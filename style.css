@@ -43,7 +43,7 @@ h1{
     border-radius: 5px;
 }
 
-.botones button:hover {
+.boton:hover {
     background-color: #007D55;
     color: white;
     font-weight: bold;
