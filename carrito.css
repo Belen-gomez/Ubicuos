@@ -8,20 +8,25 @@ html{
     scroll-behavior: smooth; /*Hace que el scroll sea suave*/
 }
 
-.logo {
+.logo, .micro {
     margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: auto; 
+    margin-right: auto; 
     display: block;
     width: 40%;
     margin-bottom: 30px;
 }
-
+.camara{
+    width: 40;
+    float: right;
+    top: 0;
+}
 .container{
     position: fixed;
     width: 90%;
     max-width: 1200px;
     display: block;
+    top: 0;
 }
 
 .container label{
@@ -82,7 +87,64 @@ html{
     right: 5px; 
     top: 10px;
     font-size: 18px;
-    color: white;
+    color: #007D55;
     cursor: pointer;
     transition: all 500ms ease;
+}
+h1{
+    color: #007D55;
+    font-size: 20px;
+    text-align: center;
+    font-weight: normal;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.productos{
+    background-color: rgb(206, 205, 205);
+}
+
+.buscar, .botones, .preguntas{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.input-box{
+    width:75%;
+    padding: 20px;
+    margin-bottom: 15px;
+    background-color: rgb(231, 231, 231);
+    border: 2px solid #007D55;
+}
+.btn{
+    color: white;
+    font-weight: bold;
+    background-color: #007D55;
+    padding: 15px;
+    margin: 10px;
+    width: 50%;
+    font-size: 15px;
+    border-radius: 5px;
+}
+.btn:hover, .btn-secundario:hover{
+    color: #007D55;
+    font-weight: bold;
+    background-color: white;
+    padding: 15px;
+    margin: 10px;
+    width: 50%;
+    border-radius: 5px;
+    border: 2px solid #007D55;
+}
+.btn-secundario {
+    color: black;
+    font-weight: bold;
+    background-color: rgb(218, 215, 215);
+    text-decoration: none;
+    padding: 15px;
+    margin: 10px;
+    width: 50%;
+    border-radius: 5px;
+    margin-bottom: 30px;
 }
