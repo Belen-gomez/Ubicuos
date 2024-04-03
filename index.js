@@ -10,7 +10,7 @@ io.on("connection", function(socket){
   console.log("nuevo cliente");
 
   // Leer el archivo clientes.json
-  fs.readFile('clientes.json', 'utf8', (err, data) => {
+  fs.readFile('/www/empleado/clientes.json', 'utf8', (err, data) => {
     if (err) {
       console.error('Error al leer el archivo:', err);
       return;

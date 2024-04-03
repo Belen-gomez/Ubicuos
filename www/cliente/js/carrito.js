@@ -1,3 +1,4 @@
+const jsQR = require("jsqr");
 const camara = document.getElementById('camara');
 camara.addEventListener('click', () => {
     var video = document.createElement('video');
@@ -27,11 +28,10 @@ function scanQRCode(video) {
         context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
         var imageData = context.getImageData(0, 0, video.videoWidth, video.videoHeight);
         
-        // Log the image data to see its structure
-        console.log("Image data:", imageData);
-        
         // Attempt to decode the QR code
-        var code = jsQR(imageData.data, imageData.width, imageData.height);
+        var code = jsQR(imageData.data, imageData.width, imageData.height, {
+            inversionAttempts: 'dontInvert'
+          } );
         if (code) {
             console.log("Found QR code", code.data);
         }
