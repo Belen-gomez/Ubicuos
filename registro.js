@@ -3,7 +3,7 @@ const registro = document.querySelector("#registro");
 registro.addEventListener("touchend", add => {
 
     function registrar_usuario(email, nombre, contraseña){
-        let nuevo_registro = ""
+        let nuevo_registro = {"email": id, "title": valor, "done": false};
     }
     // Obtener datos del formulario
     const nombre = document.getElementById('nusuario').value;
