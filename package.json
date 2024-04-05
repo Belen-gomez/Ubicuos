@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "cliente": "^0.0.1",
     "express": "^4.19.2",
     "jsqr": "^1.4.0",
     "socket.io": "^4.7.5"
