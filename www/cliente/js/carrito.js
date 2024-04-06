@@ -1,4 +1,4 @@
-const jsQR = require("jsqr");
+const jsQR = require('jsqr');
 const camara = document.getElementById('camara');
 camara.addEventListener('click', () => {
     var video = document.createElement('video');

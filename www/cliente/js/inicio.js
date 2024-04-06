@@ -10,8 +10,8 @@ function buscarUsuario(email) {
 }
 
 iniciar.addEventListener("touchend", add => {
-    const email = document.getElementById('email_l').value;
-    const contraseña = document.getElementById('contrasena_l').value;
+    const email = document.getElementById('email').value;
+    const contraseña = document.getElementById('password').value;
 
     // Buscar usuario por nombre
     /* const usuario = buscarUsuario(email);
@@ -30,8 +30,8 @@ iniciar.addEventListener("touchend", add => {
 
     // Guardar usuario en LocalStorage
     localStorage.setItem('usuario', JSON.stringify(usuario)); */
-
+    //window.location.href = '../carrito.html';
     alert('Login correcto');
-    window.location = 'inicio.html';
+    
     return true;
 });
