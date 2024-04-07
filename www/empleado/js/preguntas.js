@@ -1,8 +1,10 @@
 // Funcion para actualizar las preguntas
 function cargarPreguntas() {
     const listaPreguntas = document.querySelector(".lista-preguntas");
+    // Limpiar el contenedor de preguntas
+    listaPreguntas.innerHTML = "";
     // Realizar la petición para cargar el archivo JSON
-    fetch("preguntas.json")
+    fetch("../empleado/preguntas.json")
         .then(response => {
             if (!response.ok) {
                 alert("Error de red al cargar el archivo JSON");
@@ -21,23 +23,26 @@ function cargarPreguntas() {
                 // Crear un elemento <p> para el texto de la pregunta y agregarlo al <div>
                 const textoPreguntaElement = document.createElement("p");
                 textoPreguntaElement.classList.add("texto");
-                textoPreguntaElement.textContent = pregunta.pregunta;
+                textoPreguntaElement.textContent = pregunta.texto;
                 preguntaElement.appendChild(textoPreguntaElement);
                 // Crear un elemento <div> para contestar a la pregunta y agregarlo al <div>
                 const respuestaElement = document.createElement("div");
+                respuestaElement.classList.add("respuesta");
                 // Crear un elemento <input> para contestar a la pregunta y agregarlo al <div>
                 const respuestaInput = document.createElement("input");
                 respuestaInput.setAttribute("type", "text");
                 respuestaInput.setAttribute("id", "respuesta");
-                respuestaInput.setAttribute("placeholder", "Escribe aquí tu respuesta");
-                preguntaElement.appendChild(respuestaInput);
+                respuestaInput.setAttribute("placeholder", "Escribe tu respuesta");
+                respuestaElement.appendChild(respuestaInput);
                 // Crear un elemento <button> para contestar a la pregunta y agregarlo al <div>
                 const enviarButton = document.createElement("button");
                 enviarButton.classList.add("boton-enviar")
-                enviarButton.innerHTML = "&#x27A4;";        // "&#10140;"
+                enviarButton.innerHTML = "&#x27A4;";
                 respuestaElement.appendChild(enviarButton);
                 // Agregarlo al div
                 preguntaElement.appendChild(respuestaElement);
+
+                listaPreguntas.appendChild(preguntaElement);
             });
         })
         .catch(error => {
@@ -54,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Redirigir a la página clientes.html
         window.location.href = "listaclientes.html";
     });
+    cargarPreguntas();
 
     // Ejecuta la función cargarPreguntas cada 5 segundos (5000 milisegundos)
     setInterval(cargarPreguntas, 5000); 

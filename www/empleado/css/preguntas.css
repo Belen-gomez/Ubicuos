@@ -47,45 +47,64 @@ h1 {
 
 .lista-preguntas {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 50px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5rem;
+    margin-top: 50px;
 }
 
 .pregunta {
-    display: flex;
-    align-items: center;
+    position: relative; 
     border: 2px solid #007D55;
     border-radius: 20px;
-    padding: 30px;
-    width: 250px;
-    height: 500px;
+    padding: 20px;
+    width: 280px;
+    height: 220px;
 }
 
-h2 {
+.pregunta h2{
     color: black;
     font-weight: bold; 
     text-align: center;
     margin-top: 2px;
-    font-family: 'NATS';
+    font-family: 'NATS', sans-serif;
     font-size: 16px;
 }
 
-.texto {
-    padding: 30px;
+.pregunta .texto{
+    color: black;
+    padding: 10px;
     font-family: 'Montserrat';
     font-size: 15px;
+    text-align: center;
+}
+
+.respuesta{
+    position: absolute; 
+    bottom: 20px; 
+    display: flex;
+    left: 0;
+    width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+    justify-content: center;
+    align-self: flex-end;
 }
 
 #respuesta {
     background-color: rgb(231, 231, 231);
+    border: none;
+    border-radius: 20px;
+    width: 90%;
+    padding: 8px;
     font-family: 'Montserrat';
-    font-size: 15px;
+    font-size: 12px;
 }
 
 .boton-enviar {
+    margin-left: 5px;
     border: none;
     background-color: transparent;
-    font-size: 15px;
+    font-size: 24px;
     cursor: pointer;
 }

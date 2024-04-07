@@ -31,3 +31,19 @@ function cargarClientes() {
 
 // NO SÉ SI FUNCIONA...
 // Función para verificar el estado del cliente
+async function comprobarEstado() {
+    try {
+        // Solicitar permiso del usuario para acceder a dispositivos Bluetooth
+        const device = await navigator.bluetooth.requestDevice({
+            filters: [{ services: [/* UUID del servicio del dispositivo */] }],
+            optionalServices: [/* UUIDs de servicios adicionales si es necesario */]
+        });
+
+        // Si el dispositivo está emparejado, devolver 1
+        return 1;
+    } catch (error) {
+        // Si hay algún error o el dispositivo no está emparejado, devolver 0
+        return 0;
+    }
+}
+

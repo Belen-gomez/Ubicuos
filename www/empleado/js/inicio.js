@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var contrasena = document.getElementById("password").value;
         if (numero !== "" && contrasena !== "") {
             // Realizar petición para verificar si el número de empleado existe en el JSON
-            fetch("../empleado/json/empleados.json")
+            fetch("../../empleados.json")
                 .then(response => response.json())
                 .then(data => {
                     // Comprobar si el número de empleado existe en el JSON
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         };
                         data.push(nuevoEmpleado);
                         // Actualizar el JSON
-                        fetch("../empleado/json/empleados.json", {
+                        fetch("../../empleados.json", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json"
