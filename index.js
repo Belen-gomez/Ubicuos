@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express();
 const server = require('http').Server(app);
+const path = require('path');
 
 const io = require('socket.io')(server);
 
-app.use(express.static('www'));
+app.use(express.static(__dirname + '/www'));
 
 let clientSocket;
 

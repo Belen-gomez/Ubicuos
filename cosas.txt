@@ -4,6 +4,6 @@
 4. ¿guardar usuario en localStoarage? o donde? para la cuenta y los cupones. Sino también en un json
 6. Sincronizar las preguntas y respuestas, las preguntas se pueden hacer por dictado.
 7. bluethooth
-9. Mapa con productos, lista de la compra
-10. Carrito en un json para que el cliente pueda añadir productos y el empleado verlos
+9. Mapa con productos, lista de la compra 
+10. Carrito en un json para que el cliente pueda añadir productos y el empleado verlos (aparcado por ahora)
 11. Cupones
