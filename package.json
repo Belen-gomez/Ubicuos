@@ -3,6 +3,7 @@
     "cliente": "^0.0.1",
     "express": "^4.19.2",
     "jsqr": "^1.4.0",
+    "node-webcam": "^0.8.2",
     "socket.io": "^4.7.5"
   }
 }
