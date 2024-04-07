@@ -1,21 +1,37 @@
 <html lang="es">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>inicio de sesion</title>
-  <link rel="stylesheet" href="style.css" >
-</head>
-<img class= "logo" src="images/logo.png" alt="logo"> 
-<body>
-    <h1>Sección de empleados</h1>
-<div class="input">
-    <input type="text" id="email" class="input-box" placeholder="Introduzca el Nº de empleado">
-    <input type="password" id="password" class="input-box" placeholder="Introduzca su contraseña">
-</div>
-<div class="botones">
-    <a href="" class="boton_principal" id="iniciar" >Iniciar sesión</a>
-    <a href="inicio.html" class="boton"  >Inicio</a>
-</div>
-<script src="js/inicio.js"></script>
-</body>
-<body>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <title>Empleado</title>
+        <link rel="stylesheet" href="css/inicio.css" >
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=NATS:wght@400;700&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="bienvenida">
+            <img class= "logo" src="images/logo.png" alt="logo"> 
+            <h1>empleados</h1>
+            <div class="mensaje">
+                <p>Por favor, utiliza el número de empleado proporcionado como identificador único e introduzca su contraseña. Para ayuda, contacta a recursos humanos.</p>
+            </div>
+        </div>
+        <div class="inicio">
+            <h2>Inicio de sesión</h2>
+            <input type="text" id="number" class="input-box" placeholder="Introduzca el Nº de empleado">
+            <input type="password" id="password" class="input-box" placeholder="Introduzca su contraseña">
+            <div class="botones">
+                <button class="boton" id="borrar">Borrar</button>
+                <button class="boton-principal" id="login">Enviar</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2021 El Corte Inglés. Todos los derechos reservados.</p>
+            <p><a href="terminos.html">Términos y condiciones de uso</p>
+        </footer>
+    </body>
+
+    <script src="js/inicio.js"></script>
+</html>

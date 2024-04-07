@@ -1,0 +1,10 @@
+[
+    {
+      "numeroEmpleado": "12345",
+      "contraseña": "Hola123"
+    },
+    {
+      "numeroEmpleado": "67890",
+      "contraseña": "Adios678"
+    }
+]
