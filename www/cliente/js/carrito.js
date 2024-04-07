@@ -37,3 +37,6 @@ function scanQRCode(video) {
         }
     }, 1000);
 } 
+
+let carrito = [];
+

@@ -1,13 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Lista de Clientes</title>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="script.js"></script>
-</head>
-<body>
-    <h1>Lista de Clientes</h1>
-    <ul id="client-list">
-    </ul>
-</body>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <title>Empleado</title>
+        <link rel="stylesheet" href="css/listaclientes.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=NATS:wght@400;700&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <header>
+            <img class= "logo" src="images/logo.png" alt="logo">
+            <img class="logo-p" src="images/logo-preguntas.png" alt="preguntas">
+        </header>
+
+        <div class="buscador">
+            <input type="text" id="nombre-input" placeholder="Buscar a un cliente">
+            <button class="boton" id="buscar">Buscar</button>
+        </div>
+
+        <div class="lista-clientes"></div>
+
+    </body>
+
+    <script src="js/listaclientes.js"></script>
 </html>

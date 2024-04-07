@@ -1,18 +1,21 @@
 [
     {
       "id": 1,
-      "name": "Cliente 1",
-      "shoppingList": ["Producto 1", "Producto 2", "Producto 3"]
+      "nombre": "Belén Gómez",
+      "estado" : 1,
+      "carrito": []
     },
     {
       "id": 2,
-      "name": "Cliente 2",
-      "shoppingList": ["Producto 4", "Producto 5"]
+      "nombre": "Ignacio Fernández",
+      "estado" : 0,
+      "carrito": []
     },
     {
       "id": 3,
-      "name": "Cliente 3",
-      "shoppingList": ["Producto 6", "Producto 7", "Producto 8", "Producto 9"]
+      "nombre": "Alberto García",
+      "estado" : 0,
+      "carrito": []
     }
   ]
   

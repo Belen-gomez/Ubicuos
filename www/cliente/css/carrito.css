@@ -99,8 +99,46 @@ h1{
     margin-top: 20px;
     margin-bottom: 30px;
 }
-.productos{
-    background-color: rgb(206, 205, 205);
+h2{
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 20px;
+
+}
+.productos {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.producto {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    margin-bottom: 10px;
+    background-color: rgb(230, 229, 229);
+}
+.texto{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    margin-right: 20px;
+    align-items: flex-start; /* Alinea el texto a la izquierda */
+    flex: 1; /* Ocupa todo el espacio disponible */
+}
+
+.producto img {
+    float:right;
+    margin-right: 20px; /* Espacio entre la imagen y el texto */
+    margin-top: 10px; /* Espacio entre la imagen y el borde superior */
+    margin-bottom: 10px; /* Espacio entre la imagen y el borde superior */
+    width: 35%;
+    align-self: center; /* Centra la imagen verticalmente */
 }
 
 .buscar, .botones, .preguntas{
@@ -110,6 +148,7 @@ h1{
     justify-content: center;
     text-align: center;
 }
+
 .input-box{
     width:75%;
     padding: 20px;

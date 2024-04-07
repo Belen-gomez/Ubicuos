@@ -2,6 +2,8 @@
   "dependencies": {
     "cliente": "^0.0.1",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "fs": "^0.0.1-security",
     "jsqr": "^1.4.0",
     "node-webcam": "^0.8.2",
     "socket.io": "^4.7.5"

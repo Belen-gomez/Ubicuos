@@ -1,37 +1,25 @@
 const iniciar = document.querySelector("#iniciar");
 
-// Lista de usuarios
-let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-
-function buscarUsuario(email) {
-    // Buscar usuario por email
-    const usuario = usuarios.find((usuario) => usuario.email == email);
-    return usuario;
-}
-
 iniciar.addEventListener("touchend", add => {
+    event.preventDefault();
     const email = document.getElementById('email').value;
-    const contraseña = document.getElementById('password').value;
+    const password = document.getElementById('password').value;
 
-    // Buscar usuario por nombre
-    /* const usuario = buscarUsuario(email);
-    
-    // Si no se encuentra el usuario, mostrar una alerta
-    if (!usuario) {
-        alert('Usuario no encontrado');
-        return false;
-    }
-    
-    // Validar contraseña
-    if (usuario.contraseña != contraseña) {
-        alert('Contraseña incorrecta');
-        return false;
-    }
-
-    // Guardar usuario en LocalStorage
-    localStorage.setItem('usuario', JSON.stringify(usuario)); */
-    //window.location.href = '../carrito.html';
-    alert('Login correcto');
-    
-    return true;
+    const data = { email, password };
+    fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Inicio de sesión exitoso');
+            window.location.href = "carrito.html";
+        } else {
+            response.text().then(message => alert(message));
+        }
+    })
+    .catch(error => console.error('Error:', error));
 });
