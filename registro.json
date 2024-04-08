@@ -4,20 +4,20 @@
     "password": "1",
     "nombre": "Belen",
     "n_compras": 0,
-    "carrito": {}
+    "carrito": []
   },
   {
     "email": "alberto.garciatorre@gmail.com",
     "password": "sisisi",
     "nombre": "Alberto",
     "n_compras": 0,
-    "carrito": {}
+    "carrito": []
   },
   {
     "email": "100471955@alumnos.uc3m.es",
     "password": "abu",
     "nombre": "Nashe",
     "n_compras": 0,
-    "carrito": {}
+    "carrito": []
   }
 ]

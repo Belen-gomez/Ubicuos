@@ -69,7 +69,7 @@ app.post('/registro', (req, res) => {
             password: password,
             nombre: nombre,
             n_compras: 0,
-            carrito: {}
+            carrito: []
           };
           usuarios.push(nuevoUsuario);
           fs.writeFile('registro.json', JSON.stringify(usuarios, null, 2), 'utf8', (err) => {
@@ -78,8 +78,6 @@ app.post('/registro', (req, res) => {
               res.status(500).send('Error interno del servidor');
               return;
             }
-            req.session.user = nuevoUsuario;  // Guarda el usuario en la sesión
-            res.cookie('sessionId', req.session.id);
             res.status(200).send('Registro exitoso');
           });
       } catch (err) {
@@ -112,7 +110,7 @@ app.get('/getUser', (req, res) => {
 } */
 
 /* Ruta para manejar la publicación de preguntas por el cliente */
-app.post('/ask', (req, res) => {
+/* app.post('/ask', (req, res) => {
   const { id, nombre, texto, respuesta } = req.body;
   const preguntas = JSON.parse(jsonString);
   fs.writeFile('preguntas.json', JSON.stringify(usuarios, null, 2), 'utf8', (err) => {
@@ -121,12 +119,12 @@ app.post('/ask', (req, res) => {
       res.status(500).send('Error interno del servidor');
       return;
     }
-})
+}) */
 
 
 
 /* Ruta para manejar el inicio, registro y la autenticación del empleado */
-app.post('/login-e', (req, res) => {
+/* app.post('/login-e', (req, res) => {
   const { number, password } = req.body;
   fs.readFile('empleados.json', 'utf8', (err, jsonString) => {
     if (err) {
@@ -163,8 +161,45 @@ app.post('/login-e', (req, res) => {
     }
   });
 });
+ */
 
-
+app.post('/addProduct', (req, res) => {
+  const { email, producto } = req.body;
+      fs.readFile('registro.json', 'utf8', (err, jsonString) => {
+      if (err) {
+          console.log('Error leyendo el archivo de registro:', err);
+          res.status(500).send('Error interno del servidor');
+          return;
+      }
+      try {
+          const usuarios = JSON.parse(jsonString);
+          const usuario = usuarios.find(user => user.email === email);
+          if (usuario) {
+              res.status(401).send('Error al autentificar al usuario');
+              return;
+          }
+          const nuevoProducto = {
+            nombre: producto.nombre,
+            precio: producto.precio
+          };
+          usuario.carrito.push(nuevoProducto);
+          usuarios.push(nuevoUsuario);
+          fs.writeFile('registro.json', JSON.stringify(usuarios, null, 2), 'utf8', (err) => {
+            if (err) {
+              console.log('Error escribiendo en el archivo de registro:', err);
+              res.status(500).send('Error interno del servidor');
+              return;
+            }
+            req.session.user = nuevoUsuario;  // Guarda el usuario en la sesión
+            res.cookie('sessionId', req.session.id);
+            res.status(200).send('Registro exitoso');
+          });
+      } catch (err) {
+          console.log('Error analizando el archivo de registro:', err);
+          res.status(500).send('Error interno del servidor');
+      }
+    });
+  });
 let clientSocket;
 
 io.on('connection', function(socket){
@@ -209,4 +244,39 @@ io.on("connection", function(socket){
 });
 
 server.listen(8080, () => console.log('server started'));
- */
+}*/
+
+
+// En el lado del servidor
+/* const fs = require('fs');
+
+io.on('connection', function(socket){
+  console.log("Nuevo cliente conectado");
+
+  socket.on('login', function(data){
+    const { email, password } = data;
+    fs.readFile('registro.json', 'utf8', (err, jsonString) => {
+      if (err) {
+          console.log('Error leyendo el archivo de registro:', err);
+          socket.emit('loginResponse', {ok: false, message: 'Error interno del servidor'});
+          return;
+      }
+      try {
+          const usuarios = JSON.parse(jsonString);
+          const usuario = usuarios.find(user => user.email === email);
+          if (!usuario) {
+              socket.emit('loginResponse', {ok: false, message: 'El correo no está registrado'});
+              return;
+          }
+          if (usuario.password !== password) {
+              socket.emit('loginResponse', {ok: false, message: 'Contraseña incorrecta'});
+              return;
+          }
+          socket.emit('loginResponse', {ok: true, message: 'Inicio de sesión exitoso'});
+      } catch (err) {
+          console.log('Error analizando el archivo de registro:', err);
+          socket.emit('loginResponse', {ok: false, message: 'Error interno del servidor'});
+      }
+    });
+  });
+}); */
