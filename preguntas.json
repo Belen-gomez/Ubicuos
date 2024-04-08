@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "nombre": "Belen",
+        "texto": "¿Puedo devolver un artículo comprado en línea en una tienda física de El Corte Inglés?",
+        "respuesta": ""
+    },
+    {
+        "id": 2,
+        "nombre": "Alberto",
+        "texto": "¿Cuál es la política de devolución de productos?",
+        "respuesta": ""
+    },
+    {
+        "id": 3,
+        "nombre": "Nashe",
+        "texto": "¿Hay alguna promoción actual en la sección de moda masculina de El Corte Inglés?",
+        "respuesta": ""
+    }
+]

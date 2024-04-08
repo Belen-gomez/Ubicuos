@@ -195,3 +195,33 @@ h2{
     overflow: auto;
     zoom: 1; /* Initial zoom level */
 }
+
+/* Estilos para la cámara */
+.video-camara {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+}
+
+/* Estilos para el botón de cerrar */
+.boton-cerrar {
+    position: fixed;
+    font-size: 24px;
+    color: white;
+    background-color: #007D55;
+    padding: 5px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1100;
+    top: 120px;
+    right: 20px;
+}
+
+/* Estilos para el contenedor de la cámara */
+.container-video {
+    position: relative;
+    z-index: 1000;
+}

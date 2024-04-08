@@ -31,7 +31,7 @@ registro.addEventListener("touchend", add => {
         return false;
     }
 
-    const data = { email: miemail, password: mipassword, conf_password: miconf_password, nombre: minombre };
+    const data = { email: miemail, password: mipassword, nombre: minombre };
     const json = JSON.stringify(data);
     fetch('/registro', {
         method: 'POST',

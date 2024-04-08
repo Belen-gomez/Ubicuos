@@ -7,3 +7,8 @@
 9. Mapa con productos, lista de la compra 
 10. Carrito en un json para que el cliente pueda añadir productos y el empleado verlos (aparcado por ahora)
 11. Cupones
+
+
+preguntas
+1. Mapa
+2. que usuarios le sale al empleado. hemos pensado solo los que tienen productos en el carrito, se vacía cuando pagas.

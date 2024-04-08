@@ -14,6 +14,34 @@ function verificarCampos(numero, contrasena) {
     return true;
 }
 
+const iniciar = document.getElementById("login");
+
+iniciar.addEventListener("click", add => {
+    add.preventDefault();
+    const number = document.getElementById('number').value;
+    const password = document.getElementById('password').value;
+    verificarCampos(number, password);
+
+    const data = { number, password };
+    fetch('/login-e', {
+        method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data, null)
+    })
+    
+    .then(response => {
+        if (response.ok) {
+            alert('Inicio de sesión exitoso');
+            window.location.href = "preguntas.html";
+        } else {
+            response.text().then(message => alert(message));
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
 document.addEventListener("DOMContentLoaded", function() {
     var botonEnviar = document.getElementById("login");
     // Agregar evento click al botón de enviar
