@@ -1,5 +1,36 @@
-var user;
 const socket = io();
+const iniciar = document.querySelector("#iniciar");
+
+iniciar.addEventListener("click", add => {
+    add.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    if(email==''){
+        alert('Ingrese un correo');
+        return;
+    }
+
+    if(password==''){
+        alert('Ingrese una contraseña');
+        return;
+    }
+
+    const data =  {email, password };
+    
+    socket.emit('login', data);
+});
+
+socket.on('loginResponse', (res) => {
+    if (res.ok) {
+        alert('Inicio de sesión exitoso');
+        window.location.href = "carrito.html";
+    } else {
+        alert(res.message);
+    }
+});
+
+var user;
 window.onload = async () => {
     try {
       const response = await fetch('/getUser');
@@ -60,10 +91,8 @@ camara.addEventListener('click', () => {
             const info = parseQRCode(code.data)
             const respuesta = confirm(`¿Quieres añadir el producto ${info.producto} a tu carrito?`);
             if(respuesta) {
-              const data = {email: user.email, producto: info}
-              socket.emit('carrito', data);
               
-              /* const producto = document.createElement('div');
+              const producto = document.createElement('div');
               producto.className = 'producto';
               producto.id = info.producto;
 
@@ -78,7 +107,7 @@ camara.addEventListener('click', () => {
               imagen.src = "images/" + info.producto + ".png";
               imagen.alt = info.producto;
               producto.appendChild(imagen);
-              document.body.appendChild(producto); */
+              document.body.appendChild(producto);
             }
             else{
               alert("Producto no añadido");
@@ -100,36 +129,61 @@ camara.addEventListener('click', () => {
     return info;
 }
 });
+const registro = document.querySelector("#registro");
 
-socket.on('carritoResponse', (res) => {
-  if (res.ok) {
-    console.log(res.carrito);
-    loadCarrito(res.carrito);
-    alert('Producto añadido al carrito'); 
+registro.addEventListener("touchend", add => {
+    // Obtener datos del formulario
+    const minombre = document.getElementById('nusuario').value;
+    const mipassword = document.getElementById('contrasena').value;
+    const miconf_password = document.getElementById('contrasena2').value;
+    const miemail = document.getElementById('email').value;
 
-  } else {
-      alert(res.message);
-  }
+    // Validar nombre de usuario
+    if (minombre == '') {
+        alert('Por favor, ingrese su nombre de usuario');
+        return false;
+    }
+
+    // Validar correo electrónico
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(miemail)) {
+        alert('Formato de correo electrónico inválido');
+        return false;
+    }
+
+    // Validar contraseña
+    if (miconf_password == '') {
+        alert('Por favor, ingrese una contraseña');
+        return false;
+    }
+    // Validar confirmación de contraseña
+    if(mipassword != miconf_password){
+        alert('Las contraseñas no coinciden');
+        return false;
+    }
+
+    const data = { email: miemail, password: mipassword, nombre: minombre };
+    const json = JSON.stringify(data);
+    fetch('/registro', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: json
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en el registro');
+        }
+        return response.text();
+    })
+    .then(message => {
+        alert('Registro exitoso');
+        window.location.href = "carrito.html";
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error en el registro');
+    });
+    
 });
-function loadCarrito(carrito){
-  const productos = document.querySelector('.productos');
-  productos.innerHTML = '';
-  carrito.forEach(producto => {
-    const div = document.createElement('div');
-    div.className = 'producto';
-    div.id = producto.producto;
-
-    const texto = document.createElement('div');
-    texto.className = 'texto';
-    texto.appendChild(document.createElement('h2')).textContent = producto.producto;
-    texto.appendChild(document.createElement('p')).textContent = producto.precio;
-    texto.appendChild(document.createElement('p')).textContent = `Cantidad ${producto.cantidad}`;
-    div.appendChild(texto);
-
-    const imagen = document.createElement('img');
-    imagen.src = `images/${producto.producto}.png`;
-    imagen.alt = producto.producto;
-    div.appendChild(imagen);
-    productos.appendChild(div);
-  });
-}

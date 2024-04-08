@@ -4,7 +4,13 @@
     "password": "1",
     "nombre": "Belen",
     "n_compras": 0,
-    "carrito": []
+    "carrito": [
+      {
+        "producto": "ordenador",
+        "precio": "150€",
+        "cantidad": 5
+      }
+    ]
   },
   {
     "email": "alberto.garciatorre@gmail.com",
