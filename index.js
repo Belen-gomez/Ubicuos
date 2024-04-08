@@ -19,8 +19,19 @@ app.use(session({
 
 // Ruta para manejar el registro y la autenticación
 app.post('/login', (req, res) => {
+  fs.readFile('registro.json', 'utf8', (err, jsonString) => {
+    if (err) {
+      console.log('Error leyendo el archivo de registro:', err);
+      res.status(500).send('Error interno del servidor');
+      return;
+    }
+    res.status(200).send(jsonString);
+  });
+});
+/* app.post('/login', (req, res) => {
   let body = '';
   req.on('data', chunk => {
+      console.log("hola");
       body += chunk.toString();
   });
   req.on('end', () => {
@@ -50,17 +61,10 @@ app.post('/login', (req, res) => {
       }
   });
   });
-});
-
+}); */
 // Ruta para manejar el registro y la autenticación
 app.post('/registro', (req, res) => {
-  let body = '';
-  req.on('data', chunk => {
-      body += chunk.toString();
-  });
-  req.on('end', () => {
-      const data = JSON.parse(body);
-      const { email, password, conf_password, nombre } = data;
+  const { email, password, conf_password, nombre } = req.body;
       fs.readFile('registro.json', 'utf8', (err, jsonString) => {
       if (err) {
           console.log('Error leyendo el archivo de registro:', err);
@@ -94,7 +98,6 @@ app.post('/registro', (req, res) => {
       }
     });
   });
-});
 
 let clientSocket;
 
