@@ -1,14 +1,10 @@
 const registro = document.querySelector("#registro");
 
 registro.addEventListener("touchend", add => {
-
-    function registrar_usuario(email, nombre, contraseña){
-        let nuevo_registro = {"email": id, "title": valor, "done": false};
-    }
     // Obtener datos del formulario
     const nombre = document.getElementById('nusuario').value;
-    const contraseña = document.getElementById('contrasena').value;
-    const conf_contraseña = document.getElementById('contrasena2').value;
+    const password = document.getElementById('contrasena').value;
+    const conf_password = document.getElementById('contrasena2').value;
     const email = document.getElementById('email').value;
 
     // Validar nombre de usuario
@@ -25,18 +21,37 @@ registro.addEventListener("touchend", add => {
     }
 
     // Validar contraseña
-    if (contraseña == '') {
+    if (conf_password == '') {
         alert('Por favor, ingrese una contraseña');
         return false;
     }
     // Validar confirmación de contraseña
-    if(contraseña != conf_contraseña){
+    if(password != conf_password){
         alert('Las contraseñas no coinciden');
         return false;
     }
 
-    alert('Formulario enviado correctamente');
-
-    window.location = 'inicio.html';
-    return true;
+    const data = { email, password, conf_password, nombre };
+    fetch('/registro', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en el registro');
+        }
+        return response.text();
+    })
+    .then(message => {
+        alert('Registro exitoso');
+        window.location.href = "carrito.html";
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error en el registro');
+    });
+    
 });

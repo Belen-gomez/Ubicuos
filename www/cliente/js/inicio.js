@@ -1,7 +1,6 @@
 const iniciar = document.querySelector("#iniciar");
-
-iniciar.addEventListener("touchend", add => {
-    event.preventDefault();
+const socket = io();
+iniciar.addEventListener("click", add => {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 

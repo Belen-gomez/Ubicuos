@@ -52,6 +52,50 @@ app.post('/login', (req, res) => {
   });
 });
 
+// Ruta para manejar el registro y la autenticación
+app.post('/registro', (req, res) => {
+  let body = '';
+  req.on('data', chunk => {
+      body += chunk.toString();
+  });
+  req.on('end', () => {
+      const data = JSON.parse(body);
+      const { email, password, conf_password, nombre } = data;
+      fs.readFile('registro.json', 'utf8', (err, jsonString) => {
+      if (err) {
+          console.log('Error leyendo el archivo de registro:', err);
+          res.status(500).send('Error interno del servidor');
+          return;
+      }
+      try {
+          const usuarios = JSON.parse(jsonString);
+          const usuario = usuarios.find(user => user.email === email);
+          if (usuario) {
+              res.status(401).send('El correo ya está registrado. Inicie sesión con este correo');
+              return;
+          }
+          const nuevoUsuario = {
+            email: email,
+            password: password,
+            nombre: nombre
+          };
+          usuarios.push(nuevoUsuario);
+          fs.writeFile('registro.json', JSON.stringify(usuarios), 'utf8', (err) => {
+            if (err) {
+              console.log('Error escribiendo en el archivo de registro:', err);
+              res.status(500).send('Error interno del servidor');
+              return;
+            }
+            res.status(200).send('Registro exitoso');
+          });
+      } catch (err) {
+          console.log('Error analizando el archivo de registro:', err);
+          res.status(500).send('Error interno del servidor');
+      }
+    });
+  });
+});
+
 let clientSocket;
 
 io.on('connection', function(socket){
