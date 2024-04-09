@@ -1,5 +1,4 @@
 
-const socket = io();
 const iniciar = document.querySelector("#iniciar");
 
 iniciar.addEventListener("click", add => {
