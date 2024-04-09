@@ -4,15 +4,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Preguntas y respuestas</title>
   <link rel="stylesheet" href="css/carrito.css" >
+  <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
+    <div class="container">
+        <label for="btn-menu" class="icono-menu"> ☰</label>
+    </div>
+    <input type="checkbox" id="btn-menu">
+    <div class ="container-menu">
+        <div class = "cont-menu">
+            <nav>
+                <a href="buscar_producto.html">Buscar un producto</a>
+                <a href="lista.html">Lista de la compra</a>
+                <a href="favoritos.html">Favoritos</a>
+                <a href="carrito.html">Carrito</a>
+                <a href="cupones.html">Cupones y descuentos</a>
+                <a href="pago.html">Pago</a>
+            </nav>
+            <label for="btn-menu" class="icon-equis">✖️</label>
+        </div>
+    </div>  
     <img class= "logo" src="images/logo.png" alt="logo"> 
     <h1>Preguntas y respuestas</h1>
     <div class = "preguntas">
-        <input type="text" id="prodcuto" class="input-box" placeholder="Escribe tu pregunta">
+        <input type="text" id="pregunta-input" class="input-box" placeholder="Escribe tu pregunta">
         <p class="dictar">O díctala</p>
-        <img class= "micro" src="images/micro.png" alt="microfono"> 
+        <img id="micro" class= "micro" src="images/micro.png" alt="microfono"> 
         <button class="btn" id="btn-enviar">Enviar</button>
         <a href="carrito.html" class="btn-secundario" id="btn-ccarrito" >Carrito</a>
     </div>
+    <script src="js/preguntas.js"></script>
 </body>

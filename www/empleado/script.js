@@ -15,3 +15,16 @@ const loadClients = (data) => {
     socket.on('load_clients', loadClients);
   });
   
+// Empleado
+
+// document.addEventListener('DOMContentLoaded', () => {
+//   const socket = io();
+
+//   navigator.bluetooth.requestDevice({ acceptAllDevices: true })
+//   .then(device => {
+//     console.log('Conectando al dispositivo...', device.name);
+//     // Cuando el empleado detecta un cliente cercano
+//     socket.emit('clientNearby', device.id);
+//   })
+//   .catch(error => { console.log(error); });
+// });

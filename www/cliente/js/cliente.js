@@ -187,3 +187,5 @@ registro.addEventListener("touchend", add => {
     });
     
 });
+
+

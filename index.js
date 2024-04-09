@@ -13,7 +13,7 @@ app.use(express.static(__dirname + '/www'));
 app.use(express.json());
 
 app.use(session({
-  secret: 'tu secreto',
+  secret: 'usuario',
   resave: false,
   saveUninitialized: true
 }));
@@ -69,9 +69,15 @@ app.post('/registro', (req, res) => {
             password: password,
             nombre: nombre,
             n_compras: 0,
-            carrito: []
+            carrito: [],
+            cupones: []
           };
+          // Añadir cupón de bienvenida
+          nuevoUsuario.cupones.push("bienvenida");
           usuarios.push(nuevoUsuario);
+          
+          req.session.user = nuevoUsuario;  // Guarda el usuario en la sesión
+          res.cookie('sessionId', req.session.id);
           fs.writeFile('registro.json', JSON.stringify(usuarios, null, 2), 'utf8', (err) => {
             if (err) {
               console.log('Error escribiendo en el archivo de registro:', err);
@@ -250,6 +256,68 @@ io.on('connection', function(socket){
     });
   });
 
+  // Cupones
+  socket.on('cupon', function(data){
+    const { email, cupones} = data;
+    fs.readFile('registro.json', 'utf8', (err, jsonString) => {
+      if (err) {
+          console.log('Error leyendo el archivo de registro:', err);
+          socket.emit('cuponResponse', {ok: false, message: 'Error interno del servidor'}, );
+          return;
+      }
+      try {
+          const usuarios = JSON.parse(jsonString);
+          const usuario = usuarios.find(user => user.email === email);
+          if (!usuario) {
+              socket.emit('cuponResponse', {ok: false, message: 'El usuario no está autentificado'});
+              return;
+          }
+          
+          usuario.cupones = cupones;
+          fs.writeFile('registro.json', JSON.stringify(usuarios, null, 2), 'utf8', (err) => {
+            if (err) {
+              console.log('Error escribiendo en el archivo de registro:', err);
+              res.status(500).send('Error interno del servidor');
+              return;
+            }
+            socket.emit('cuponResponse', {ok: true, message: 'Carrito actualizado'});
+          });
+          
+      } catch (err) {
+          console.log('Error analizando el archivo de registro:', err);
+          socket.emit('cuponResponse', {ok: false, message: 'Error interno del servidor'});
+      }
+    });
+  });
+
+/* Preguntas */
+  socket.on('getPreguntas', function(data) {
+    fs.readFile('preguntas.json', 'utf-8', (err, jsonString) => {
+      if (err) {
+        console.log("Error leyendo el archivo de preguntas: ", err);
+        socket.emit('preguntasData', {ok: false, message: 'Error interno del servidor.'});
+        return;
+      }
+      const preguntas = JSON.parse(jsonString);
+      socket.emit('preguntasData', {ok: true, preguntas});
+    });
+  }); 
+
+  socket.on('textMessage', (data) => {
+    let questions = require('./preguntas.json');
+    questions.push({data });
+    fs.writeFileSync('preguntas.json', JSON.stringify(questions, null, 2), 'utf8', (err) => {
+      if (err) {
+        console.log('Error escribiendo en el archivo de registro:', err);
+        res.status(500).send('Error interno del servidor');
+        return;
+      }
+      const preguntas = JSON.parse(questions);
+      socket.emit('preguntasData', {ok: true, preguntas});
+    });
+  });
+  
+
   socket.on("message_evt", function(message){
     console.log(socket.id, message);
     socket.broadcast.emit("message_evt", message);
@@ -259,6 +327,7 @@ io.on('connection', function(socket){
 server.listen(8080, () => {
   console.log("Server listening...");
 });
+
 
 /* const express = require('express');
 const app = express();
@@ -325,3 +394,36 @@ io.on('connection', function(socket){
     });
   });
 }); */
+
+// io.on('connection', (socket) => {
+//   console.log('Empleado conectado');
+
+//   socket.on('clientConnected', (client) => {
+//     console.log(`Cliente ${client.id} está cerca`);
+
+//     // Leer el archivo clientes.json
+//     fs.readFile('clientes.json', 'utf8', (err, data) => {
+//       if (err) {
+//         console.error('Error al leer el archivo:', err);
+//         return;
+//       }
+
+//       // Parsear los datos JSON
+//       let clientes = JSON.parse(data);
+
+//       // Añadir el nuevo cliente a la lista
+//       clientes.push({
+//         email: client.email,
+//         nombre: client.name,
+//         carrito: client.shoppingList
+//       });
+
+//       // Escribir los datos actualizados de nuevo al archivo
+//       fs.writeFile('empleado/clientes.json', JSON.stringify(clientes, null, 2), (err) => {
+//         if (err) {
+//           console.error('Error al escribir en el archivo:', err);
+//         }
+//       });
+//     });
+//   });
+// });

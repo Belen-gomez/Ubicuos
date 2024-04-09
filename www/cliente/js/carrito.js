@@ -110,18 +110,22 @@ camara.addEventListener('click', () => {
 
 socket.on('carritoResponse', (res) => {
   if (res.ok) {
-    if(res.acc === 'add') {
+    if(res.acc === 'add') {      
+        // Solicitar al usuario que seleccione un dispositivo Bluetooth
+        /* navigator.bluetooth.requestDevice({ acceptAllDevices: true })
+        .then(device => {
+          console.log('El usuario ha seleccionado el dispositivo:', device.name);
+          // Cuando el cliente da permiso, emitir su ID a través de socket.io
+          socket.emit('clientConnected', device.id);
+        })
+        .catch(error => { console.log(error); }); */
+      
     loadCarrito(carrito);
     alert('Producto añadido al carrito'); 
     }
     else if (res.acc === 'remove'){
-      loadCarrito(carrito);
-      alert('Producto añadido a favoritos');
+      alert('Producto eliminado');
     }
-    /*else if (res.acc === 'no-fav'){
-      console.log("eliminar");
-      alert('Producto eliminado de favoritos');
-    } */
 
   } else {
       alert(res.message);
@@ -131,6 +135,10 @@ socket.on('carritoResponse', (res) => {
 function loadCarrito(carrito){
   const productos = document.querySelector('.productos');
   productos.innerHTML = '';
+
+  let productoSeleccionado = null;
+  let handleDeviceMotion = null;
+
   carrito.forEach(producto => {
     const div = document.createElement('div');
     div.className = 'producto';
@@ -148,33 +156,112 @@ function loadCarrito(carrito){
     texto.appendChild(document.createElement('p')).textContent = producto.precio;
     texto.appendChild(document.createElement('p')).textContent = `Cantidad ${producto.cantidad}`;
 
+    const t_ordenar = document.createElement('p');
+    t_ordenar.className = 'oculto';
+    t_ordenar.textContent = 'Arrastra para ordenar';
+    texto.appendChild(t_ordenar);
+
+    const t_eliminar = document.createElement('p');
+    t_eliminar.className = 'oculto';
+    t_eliminar.textContent = 'Agita para eliminar';
+    texto.appendChild(t_eliminar);
+
     div.addEventListener('dblclick', () => {
       favorito(producto, div);
     });
 
-    div.addEventListener('click',() =>{
-      window.addEventListener('devicemotion', handleDeviceMotion);
+    div.addEventListener('touchstart', (event) => {
+      if (productoSeleccionado !== null) {
+        productoSeleccionado.style.backgroundColor = '#E6E5E5';
+        productoSeleccionado = null;
+      }
+      
+      div.style.backgroundColor = '#007D55';
+      productoSeleccionado = div;
+      
+      const touchStartY = event.touches[0].clientY; // Guardar la posición inicial del toque
 
-      function handleDeviceMotion(event) {
-        const acceleration = event.accelerationIncludingGravity;
-        const accelerationThreshold = 15; // Adjust the threshold value as needed
+      div.addEventListener('touchmove', handleTouchMove);
 
-        if (Math.abs(acceleration.x) > accelerationThreshold || Math.abs(acceleration.y) > accelerationThreshold || Math.abs(acceleration.z) > accelerationThreshold) {
-          const respuesta = confirm(`¿Quieres eliminar el producto ${producto.producto} del carrito?`);
-          if (respuesta) {
-            console.log("birrar");
-            const index = carrito.findIndex(p => p.producto === producto.producto);            
-            if (index !== -1) {
-              carrito.splice(index, 1);
-              const email = user.email;
-              const accion = "remove";
-              const data = { email, carrito, accion };
-              socket.emit('carrito', data);
-            }
+      function handleTouchMove(event) {
+        event.preventDefault()
+        const touchEndY = event.touches[0].clientY;
+        const deltaY = touchEndY - touchStartY; // Calcular el movimiento total del dedo desde el inicio del arrastre
+        console.log(deltaY);
+        const productHeight = div.offsetHeight;
+        
+        // Obtener el índice del producto seleccionado
+        const selectedIndex = Array.from(div.parentElement.children).indexOf(div);
+        console.log(productHeight);
+        // Calcular el nuevo índice después del arrastre
+        let newIndex = selectedIndex + Math.round(deltaY / productHeight);
+        console.log(newIndex);
+        // Limitar el índice dentro de los límites del contenedor
+        newIndex = Math.max(0, Math.min(newIndex, div.parentElement.children.length - 1));
+
+        // Mover el elemento seleccionado a la nueva posición
+        if (newIndex !== selectedIndex) {
+          if (newIndex < selectedIndex) {
+            div.parentElement.insertBefore(div, div.parentElement.children[newIndex]);
+          } else {
+            div.parentElement.insertBefore(div, div.parentElement.children[newIndex + 1]);
           }
         }
+
+        // Actualizar el índice del producto seleccionado
+        productoSeleccionado = div;
       }
+
+      div.addEventListener('touchend', () => {
+        div.removeEventListener('touchmove', handleTouchMove);
+      });
     });
+
+    div.addEventListener('click',() =>{
+      if (productoSeleccionado !== null) {
+        productoSeleccionado.style.backgroundColor = '#E6E5E5';
+        window.removeEventListener('devicemotion', handleDeviceMotion);
+        productoSeleccionado = null;
+      }
+
+      div.style.backgroundColor = '#007D55';
+      productoSeleccionado = div;
+      
+      let shakes = 0; 
+      handleDeviceMotion = function(event) {
+        const acceleration = event.accelerationIncludingGravity;
+        const accelerationThreshold = 25; // Adjust the threshold value as needed
+
+        if (Math.abs(acceleration.x) > accelerationThreshold || Math.abs(acceleration.y) > accelerationThreshold || Math.abs(acceleration.z) > accelerationThreshold) {
+          shakes++;
+          if (shakes>=3){
+            const respuesta = confirm(`¿Quieres eliminar el producto ${producto.producto} del carrito?`);
+            if (respuesta) {
+              console.log("borrar");
+              const index = carrito.findIndex(p => p.producto === producto.producto);            
+              if (index !== -1) {
+                carrito.splice(index, 1);
+                div.remove();
+                
+                const email = user.email;
+                const accion = "remove";
+                const data = { email, carrito, accion};
+                shakes = 0;
+                socket.emit('carrito', data);
+              }
+              
+            }
+            else{
+              shakes = 0;
+              productoSeleccionado.style.backgroundColor = '#E6E5E5';
+              productoSeleccionado = null;
+            }
+          window.removeEventListener('devicemotion', handleDeviceMotion);  
+          }
+        }
+      };
+      window.addEventListener('devicemotion', handleDeviceMotion);
+  });  
 
     div.appendChild(texto);
 
@@ -207,4 +294,6 @@ function favorito(producto, div){
   }
 
 }
+
+// Cliente
 

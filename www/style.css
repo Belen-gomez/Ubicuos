@@ -96,4 +96,19 @@ h1{
     100%{margin-left: -400%;}
 }
 
+@media (min-width: 550px) {
+    .slider {
+        height: 0%;
+        width: 100%;
+        align-items: center;
+    }
 
+    .logo {
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        width: 20%;
+        margin-bottom: 30px;
+    }
+}

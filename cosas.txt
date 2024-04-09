@@ -14,3 +14,4 @@ preguntas
 2. que usuarios le sale al empleado. hemos pensado solo los que tienen productos en el carrito, se vacía cuando pagas.
 3. sockets en el registro y login, ¿todo en un js?
 4. favoritos
+5. bluethooth

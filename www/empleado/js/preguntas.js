@@ -1,56 +1,22 @@
-// Funcion para actualizar las preguntas
-function cargarPreguntas() {
-    const listaPreguntas = document.querySelector(".lista-preguntas");
-    // Limpiar el contenedor de preguntas
-    listaPreguntas.innerHTML = "";
-    // Realizar la petición para cargar el archivo JSON
-    fetch("../empleado/preguntas.json")
-        .then(response => {
-            if (!response.ok) {
-                alert("Error de red al cargar el archivo JSON");
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Iterar sobre cada pregunta en el JSON y agregarla al contenedor
-            data.forEach(pregunta => {
-                const preguntaElement = document.createElement("div");
-                preguntaElement.classList.add("pregunta");
-                // Crear un elemento <h2> para el nombre del usuario y agregarlo al <div>
-                const nombreElement = document.createElement("h2");
-                nombreElement.textContent = pregunta.nombre;
-                preguntaElement.appendChild(nombreElement);
-                // Crear un elemento <p> para el texto de la pregunta y agregarlo al <div>
-                const textoPreguntaElement = document.createElement("p");
-                textoPreguntaElement.classList.add("texto");
-                textoPreguntaElement.textContent = pregunta.texto;
-                preguntaElement.appendChild(textoPreguntaElement);
-                // Crear un elemento <div> para contestar a la pregunta y agregarlo al <div>
-                const respuestaElement = document.createElement("div");
-                respuestaElement.classList.add("respuesta");
-                // Crear un elemento <input> para contestar a la pregunta y agregarlo al <div>
-                const respuestaInput = document.createElement("input");
-                respuestaInput.setAttribute("type", "text");
-                respuestaInput.setAttribute("id", "respuesta");
-                respuestaInput.setAttribute("placeholder", "Escribe tu respuesta");
-                respuestaElement.appendChild(respuestaInput);
-                // Crear un elemento <button> para contestar a la pregunta y agregarlo al <div>
-                const enviarButton = document.createElement("button");
-                enviarButton.classList.add("boton-enviar")
-                enviarButton.innerHTML = "&#x27A4;";
-                respuestaElement.appendChild(enviarButton);
-                // Agregarlo al div
-                preguntaElement.appendChild(respuestaElement);
+let preguntas = [];
+const socket = io();
 
-                listaPreguntas.appendChild(preguntaElement);
-            });
-        })
-        .catch(error => {
-            console.error("Error al cargar el archivo JSON:", error);
-            // Aquí puedes manejar el error de manera apropiada, como mostrar un mensaje al usuario
-            alert("Error al cargar el JSON")
-        });
-}
+/* window.onload = async () => {
+    try {
+      const response = await fetch('/getUser');
+      if (!response.ok) {
+        throw new Error('No has iniciado sesión');
+      }
+      user = await response.json();
+      document.title = `¡Bienvenido ${user.nombre}!`;
+      
+      // Make socket request to get carrito data
+      console.log(user.email);
+      socket.emit('getCarrito', user.email);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+}; */
 
 document.addEventListener("DOMContentLoaded", function() {
     const logoClientes = document.querySelector(".logo-c");
@@ -59,8 +25,53 @@ document.addEventListener("DOMContentLoaded", function() {
         // Redirigir a la página clientes.html
         window.location.href = "listaclientes.html";
     });
-    cargarPreguntas();
-
-    // Ejecuta la función cargarPreguntas cada 5 segundos (5000 milisegundos)
-    setInterval(cargarPreguntas, 5000); 
+    // Funcion para actualizar las preguntas
+    const listaPreguntas = document.querySelector(".lista-preguntas");
+    // Limpiar el contenedor de preguntas
+    listaPreguntas.innerHTML = "";
+    const data = {};
+    socket.emit('getPreguntas', data);
 });
+
+socket.on('preguntasData', (data)=> {
+    preguntas = data.preguntas;
+    console.log(preguntas);
+    cargarPreguntas(preguntas);
+});
+    
+function cargarPreguntas(preguntas) {
+    const listaPreguntas = document.querySelector(".lista-preguntas");
+    listaPreguntas.innerHTML = "";
+    
+    preguntas.forEach(pregunta => {
+        const preguntaElement = document.createElement("div");
+        preguntaElement.classList.add("pregunta");
+        // Crear un elemento <h2> para el nombre del usuario y agregarlo al <div>
+        const nombreElement = document.createElement("h2");
+        nombreElement.textContent = pregunta.nombre;
+        preguntaElement.appendChild(nombreElement);
+        // Crear un elemento <p> para el texto de la pregunta y agregarlo al <div>
+        const textoPreguntaElement = document.createElement("p");
+        textoPreguntaElement.classList.add("texto");
+        textoPreguntaElement.textContent = pregunta.texto;
+        preguntaElement.appendChild(textoPreguntaElement);
+        // Crear un elemento <div> para contestar a la pregunta y agregarlo al <div>
+        const respuestaElement = document.createElement("div");
+        respuestaElement.classList.add("respuesta");
+        // Crear un elemento <input> para contestar a la pregunta y agregarlo al <div>
+        const respuestaInput = document.createElement("input");
+        respuestaInput.setAttribute("type", "text");
+        respuestaInput.setAttribute("id", "respuesta");
+        respuestaInput.setAttribute("placeholder", "Escribe tu respuesta");
+        respuestaElement.appendChild(respuestaInput);
+        // Crear un elemento <button> para contestar a la pregunta y agregarlo al <div>
+        const enviarButton = document.createElement("button");
+        enviarButton.classList.add("boton-enviar")
+        enviarButton.innerHTML = "&#x27A4;";
+        respuestaElement.appendChild(enviarButton);
+        // Agregarlo al div
+        preguntaElement.appendChild(respuestaElement);
+
+        listaPreguntas.appendChild(preguntaElement);
+    });
+}
