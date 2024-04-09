@@ -165,6 +165,13 @@ function loadCarrito(carrito){
     t_eliminar.className = 'oculto';
     t_eliminar.textContent = 'Agita para eliminar';
     texto.appendChild(t_eliminar);
+    div.appendChild(texto);
+
+    const imagen = document.createElement('img');
+    imagen.src = `images/${producto.producto}.png`;
+    imagen.alt = producto.producto;
+    div.appendChild(imagen);
+    productos.appendChild(div);
 
     div.addEventListener('dblclick', () => {
       favorito(producto, div);
@@ -179,7 +186,7 @@ function loadCarrito(carrito){
       div.style.backgroundColor = '#007D55';
       productoSeleccionado = div;
       
-      const touchStartY = event.touches[0].clientY; // Guardar la posición inicial del toque
+      let touchStartY = event.touches[0].clientY; // Guardar la posición inicial del toque
 
       div.addEventListener('touchmove', handleTouchMove);
 
@@ -187,12 +194,12 @@ function loadCarrito(carrito){
         event.preventDefault()
         const touchEndY = event.touches[0].clientY;
         const deltaY = touchEndY - touchStartY; // Calcular el movimiento total del dedo desde el inicio del arrastre
-        console.log(deltaY);
+        console.log("Delta"+ deltaY);
         const productHeight = div.offsetHeight;
         
         // Obtener el índice del producto seleccionado
         const selectedIndex = Array.from(div.parentElement.children).indexOf(div);
-        console.log(productHeight);
+        console.log("Altura" + productHeight);
         // Calcular el nuevo índice después del arrastre
         let newIndex = selectedIndex + Math.round(deltaY / productHeight);
         console.log(newIndex);
@@ -206,6 +213,7 @@ function loadCarrito(carrito){
           } else {
             div.parentElement.insertBefore(div, div.parentElement.children[newIndex + 1]);
           }
+          touchStartY = touchEndY; // Actualizar la posición inicial del toque
         }
 
         // Actualizar el índice del producto seleccionado
@@ -262,14 +270,6 @@ function loadCarrito(carrito){
       };
       window.addEventListener('devicemotion', handleDeviceMotion);
   });  
-
-    div.appendChild(texto);
-
-    const imagen = document.createElement('img');
-    imagen.src = `images/${producto.producto}.png`;
-    imagen.alt = producto.producto;
-    div.appendChild(imagen);
-    productos.appendChild(div);
   });
 }
 

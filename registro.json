@@ -12,14 +12,14 @@
         "favorito": true
       },
       {
-        "producto": "ordenador",
-        "precio": "150€",
-        "cantidad": 1,
-        "favorito": false
-      },
-      {
         "producto": "Fuet Espetec",
         "precio": "3€",
+        "cantidad": 1,
+        "favorito": true
+      },
+      {
+        "producto": "ordenador",
+        "precio": "150€",
         "cantidad": 1,
         "favorito": true
       }
