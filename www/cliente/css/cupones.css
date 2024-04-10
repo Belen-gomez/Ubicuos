@@ -106,8 +106,12 @@ h2{
     font-weight: bold;
     margin-top: 5px;
     margin-bottom: 20px;
-
 }
+
+img {
+    width: 100%;
+}
+
 .productos {
     display: flex;
     flex-direction: column;
@@ -251,8 +255,6 @@ h2{
 /* Estilos para el contenedor de respuestas */
 .respuestas{
     display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .respuesta{
@@ -264,7 +266,6 @@ h2{
 }
 
 .preg{
-    font-weight: bold;
     color: #007D55;
     padding: 10px;
     font-family: 'Montserrat';

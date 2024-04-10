@@ -6,22 +6,22 @@
     "n_compras": 0,
     "carrito": [
       {
-        "producto": "Camiseta",
-        "precio": "15€",
-        "cantidad": 2,
+        "producto": "ordenador",
+        "precio": "150€",
+        "cantidad": 1,
         "favorito": true
       },
       {
         "producto": "Fuet Espetec",
         "precio": "3€",
         "cantidad": 1,
-        "favorito": true
+        "favorito": false
       },
       {
-        "producto": "ordenador",
-        "precio": "150€",
-        "cantidad": 1,
-        "favorito": true
+        "producto": "Camiseta",
+        "precio": "15€",
+        "cantidad": 2,
+        "favorito": false
       }
     ]
   },
@@ -52,7 +52,10 @@
       }
     ],
     "cupones": [
-      "bienvenida"
+      "bienvenida",
+      "camiseta",
+      "mcqueen",
+      "fnac"
     ]
   },
   {

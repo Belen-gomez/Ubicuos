@@ -290,22 +290,23 @@ io.on('connection', function(socket){
     });
   });
 
+
 /* Preguntas */
   socket.on('getPreguntas', function(data) {
-    fs.readFile('preguntas.json', 'utf-8', (err, jsonString) => {
+    fs.readFile('preguntas.json', 'utf8', (err, jsonString) => {
       if (err) {
         console.log("Error leyendo el archivo de preguntas: ", err);
-        socket.emit('preguntasData', {ok: false, message: 'Error interno del servidor.'});
+        io.emit('preguntasData', {ok: false, message: 'Error interno del servidor.'});
         return;
       }
       const preguntas = JSON.parse(jsonString);
-      socket.emit('preguntasData', {ok: true, preguntas});
+      io.emit('preguntasData', {ok: true, preguntas});
     });
   }); 
 
-  socket.on('textMessage', (data) => {
+  /*socket.on('textMessage', (data) => {
     let questions = require('./preguntas.json');
-    questions.push({data });
+    questions.push(data);
     fs.writeFileSync('preguntas.json', JSON.stringify(questions, null, 2), 'utf8', (err) => {
       if (err) {
         console.log('Error escribiendo en el archivo de registro:', err);
@@ -314,6 +315,28 @@ io.on('connection', function(socket){
       }
       const preguntas = JSON.parse(questions);
       socket.emit('preguntasData', {ok: true, preguntas});
+    });
+  });*/
+
+  socket.on('textMessage', (data) => {
+    fs.readFile('preguntas.json', 'utf8', (err, jsonString) => {
+      if (err) {
+          console.log('Error leyendo el archivo de preguntas:', err);
+          io.emit('preguntasData', {ok: false, message: 'Error interno del servidor.'});
+          return;
+      }
+      let preguntas = JSON.parse(jsonString);
+      preguntas.push(data);
+
+      fs.writeFile('preguntas.json', JSON.stringify(preguntas, null, 2), 'utf8', (err) => {
+        if (err) {
+          console.log('Error leyendo el archivo de preguntas: ', err);
+          io.emit('preguntasData', {ok: false,message: 'Error interno del servidor.'});
+        }
+        else{
+          io.emit('preguntasData', {ok: true, preguntas});
+        }
+      })
     });
   });
   

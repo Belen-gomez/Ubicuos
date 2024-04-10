@@ -4,7 +4,7 @@ window.onload = async () => {
     let usuario;
     try {
         const response = await fetch('/getUser');
-        if (!response.ok) {
+        if (!response.ok) { 
             throw new Error('No has iniciado sesión');
         }
         const user = await response.json();
@@ -13,7 +13,7 @@ window.onload = async () => {
     } catch (error) {
         console.error('Error:', error);
     }
-    alert(usuario.nombre);
+    // alert(usuario.nombre);
     // alert(usuario.email);
     // alert(usuario.n_compras);
     // alert(usuario.carrito.length);
@@ -41,12 +41,26 @@ function loadCupones(cupones){
 
         const texto = document.createElement('div');
         texto.className = 'texto';
+
+        // Crear un nuevo div para la descripción y la imagen
+        const contenido = document.createElement('div');
+        contenido.className = 'contenido';
         
         // Crear el elemento de texto
-        const texto = document.createTextNode('Cupón '+element);
+        const descripcion = document.createElement('h2');
+        descripcion.textContent = 'Cupón ' + element;
 
-        // Añadir el texto al div
-        div.appendChild(texto);
+        // Añadir la descripción al div
+        contenido.appendChild(descripcion);
+        div.appendChild(contenido);
+
+        // Crear el elemento de imagen
+        const imagen = document.createElement('img');
+        let path = "images/cupon_"+element+".png";
+        imagen.src = path;
+
+        // Añadir la imagen al div
+        div.appendChild(imagen);
 
         // Agregar el div al contenedor de productos en el HTML
         productos.appendChild(div);
@@ -61,7 +75,7 @@ function comprobar_cupones(usuario){
     usuario.carrito.forEach(element => {
         if (element.producto == "Camiseta" && camiseta == false){
             usuario.cupones.forEach(cupon => {
-                if (cupon == "Camiseta"){
+                if (cupon == "camiseta"){
                     cupon_deseado = true;
                 }
             })
@@ -69,30 +83,30 @@ function comprobar_cupones(usuario){
         }
     })
     if (camiseta == true && cupon_deseado == false){
-        usuario.cupones.push("Camiseta");
+        usuario.cupones.push("camiseta");
     }
     // Comprobar número de pedidos
     cupon_deseado = false
     if (usuario.n_compras >= 1){
         usuario.cupones.forEach(cupon => {
-            if (cupon == "Mcqueen"){
+            if (cupon == "mcqueen"){
                 cupon_deseado = true;
             }
         })
         if (cupon_deseado == false){
-            usuario.cupones.push("Mcqueen");
+            usuario.cupones.push("mcqueen");
         }
     }
 
     cupon_deseado = false
     if (usuario.n_compras >= 2){
         usuario.cupones.forEach(cupon => {
-            if (cupon == "Fnac"){
+            if (cupon == "fnac"){
                 cupon_deseado = true;
             }
         })
         if (cupon_deseado == false){
-            usuario.cupones.push("Fnac");
+            usuario.cupones.push("fnac");
         }
     }
     // Añadir a la base de datos

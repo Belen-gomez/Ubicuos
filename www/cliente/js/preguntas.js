@@ -12,8 +12,8 @@ window.onload = async () => {
     document.title = `¡Bienvenido ${user.nombre}!`;
     
     // Make socket request to get carrito data
-    console.log(user.email);
-    socket.emit('getCarrito', user.email);
+    /*console.log(user.email);
+    socket.emit('getCarrito', user.email);*/
   } catch (error) {
     console.error('Error:', error);
   }
@@ -50,7 +50,7 @@ microImage.addEventListener('click', function() {
 recognition.onresult = function(event) {
     speechToText = event.results[0][0].transcript;
     
-    let preguntaInput = document.getElementById('pregunta-input').value;
+    /*let preguntaInput = document.getElementById('pregunta-input').value;
     if (preguntaInput!=null){
         pregunta = preguntaInput;
     }
@@ -60,7 +60,7 @@ recognition.onresult = function(event) {
         pregunta = speechToText;
     }
     
-    agregarPregunta(user.nombre, user.email, pregunta);
+    agregarPregunta(user.nombre, user.email, pregunta);*/
 }
 
 recognition.onspeechend = function() {
@@ -74,10 +74,22 @@ enviar = document.getElementById('btn-enviar');
 enviar.addEventListener('click', add => {
     add.preventDefault();
 
-    
+    let preguntaInput = document.getElementById('pregunta-input').value;
+    if (preguntaInput!=null){
+        pregunta = preguntaInput;
+    }
+    if (speechToText != '') {
+        let preguntaBox = document.getElementById('pregunta-input');
+        preguntaBox.value = speechToText;
+        pregunta = speechToText;
+    }
+
+    agregarPregunta(user.nombre, user.email, pregunta);
 });
 
 function agregarPregunta(nombre, email, pregunta) {
+
+    fijarPregunta(pregunta);
 
     let newPregunta = {
         "email": email,
@@ -86,4 +98,23 @@ function agregarPregunta(nombre, email, pregunta) {
         "respuesta": ""
     }
     socket.emit('textMessage', newPregunta);
+}
+
+function fijarPregunta(pregunta) {
+    alert("Fijo la pregunta");
+    let listaRespuestas = document.querySelector(".respuestas");
+    const respuestaBox = document.createElement("div");
+    respuestaBox.classList.add("respuesta");
+
+    const preguntaElement = document.createElement("p");
+    preguntaElement.classList.add("preg");
+    preguntaElement.textContent = pregunta;
+    respuestaBox.appendChild(preguntaElement);
+
+    const respuestaElement = document.createElement("p");
+    respuestaElement.classList.add("res");
+    respuestaElement.textContent = "Esta es tu respesta";
+    respuestaBox.appendChild(respuestaElement);
+
+    listaRespuestas.appendChild(respuestaBox);
 }
