@@ -1,6 +1,8 @@
 let preguntas = [];
 const socket = io();
 
+
+
 /* window.onload = async () => {
     try {
       const response = await fetch('/getUser');
@@ -22,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const logoClientes = document.querySelector(".logo-c");
     // Agregar evento de clic al logo de clientes
     logoClientes.addEventListener("click", function() {
-        // Redirigir a la página clientes.html
+      console.log("Client");
         window.location.href = "listaclientes.html";
     });
     // Funcion para actualizar las preguntas

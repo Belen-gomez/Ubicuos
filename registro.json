@@ -8,19 +8,19 @@
       {
         "producto": "ordenador",
         "precio": "150€",
-        "cantidad": 1,
+        "cantidad": 16,
         "favorito": true
       },
       {
         "producto": "Fuet Espetec",
         "precio": "3€",
-        "cantidad": 1,
+        "cantidad": 4,
         "favorito": false
       },
       {
         "producto": "Camiseta",
         "precio": "15€",
-        "cantidad": 2,
+        "cantidad": 5,
         "favorito": false
       }
     ]
@@ -30,7 +30,20 @@
     "password": "abu",
     "nombre": "Nashe",
     "n_compras": 0,
-    "carrito": []
+    "carrito": [
+      {
+        "producto": "ordenador",
+        "precio": "150€",
+        "cantidad": 5,
+        "favorito": false
+      },
+      {
+        "producto": "Fuet Espetec",
+        "precio": "3€",
+        "cantidad": 3,
+        "favorito": false
+      }
+    ]
   },
   {
     "email": "alberto.garciatorre@gmail.com",

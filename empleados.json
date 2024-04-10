@@ -1,1 +1,6 @@
-[{"numeroEmpleado":"12345","contraseña":"Hola123"},{"numeroEmpleado":"67890","contraseña":"Adios678"},{"number":"12345","password":"Hola123"}]
+[
+  {
+    "numberEmpleado": "12389",
+    "password": "Celia123"
+  }
+]

@@ -38,21 +38,13 @@ function loadCupones(cupones){
     cupones.forEach(element => {
         const div = document.createElement('div');
         div.className = 'cupon';
-
-        const texto = document.createElement('div');
-        texto.className = 'texto';
-
-        // Crear un nuevo div para la descripción y la imagen
-        const contenido = document.createElement('div');
-        contenido.className = 'contenido';
         
         // Crear el elemento de texto
-        const descripcion = document.createElement('h2');
-        descripcion.textContent = 'Cupón ' + element;
+        const titulo = document.createElement('h2');
+        titulo.textContent = 'Cupón ' + element;
 
         // Añadir la descripción al div
-        contenido.appendChild(descripcion);
-        div.appendChild(contenido);
+        productos.appendChild(titulo);
 
         // Crear el elemento de imagen
         const imagen = document.createElement('img');

@@ -140,14 +140,14 @@ app.post('/login-e', (req, res) => {
     }
     try {
         const empleados = JSON.parse(jsonString);
-        const empleado = empleados.find(emp => emp.number === number);
+        const empleado = empleados.find(emp => emp.numberEmpleado === number);
         if (!empleado) {
             const nuevoEmpleado = {
-              number: number,
+              numberEmpleado: number,
               password: password
             };
             empleados.push(nuevoEmpleado);
-            fs.writeFile('empleados.json', JSON.stringify(usuarios, null, 2), 'utf8', (err) => {
+            fs.writeFile('empleados.json', JSON.stringify(empleados, null, 2), 'utf8', (err) => {
               if (err) {
                 console.log('Error escribiendo en el archivo de registro:', err);
                 res.status(500).send('Error interno del servidor');
@@ -304,6 +304,7 @@ io.on('connection', function(socket){
     });
   }); 
 
+
   /*socket.on('textMessage', (data) => {
     let questions = require('./preguntas.json');
     questions.push(data);
@@ -339,6 +340,8 @@ io.on('connection', function(socket){
       })
     });
   });
+
+
   
 
   socket.on("message_evt", function(message){

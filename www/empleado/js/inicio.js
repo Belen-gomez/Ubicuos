@@ -40,9 +40,22 @@ iniciar.addEventListener("click", add => {
         }
     })
     .catch(error => console.error('Error:', error));
+    navigator.bluetooth.requestDevice({ acceptAllDevices: true })
+        .then(device => {
+          console.log('El usuario ha seleccionado el dispositivo:', device.name);
+          // Cuando el cliente da permiso, emitir su ID a través de socket.io
+          socket.emit('clientConnected', device.id);
+        })
+        .catch(error => { console.log(error); });
 });
 
-document.addEventListener("DOMContentLoaded", function() {
+const borrar = document.getElementById("borrar");
+borrar.addEventListener("click", function() {
+    document.getElementById("number").value = "";
+    document.getElementById("password").value = "";
+});
+
+/*document.addEventListener("DOMContentLoaded", function() {
     var botonEnviar = document.getElementById("login");
     // Agregar evento click al botón de enviar
     botonEnviar.addEventListener("click", function() {
@@ -98,4 +111,4 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("password").value = "";
     });
 
-});
+});*/

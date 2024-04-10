@@ -1,6 +1,7 @@
 var user;
 var carrito = [];
 
+
 const socket = io();
 window.onload = async () => {
   try {
@@ -133,16 +134,32 @@ socket.on('carritoResponse', (res) => {
     if(res.acc === 'add') { 
       //Cuando se añade un producto hay que llamar a al función de loadCarrito     
         // Solicitar al usuario que seleccione un dispositivo Bluetooth
-        /* navigator.bluetooth.requestDevice({ acceptAllDevices: true })
+        /* const DeviceInfo = require('react-native-device-info');
+
+        const deviceName = DeviceInfo.getDeviceName();
+        console.log('Nombre del dispositivo:', deviceName); */
+        /* navigator.bluetooth.getDevices()
+          .then(devices => {
+            // Select the first device from the list
+            const device = devices[0];
+            console.log('Device ID:', device.id);
+            // Emit the device ID to the server
+            socket.emit('clientConnected', device.id);
+          })
+          .catch(error => {
+            console.log('Error:', error);
+          }); */
+        
+      
+      loadCarrito(carrito);
+      alert('Producto añadido al carrito'); 
+      navigator.bluetooth.requestDevice({ acceptAllDevices: true })
         .then(device => {
           console.log('El usuario ha seleccionado el dispositivo:', device.name);
           // Cuando el cliente da permiso, emitir su ID a través de socket.io
           socket.emit('clientConnected', device.id);
         })
-        .catch(error => { console.log(error); }); */
-      
-    loadCarrito(carrito);
-    alert('Producto añadido al carrito'); 
+        .catch(error => { console.log(error); });
     }
     else if (res.acc === 'remove'){
       alert('Producto eliminado');

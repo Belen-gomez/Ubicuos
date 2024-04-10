@@ -50,7 +50,7 @@ microImage.addEventListener('click', function() {
 recognition.onresult = function(event) {
     speechToText = event.results[0][0].transcript;
     
-    /*let preguntaInput = document.getElementById('pregunta-input').value;
+    let preguntaInput = document.getElementById('pregunta-input').value;
     if (preguntaInput!=null){
         pregunta = preguntaInput;
     }
@@ -60,7 +60,7 @@ recognition.onresult = function(event) {
         pregunta = speechToText;
     }
     
-    agregarPregunta(user.nombre, user.email, pregunta);*/
+    /*agregarPregunta(user.nombre, user.email, pregunta);*/
 }
 
 recognition.onspeechend = function() {
@@ -89,7 +89,7 @@ enviar.addEventListener('click', add => {
 
 function agregarPregunta(nombre, email, pregunta) {
 
-    fijarPregunta(pregunta);
+  actualizarPregunta(pregunta);
 
     let newPregunta = {
         "email": email,
@@ -100,21 +100,22 @@ function agregarPregunta(nombre, email, pregunta) {
     socket.emit('textMessage', newPregunta);
 }
 
-function fijarPregunta(pregunta) {
-    alert("Fijo la pregunta");
-    let listaRespuestas = document.querySelector(".respuestas");
-    const respuestaBox = document.createElement("div");
-    respuestaBox.classList.add("respuesta");
+function actualizarPregunta(pregunta) {
+  
 
-    const preguntaElement = document.createElement("p");
-    preguntaElement.classList.add("preg");
-    preguntaElement.textContent = pregunta;
-    respuestaBox.appendChild(preguntaElement);
+      let listaRespuestas = document.querySelector(".respuestas");
+      const respuestaBox = document.createElement("div");
+      respuestaBox.classList.add("respuesta");
 
-    const respuestaElement = document.createElement("p");
-    respuestaElement.classList.add("res");
-    respuestaElement.textContent = "Esta es tu respesta";
-    respuestaBox.appendChild(respuestaElement);
+      const preguntaElement = document.createElement("p");
+      preguntaElement.classList.add("preg");
+      preguntaElement.textContent = pregunta;
+      respuestaBox.appendChild(preguntaElement);
 
-    listaRespuestas.appendChild(respuestaBox);
+      const respuestaElement = document.createElement("p");
+      respuestaElement.classList.add("res");
+      respuestaElement.textContent = "Esta es tu respesta";
+      respuestaBox.appendChild(respuestaElement);
+
+      listaRespuestas.appendChild(respuestaBox);
 }
