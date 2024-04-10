@@ -2,5 +2,21 @@
   {
     "numberEmpleado": "12389",
     "password": "Celia123"
+  },
+  {
+    "numberEmpleado": "12345",
+    "password": "Hola123"
+  },
+  {
+    "numberEmpleado": "12344",
+    "password": "Hola2"
+  },
+  {
+    "numberEmpleado": "12343",
+    "password": "Hola2"
+  },
+  {
+    "numberEmpleado": "12346",
+    "password": "Hola6"
   }
 ]

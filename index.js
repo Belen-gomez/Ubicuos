@@ -134,8 +134,8 @@ app.post('/login-e', (req, res) => {
   const { number, password } = req.body;
   fs.readFile('empleados.json', 'utf8', (err, jsonString) => {
     if (err) {
-        console.log('Error leyendo el archivo de registro:', err);
-        res.status(500).send('Error interno del servidor');
+        console.log('Error leyendo el archivo de registro: 2', err);
+        res.status(500).send('Error interno del servidor 2');
         return;
     }
     try {
@@ -149,18 +149,23 @@ app.post('/login-e', (req, res) => {
             empleados.push(nuevoEmpleado);
             fs.writeFile('empleados.json', JSON.stringify(empleados, null, 2), 'utf8', (err) => {
               if (err) {
-                console.log('Error escribiendo en el archivo de registro:', err);
-                res.status(500).send('Error interno del servidor');
+                console.log('Error escribiendo en el archivo de registro: 3', err);
+                res.status(500).send('Error interno del servidor 3');
                 return;
               }
-              res.status(200).send('Registro exitoso');
+              else{
+                res.status(200).send('Registro exitoso');
+              }
+              
             });
         }
         else if (empleado.password !== password) {
             res.status(401).send('Contraseña incorrecta');
             return;
         }
-        res.status(200).send('Inicio de sesión exitoso');
+        else{
+            res.status(200).send('Inicio de sesión exitoso');
+        }
     } catch (err) {
         console.log('Error analizando el archivo de registro:', err);
         res.status(500).send('Error interno del servidor');
@@ -198,6 +203,14 @@ io.on('connection', function(socket){
       }
     });
   }); */
+  socket.on('getUser', function(data){
+    if (req.session.user) {
+      io.emit('usuer', {ok: true, usuario: req.session.user});
+    } else {
+      io.emit('usuer', {ok: false, message: 'No has iniciado sesión'});
+    }
+  });
+
   socket.on('carrito', function(data){
     const { email, carrito, accion } = data;
     fs.readFile('registro.json', 'utf8', (err, jsonString) => {

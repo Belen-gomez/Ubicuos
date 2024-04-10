@@ -40,13 +40,6 @@ iniciar.addEventListener("click", add => {
         }
     })
     .catch(error => console.error('Error:', error));
-    navigator.bluetooth.requestDevice({ acceptAllDevices: true })
-        .then(device => {
-          console.log('El usuario ha seleccionado el dispositivo:', device.name);
-          // Cuando el cliente da permiso, emitir su ID a través de socket.io
-          socket.emit('clientConnected', device.id);
-        })
-        .catch(error => { console.log(error); });
 });
 
 const borrar = document.getElementById("borrar");
