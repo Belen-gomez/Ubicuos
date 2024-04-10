@@ -25,25 +25,26 @@ iniciar.addEventListener("click", add => {
     const data = { number, password };
     fetch('/login-e', {
         method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data, null)
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data, null)
     })
-    
-    .then(response => {
-        if (response.ok) {
-            alert('Inicio de sesión exitoso');
-            window.location.href = "preguntas.html";
-        } else {
-            response.text().then(message => alert(message));
-        }
-    })
-    .catch(error => console.error('Error:', error));
+
+        .then(response => {
+            if (response.ok) {
+                alert('Inicio de sesión exitoso');
+                /* localStorage.setItem(JSON.stringify(response.data)); */
+                window.location.href = "preguntas.html";
+            } else {
+                response.text().then(message => alert(message));
+            }
+        })
+        .catch(error => console.error('Error:', error));
 });
 
 const borrar = document.getElementById("borrar");
-borrar.addEventListener("click", function() {
+borrar.addEventListener("click", function () {
     document.getElementById("number").value = "";
     document.getElementById("password").value = "";
 });

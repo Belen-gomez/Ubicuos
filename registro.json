@@ -1,31 +1,5 @@
 [
   {
-    "email": "belen@gmail.com",
-    "password": "1",
-    "nombre": "Belen",
-    "n_compras": 0,
-    "carrito": [
-      {
-        "producto": "ordenador",
-        "precio": "150€",
-        "cantidad": 16,
-        "favorito": true
-      },
-      {
-        "producto": "Fuet Espetec",
-        "precio": "3€",
-        "cantidad": 4,
-        "favorito": false
-      },
-      {
-        "producto": "Camiseta",
-        "precio": "15€",
-        "cantidad": 5,
-        "favorito": false
-      }
-    ]
-  },
-  {
     "email": "100471955@alumnos.uc3m.es",
     "password": "abu",
     "nombre": "Nashe",
@@ -75,6 +49,34 @@
     "email": "celia@gmail.com",
     "password": "1",
     "nombre": "Celia",
+    "n_compras": 0,
+    "carrito": [],
+    "cupones": [
+      "bienvenida"
+    ]
+  },
+  {
+    "email": "belen@gmail.com",
+    "password": "1",
+    "nombre": "Belen",
+    "n_compras": 0,
+    "carrito": [
+      {
+        "producto": "Camiseta",
+        "precio": "15€",
+        "cantidad": 1,
+        "favorito": false
+      }
+    ],
+    "cupones": [
+      "bienvenida",
+      "camiseta"
+    ]
+  },
+  {
+    "email": "a@gmail.com",
+    "password": "1",
+    "nombre": "Angela",
     "n_compras": 0,
     "carrito": [],
     "cupones": [

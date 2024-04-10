@@ -26,7 +26,7 @@ registro.addEventListener("touchend", add => {
         return false;
     }
     // Validar confirmación de contraseña
-    if(mipassword != miconf_password){
+    if (mipassword != miconf_password) {
         alert('Las contraseñas no coinciden');
         return false;
     }
@@ -40,19 +40,18 @@ registro.addEventListener("touchend", add => {
         },
         body: json
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Error en el registro');
-        }
-        return response.text();
-    })
-    .then(message => {
-        alert('Registro exitoso');
-        window.location.href = "carrito.html";
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error en el registro');
-    });
-    
+        .then(response => {
+            if (response.ok) {
+                return response.json();  // Convertir la respuesta a JSON
+            } else {
+                throw new Error('Error al registrar usuario');
+            }
+        })
+        .then(usuario => {
+            alert('Registro exitoso');
+            localStorage.setItem('usuario', JSON.stringify(usuario));  // Guardar el usuario en el almacenamiento local
+            window.location.href = "carrito.html";
+        })
+        .catch(error => console.error('Error:', error));
+
 });

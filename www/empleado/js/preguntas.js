@@ -20,11 +20,11 @@ const socket = io();
     }
 }; */
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const logoClientes = document.querySelector(".logo-c");
     // Agregar evento de clic al logo de clientes
-    logoClientes.addEventListener("click", function() {
-      console.log("Client");
+    logoClientes.addEventListener("click", function () {
+        console.log("Client");
         window.location.href = "listaclientes.html";
     });
     // Funcion para actualizar las preguntas
@@ -35,16 +35,16 @@ document.addEventListener("DOMContentLoaded", function() {
     socket.emit('getPreguntas', data);
 });
 
-socket.on('preguntasData', (data)=> {
+socket.on('preguntasData', (data) => {
     preguntas = data.preguntas;
     console.log(preguntas);
     cargarPreguntas(preguntas);
 });
-    
+
 function cargarPreguntas(preguntas) {
     const listaPreguntas = document.querySelector(".lista-preguntas");
     listaPreguntas.innerHTML = "";
-    
+
     preguntas.forEach(pregunta => {
         const preguntaElement = document.createElement("div");
         preguntaElement.classList.add("pregunta");

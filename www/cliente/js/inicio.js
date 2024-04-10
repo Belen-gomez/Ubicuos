@@ -6,17 +6,17 @@ iniciar.addEventListener("click", add => {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    if(email==''){
+    if (email == '') {
         alert('Ingrese un correo');
         return;
     }
 
-    if(password==''){
+    if (password == '') {
         alert('Ingrese una contraseña');
         return;
     }
 
-    const data =  {email, password };
+    const data = { email, password };
 
     fetch('/login', {
         method: 'POST',
@@ -24,32 +24,22 @@ iniciar.addEventListener("click", add => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data, null)
-        })
-        
+    })
+
         .then(response => {
             if (response.ok) {
-                alert('Inicio de sesión exitoso');
-                window.location.href = "carrito.html";
+                return response.json();  // Convertir la respuesta a JSON
             } else {
-                response.text().then(message => alert(message));
+                throw new Error('Error al iniciar sesión');
             }
         })
+        .then(usuario => {
+            alert('Inicio de sesión exitoso');
+            localStorage.setItem('usuario', JSON.stringify(usuario));  // Guardar el usuario en el almacenamiento local
+            window.location.href = "carrito.html";
+        })
         .catch(error => console.error('Error:', error));
-    });
-    
-    
-    /* socket.emit('login', data);
 });
 
-socket.on('loginResponse', (res) => {
-    if (res.ok) {
-        alert('Inicio de sesión exitoso');
-        window.location.href = "carrito.html";
-    } else {
-        alert(res.message);
-    }
-});
- */
 
 
-        
