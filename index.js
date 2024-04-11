@@ -283,7 +283,12 @@ io.on('connection', function (socket) {
                 return;
             }
             const preguntas = JSON.parse(jsonString);
-            io.emit('preguntasData', { ok: true, preguntas });
+            // Eliminar las preguntas que tengan respuesta
+
+            // Igual esto hay que borrarlo
+
+            const preguntasSinRespuesta = preguntas.filter(pregunta => !pregunta.respuesta);
+            io.emit('preguntasData', { ok: true, preguntas: preguntasSinRespuesta });
         });
     });
 
@@ -324,6 +329,30 @@ io.on('connection', function (socket) {
         });
     });
 
+    socket.on('resPregunta', (data) => {
+        const { pregunta, respuesta } = data;
+        fs.readFile('preguntas.json', 'utf8', (err, jsonString) => {
+            if (err) {
+                console.log('Error leyendo el archivo de preguntas:', err);
+                io.emit('respuestaData', { ok: false, message: 'Error interno del servidor.' });
+                return;
+            }
+            let preguntas = JSON.parse(jsonString);
+            const preguntaIndex = preguntas.findIndex(p => p.texto === pregunta);
+            preguntas[preguntaIndex].respuesta = respuesta;
+
+            fs.writeFile('preguntas.json', JSON.stringify(preguntas, null, 2), 'utf8', (err) => {
+                if (err) {
+                    console.log('Error leyendo el archivo de preguntas: ', err);
+                    io.emit('respuestaData', { ok: false, message: 'Error interno del servidor.' });
+                }
+                else {
+                    // io.emit('preguntasData', { ok: true, preguntas });
+                    io.emit('respuestaData', { ok: true, preguntas });
+                }
+            })
+        });
+    });
 
 
 

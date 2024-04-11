@@ -1,5 +1,6 @@
 // Crear conexión con el servidor
 const socket = io();
+
 let pregunta;
 
 window.onload = async () => {
@@ -16,7 +17,18 @@ window.onload = async () => {
     } catch (error) {
         console.error('Error:', error);
     }
+
+    // Actualizar las preguntas y respuestas del usuario
+    const data = {};
+    socket.emit('getPreguntas', data);
+    // Seleccionar solo las preguntas del usuario con el email
+    socket.on('preguntasData', (data) => {
+        preguntasUsuario = data.preguntas.filter(pregunta => pregunta.email === user.email);
+        console.log(preguntasUsuario);
+        actualizarPreguntas(preguntasUsuario);
+    });
 };
+
 // Iniciar reconocimiento de voz
 let recognition = new window.webkitSpeechRecognition();
 recognition.lang = 'es-ES'; // Ajusta el idioma a español
@@ -32,14 +44,12 @@ microImage.addEventListener('click', function () {
     if (!isRecording) {
         // Cambiar el color de borde a rojo
         microImage.style.border = '2px solid red';
-
         // Iniciar reconocimiento de voz
         recognition.start();
         isRecording = true;
     } else {
         // Restaurar el color de borde
         microImage.style.border = '';
-
         // Detener reconocimiento de voz
         recognition.stop();
         isRecording = false;
@@ -48,9 +58,11 @@ microImage.addEventListener('click', function () {
 
 recognition.onresult = function (event) {
     speechToText = event.results[0][0].transcript;
+    // Convertir la primera letra a mayúscula
+    speechToText = speechToText.charAt(0).toUpperCase() + speechToText.slice(1);
 
     let preguntaInput = document.getElementById('pregunta-input').value;
-    if (preguntaInput != null) {
+    if (preguntaInput != '') {
         pregunta = preguntaInput;
     }
     if (speechToText != '') {
@@ -58,8 +70,6 @@ recognition.onresult = function (event) {
         preguntaBox.value = speechToText;
         pregunta = speechToText;
     }
-
-    /*agregarPregunta(user.nombre, user.email, pregunta);*/
 }
 
 recognition.onspeechend = function () {
@@ -69,27 +79,17 @@ recognition.onspeechend = function () {
 /* HASTA AQUI NACHO! */
 
 enviar = document.getElementById('btn-enviar');
-
 enviar.addEventListener('click', add => {
     add.preventDefault();
 
     let preguntaInput = document.getElementById('pregunta-input').value;
-    if (preguntaInput != null) {
-        pregunta = preguntaInput;
-    }
-    if (speechToText != '') {
-        let preguntaBox = document.getElementById('pregunta-input');
-        preguntaBox.value = speechToText;
-        pregunta = speechToText;
-    }
 
-    agregarPregunta(user.nombre, user.email, pregunta);
+    agregarPregunta(user.nombre, user.email, preguntaInput);
+    // Borrar el input
+    document.getElementById('pregunta-input').value = '';
 });
 
 function agregarPregunta(nombre, email, pregunta) {
-
-    actualizarPregunta(pregunta);
-
     let newPregunta = {
         "email": email,
         "nombre": nombre,
@@ -99,10 +99,9 @@ function agregarPregunta(nombre, email, pregunta) {
     socket.emit('textMessage', newPregunta);
 }
 
-function actualizarPregunta(pregunta) {
-
-
+function cargarPregunta(pregunta) {
     let listaRespuestas = document.querySelector(".respuestas");
+    
     const respuestaBox = document.createElement("div");
     respuestaBox.classList.add("respuesta");
 
@@ -113,8 +112,38 @@ function actualizarPregunta(pregunta) {
 
     const respuestaElement = document.createElement("p");
     respuestaElement.classList.add("res");
-    respuestaElement.textContent = "Esta es tu respesta";
+    respuestaElement.textContent = "Aquí aparecerá tu respuesta...";
+    respuestaElement.style.color = "gray";
     respuestaBox.appendChild(respuestaElement);
 
     listaRespuestas.appendChild(respuestaBox);
+}
+
+function actualizarPreguntas(preguntasUsuario) {
+    let listaRespuestas = document.querySelector(".respuestas");
+    listaRespuestas.innerHTML = "";
+    // Para cada pregunta, cargarla en la lista de respuestas
+    preguntasUsuario.forEach(pregunta => {
+        cargarPregunta(pregunta.texto);
+    });
+}
+
+socket.on('respuestaData', (data) => {
+    console.log(data);
+    cargarRespuesta(data);
+});
+
+function cargarRespuesta(data) {
+    let listaRespuestas = document.querySelector(".respuestas");
+    let respuestas = listaRespuestas.querySelectorAll(".respuesta");
+    let pregunta = data.pregunta;
+    let respuesta = data.respuesta;
+    // Para cada respuesta, cargarla en la lista de respuestas
+    respuestas.forEach(respuestaElement => {
+        if (respuestaElement.querySelector(".preg").textContent === pregunta) {
+            respuestaElement.querySelector(".res").textContent = respuesta;
+            respuestaElement.querySelector(".res").style.color = "black";
+        }
+    });
+    
 }
