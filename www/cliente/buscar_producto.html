@@ -2,6 +2,11 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin="">
+    </script>
   <title>Buscar un producto</title>
   <link rel="stylesheet" href="css/carrito.css" >
 </head>
@@ -28,6 +33,8 @@
         <input type="text" id="prodcuto" class="input-box" placeholder="¿Qué producto quieres buscar?">
         <button class="btn" id="btn-buscar">Buscar</button>
     </div>
-    <div class = "mapa">
-        <img src="images/mapa.jpg" alt="mapa">
+    <div class = 'mapa' id = 'map'>
+        <!-- <img src="images/mapa.jpg" alt="mapa"> -->
     </div>
+    <script  src="js/mapa.js"></script>
+</body>

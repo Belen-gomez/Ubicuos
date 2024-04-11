@@ -18,6 +18,60 @@ window.onload = async () => {
     }
 };
 
+function scanQRCode(videoElement) {
+    //Se utuliza el módulo jsQR
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    const scan = () => {
+        //escanea la pantalla buscando códigos QR
+        context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(imageData.data, imageData.width, imageData.height);
+        if (code) {
+            //Si encuentra un código QR lo parsea y pregunta si se quiere añadir el producto al carrito
+            const info = parseQRCode(code.data)
+            const respuesta = confirm(`¿Quieres añadir el producto ${info.producto} a tu carrito?`);
+            if (respuesta) {
+                //Se añade el producto tanto al carrito como a la base de datos
+                const p_actual = carrito.find(p => p.producto === info.producto);
+                //Comprueba si ya está el producto en el carrito. Si está se suma la cantidad, sino se añade desde 0 a la lista
+                if (p_actual) {
+                    p_actual.cantidad++;
+                } else {
+                    //Todos los productos son diccionarios que tienen el nombre del producto, el precio, la cantidad y si está marcado como favorito o no
+                    carrito.push({ producto: info.producto, precio: info.precio, cantidad: 1, favorito: false });
+                }
+                //Para añadirlo a la base de datos se manda al socket y el servidor lo añadirá
+                const email = user.email;
+                const accion = "add"
+                const data = { email, carrito, accion }
+                socket.emit('carrito', data);
+            }
+            else {
+                //Si no no se hace nada
+                alert("Producto no añadido");
+            }
+
+        } else {
+            //Si no encuentra ningún QR sigue buscando
+            requestAnimationFrame(scan);
+        }
+    };
+    scan();
+}
+function parseQRCode(data) {
+    //Esta función es para obtener la información de los QR. Los QR que se pueden escanear están el la carpeta QR. Todos tienen esta estructura:
+    //Producto: nombre
+    //Precio: precio_del_producto
+    const lines = data.split('\n');
+    const info = {};
+    lines.forEach(line => {
+        const [key, value] = line.split(': ');
+        info[key.toLowerCase()] = value;
+    });
+    console.log(info);
+    return info;
+}
 const camara = document.getElementById('camara');
 
 camara.addEventListener('click', () => {
@@ -56,61 +110,6 @@ camara.addEventListener('click', () => {
             };
         })
         .catch(function (err) { console.log(err.name + ": " + err.message); }); //Errores por si no se puede abrir la cámara
-
-    function scanQRCode(videoElement) {
-        //Se utuliza el módulo jsQR
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        const scan = () => {
-            //escanea la pantalla buscando códigos QR
-            context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-            const code = jsQR(imageData.data, imageData.width, imageData.height);
-            if (code) {
-                //Si encuentra un código QR lo parsea y pregunta si se quiere añadir el producto al carrito
-                const info = parseQRCode(code.data)
-                const respuesta = confirm(`¿Quieres añadir el producto ${info.producto} a tu carrito?`);
-                if (respuesta) {
-                    //Se añade el producto tanto al carrito como a la base de datos
-                    const p_actual = carrito.find(p => p.producto === info.producto);
-                    //Comprueba si ya está el producto en el carrito. Si está se suma la cantidad, sino se añade desde 0 a la lista
-                    if (p_actual) {
-                        p_actual.cantidad++;
-                    } else {
-                        //Todos los productos son diccionarios que tienen el nombre del producto, el precio, la cantidad y si está marcado como favorito o no
-                        carrito.push({ producto: info.producto, precio: info.precio, cantidad: 1, favorito: false });
-                    }
-                    //Para añadirlo a la base de datos se manda al socket y el servidor lo añadirá
-                    const email = user.email;
-                    const accion = "add"
-                    const data = { email, carrito, accion }
-                    socket.emit('carrito', data);
-                }
-                else {
-                    //Si no no se hace nada
-                    alert("Producto no añadido");
-                }
-
-            } else {
-                //Si no encuentra ningún QR sigue buscando
-                requestAnimationFrame(scan);
-            }
-        };
-        scan();
-    }
-    function parseQRCode(data) {
-        //Esta función es para obtener la información de los QR. Los QR que se pueden escanear están el la carpeta QR. Todos tienen esta estructura:
-        //Producto: nombre
-        //Precio: precio_del_producto
-        const lines = data.split('\n');
-        const info = {};
-        lines.forEach(line => {
-            const [key, value] = line.split(': ');
-            info[key.toLowerCase()] = value;
-        });
-        console.log(info);
-        return info;
-    }
 });
 
 
@@ -154,6 +153,7 @@ socket.on('carritoResponse', (res) => {
 
             alert('Producto eliminado');
         }
+        //Si no ha habido ningún error también se modifica el usuario en localStorage. Se hace aquí por si hay algún error modificando el usuario en el servidor, que no se modifique en locarStorage
         user.carrito = carrito;
         localStorage.setItem('usuario', JSON.stringify(user));
     } else {
