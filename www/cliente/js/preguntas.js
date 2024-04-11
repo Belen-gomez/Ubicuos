@@ -144,8 +144,12 @@ function cargarRespuesta(pregunta, respuesta) {
     let listaRespuestas = document.querySelector(".respuestas");
     listaRespuestas.innerHTML = "";
     // Para cada pregunta, cargarla en la lista de respuestas
-    preguntasUsuario.forEach(pregunta => {
-        cargarPregunta(pregunta.texto, pregunta.respuesta);
+    preguntasUsuario.forEach(p => {
+        if (p.texto === pregunta) {
+            cargarPregunta(p.texto, respuesta);
+        } else {
+            cargarPregunta(p.texto, p.respuesta);
+        }
     });
     
 }

@@ -347,7 +347,7 @@ io.on('connection', function (socket) {
                     io.emit('respuestaData', { ok: false, message: 'Error interno del servidor.' });
                 }
                 else {
-                    // io.emit('preguntasData', { ok: true, preguntas });
+                    // Eliminar las preguntas que tengan respuesta
                     io.emit('respuestaData', { ok: true, pregunta, respuesta });
                 }
             })

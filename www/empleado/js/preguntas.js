@@ -42,6 +42,7 @@ function cargarPreguntas(preguntas) {
       respuestaElement.classList.add("respuesta");
       // Crear un elemento <input> para contestar a la pregunta y agregarlo al <div>
       const respuestaInput = document.createElement("input");
+      respuestaInput.classList.add("respuesta-input");
       respuestaInput.setAttribute("type", "text");
       respuestaInput.setAttribute("id", "respuesta");
       respuestaInput.setAttribute("placeholder", "Escribe tu respuesta");
@@ -56,7 +57,9 @@ function cargarPreguntas(preguntas) {
         const contenidoEnvio = respuestaInput.value;
         // Llamar a la función para enviar el contenido
         enviar(preguntaEnvio, contenidoEnvio);
-    });
+        // Borrar el input
+        respuestaInput.value = '';
+      });
       respuestaElement.appendChild(enviarButton);
       // Agregarlo al div
       preguntaElement.appendChild(respuestaElement);
