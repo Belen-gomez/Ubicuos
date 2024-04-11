@@ -1,38 +1,8 @@
 [
   {
-    "email": "belen@gmail.com",
-    "nombre": "Belen",
-    "texto": "¿Puedo devolver un artículo comprado en línea en una tienda física de El Corte Inglés?",
-    "respuesta": "Claro!"
-  },
-  {
-    "email": "alberto.garciatorre@gmail.com",
-    "nombre": "Alberto",
-    "texto": "¿Cuál es la política de devolución de productos?",
-    "respuesta": ""
-  },
-  {
-    "email": "100471955@alumnos.uc3m.es",
-    "nombre": "Nashe",
-    "texto": "¿Hay alguna promoción actual en la sección de moda masculina de El Corte Inglés?",
-    "respuesta": ""
-  },
-  {
     "email": "celia@gmail.com",
     "nombre": "Celia",
-    "texto": "¿Cuáles son las últimas tendencias en moda de la temporada de primavera? ",
-    "respuesta": "Pronto las anunciaremos en nuestras RRSS!!!"
-  },
-  {
-    "email": "celia@gmail.com",
-    "nombre": "Celia",
-    "texto": "¿Qué marcas de electrodomésticos es más recomendable para una cocina que es pequeña? ",
-    "respuesta": "Muchas, ven y descubrelas!"
-  },
-  {
-    "email": "celia@gmail.com",
-    "nombre": "Celia",
-    "texto": "Esto es otra prueba para ver si otra cosa funciona!!!! ",
-    "respuesta": "Prueba"
+    "texto": "Quiero saber si se pueden hacer devoluciones en Semana Santa",
+    "respuesta": "Sí es posible, menos los siguientes días!"
   }
 ]

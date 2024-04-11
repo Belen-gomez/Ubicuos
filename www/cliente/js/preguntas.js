@@ -99,7 +99,7 @@ function agregarPregunta(nombre, email, pregunta) {
     socket.emit('textMessage', newPregunta);
 }
 
-function cargarPregunta(pregunta) {
+function cargarPregunta(pregunta, respuesta) {
     let listaRespuestas = document.querySelector(".respuestas");
     
     const respuestaBox = document.createElement("div");
@@ -112,8 +112,13 @@ function cargarPregunta(pregunta) {
 
     const respuestaElement = document.createElement("p");
     respuestaElement.classList.add("res");
-    respuestaElement.textContent = "Aquí aparecerá tu respuesta...";
-    respuestaElement.style.color = "gray";
+    if (respuesta === "") {
+        respuestaElement.textContent = "Aquí aparecerá tu respuesta...";
+        respuestaElement.style.color = "gray";
+    } else {
+        respuestaElement.textContent = respuesta;
+        respuestaElement.style.color = "black";
+    }
     respuestaBox.appendChild(respuestaElement);
 
     listaRespuestas.appendChild(respuestaBox);
@@ -124,26 +129,23 @@ function actualizarPreguntas(preguntasUsuario) {
     listaRespuestas.innerHTML = "";
     // Para cada pregunta, cargarla en la lista de respuestas
     preguntasUsuario.forEach(pregunta => {
-        cargarPregunta(pregunta.texto);
+        cargarPregunta(pregunta.texto, pregunta.respuesta);
     });
 }
 
 socket.on('respuestaData', (data) => {
-    console.log(data);
-    cargarRespuesta(data);
+    console.log("Respuesta recibida: ", data);
+    cargarRespuesta(data.pregunta, data.respuesta);
 });
 
-function cargarRespuesta(data) {
+function cargarRespuesta(pregunta, respuesta) {
+    console.log("Cargando respuesta...");
+    console.log(pregunta, respuesta);
     let listaRespuestas = document.querySelector(".respuestas");
-    let respuestas = listaRespuestas.querySelectorAll(".respuesta");
-    let pregunta = data.pregunta;
-    let respuesta = data.respuesta;
-    // Para cada respuesta, cargarla en la lista de respuestas
-    respuestas.forEach(respuestaElement => {
-        if (respuestaElement.querySelector(".preg").textContent === pregunta) {
-            respuestaElement.querySelector(".res").textContent = respuesta;
-            respuestaElement.querySelector(".res").style.color = "black";
-        }
+    listaRespuestas.innerHTML = "";
+    // Para cada pregunta, cargarla en la lista de respuestas
+    preguntasUsuario.forEach(pregunta => {
+        cargarPregunta(pregunta.texto, pregunta.respuesta);
     });
     
 }

@@ -283,12 +283,12 @@ io.on('connection', function (socket) {
                 return;
             }
             const preguntas = JSON.parse(jsonString);
+            io.emit('preguntasData', { ok: true, preguntas });
             // Eliminar las preguntas que tengan respuesta
-
-            // Igual esto hay que borrarlo
-
+            /*
             const preguntasSinRespuesta = preguntas.filter(pregunta => !pregunta.respuesta);
             io.emit('preguntasData', { ok: true, preguntas: preguntasSinRespuesta });
+            */
         });
     });
 
@@ -348,7 +348,7 @@ io.on('connection', function (socket) {
                 }
                 else {
                     // io.emit('preguntasData', { ok: true, preguntas });
-                    io.emit('respuestaData', { ok: true, preguntas });
+                    io.emit('respuestaData', { ok: true, pregunta, respuesta });
                 }
             })
         });
