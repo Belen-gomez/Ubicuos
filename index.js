@@ -74,7 +74,8 @@ app.post('/registro', (req, res) => {
                 cupones: []
             };
             // Añadir cupón de bienvenida
-            nuevoUsuario.cupones.push("bienvenida");
+            nuevoUsuario.cupones.push({ nombre: "bienvenida",
+                                        abierto: false});
             usuarios.push(nuevoUsuario);
 
             /* req.session.user = nuevoUsuario;  // Guarda el usuario en la sesión

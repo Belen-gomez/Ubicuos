@@ -36,20 +36,45 @@ window.onload = async () => {
 function loadCupones(cupones) {
     const productos = document.querySelector('.productos');
     productos.innerHTML = '';
-    cupones.forEach(element => {
+    cupones.forEach(cupon => {
         const div = document.createElement('div');
         div.className = 'cupon';
 
         // Crear el elemento de texto
         const titulo = document.createElement('h2');
-        titulo.textContent = 'Cupón ' + element;
 
         // Añadir la descripción al div
         productos.appendChild(titulo);
 
         // Crear el elemento de imagen
         const imagen = document.createElement('img');
-        let path = "images/cupon_" + element + ".png";
+
+        // Comprobar si está abierto
+        let path;
+        if (!cupon.abierto){
+            path = "images/regalo.gif";
+            titulo.textContent = "¡Agítame!"
+            // Añade el agitado
+            function handleMotion(event) {
+                const acceleration = event.accelerationIncludingGravity;
+                const agitacion = Math.abs(acceleration.x) + Math.abs(acceleration.y) + Math.abs(acceleration.z);
+
+                if (agitacion > 100) {
+                    titulo.textContent = 'Cupón ' + cupon.nombre;
+                    path = "images/cupon_" + cupon.nombre + ".png";
+                    imagen.src = path;
+                    // cupon.abierto = true;
+                    localStorage.setItem(nombre, true);
+                    window.removeEventListener('devicemotion', handleMotion);
+                }
+            }
+
+            window.addEventListener('devicemotion', handleMotion);
+        }
+        else {
+            titulo.textContent = 'Cupón ' + cupon.nombre;
+            path = "images/cupon_" + cupon.nombre + ".png";
+        }
         imagen.src = path;
 
         // Añadir la imagen al div
@@ -57,6 +82,7 @@ function loadCupones(cupones) {
 
         // Agregar el div al contenedor de productos en el HTML
         productos.appendChild(div);
+        
     });
 }
 
@@ -68,7 +94,7 @@ function comprobar_cupones(usuario) {
     usuario.carrito.forEach(element => {
         if (element.producto == "Camiseta" && camiseta == false) {
             usuario.cupones.forEach(cupon => {
-                if (cupon == "camiseta") {
+                if (cupon.nombre == "camiseta") {
                     cupon_deseado = true;
                 }
             })
@@ -76,7 +102,8 @@ function comprobar_cupones(usuario) {
         }
     })
     if (camiseta == true && cupon_deseado == false) {
-        usuario.cupones.push("camiseta");
+        usuario.cupones.push({  nombre: "camiseta",
+                                abierto: false});
     }
 
     // Comprobar número de pedidos
@@ -88,7 +115,8 @@ function comprobar_cupones(usuario) {
             }
         })
         if (cupon_deseado == false) {
-            usuario.cupones.push("mcqueen");
+            usuario.cupones.push({  nombre: "bienvenida",
+                                    abierto: false});
         }
     }
 
@@ -100,7 +128,8 @@ function comprobar_cupones(usuario) {
             }
         })
         if (cupon_deseado == false) {
-            usuario.cupones.push("fnac");
+            usuario.cupones.push({  nombre: "bienvenida",
+                                    abierto: false});
         }
     }
     // Añadir a la base de datos
@@ -110,3 +139,15 @@ function comprobar_cupones(usuario) {
     localStorage.setItem('usuario', JSON.stringify(user));
     socket.emit('cupon', data);
 }
+
+
+// let shakes = 0;
+// handleDeviceMotion = function (event) {
+//     const acceleration = event.accelerationIncludingGravity;
+//     const accelerationThreshold = 25; // Adjust the threshold value as needed
+
+//     if (Math.abs(acceleration.x) > accelerationThreshold || Math.abs(acceleration.y) > accelerationThreshold || Math.abs(acceleration.z) > accelerationThreshold) {
+//         shakes++;
+//     }
+// };
+// window.addEventListener('devicemotion', handleDeviceMotion);
