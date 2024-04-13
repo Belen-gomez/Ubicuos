@@ -166,7 +166,7 @@ function loadCarrito(carrito) {
     const productos = document.querySelector('.productos');
     productos.innerHTML = '';
 
-    //Para seleccionar y mover prodcutos
+    //Para seleccionar y mover productos
     let productoSeleccionado = null;
     let handleDeviceMotion = null;
 
@@ -272,7 +272,7 @@ function loadCarrito(carrito) {
             });
         });
 
-        //Cuando se pulsao sobre un producto se selecciona
+        //Cuando se pulsa sobre un producto se selecciona
         div.addEventListener('click', () => {
             if (productoSeleccionado !== null) {
                 productoSeleccionado.style.backgroundColor = '#E6E5E5';

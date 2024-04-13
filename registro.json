@@ -59,7 +59,7 @@
     "email": "belen@gmail.com",
     "password": "1",
     "nombre": "Belen",
-    "n_compras": 0,
+    "n_compras": 1,
     "carrito": [
       {
         "producto": "Fuet Espetec",
