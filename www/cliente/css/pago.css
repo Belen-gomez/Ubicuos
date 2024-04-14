@@ -94,6 +94,8 @@ h1{
     font-weight: normal;
     margin-top: 20px;
     margin-bottom: 30px;
+    font-weight: bold;
+    font-family: 'Montserrat';
 }
 h2{
     font-weight: bold;
@@ -109,7 +111,18 @@ h2{
     flex-direction: column;
     justify-content: space-between;
 }
+.productos li{
+    margin-left: 30px;
+    color:#007D55;
+    font-family: 'Montserrat';
+}
+.productos p{
+    margin-left: 30px;
+    margin-top: 50px;
+    font-weight: bold;
+    font-family: 'Montserrat';
 
+}
 .producto {
     display: flex;
     flex-direction: row;
@@ -132,6 +145,10 @@ h2{
     align-items: flex-start; /* Alinea el texto a la izquierda */
     flex: 1; /* Ocupa todo el espacio disponible */
 }
+#texto2{
+    display: none;
+}
+
 
 .producto img {
     float:right;
@@ -253,4 +270,8 @@ h2{
     margin: 10px;
     width: 50%;
     border-radius: 5px;
+}
+
+.gif_nfc{
+    display: none;
 }

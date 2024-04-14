@@ -239,7 +239,29 @@ io.on('connection', function (socket) {
             }
         });
     });
-
+    //Pago
+    socket.on('pago', function (data) {
+        const user = data.user;
+        try{
+            io.emit('pagoEmpleado', { ok: true, user});
+        }
+        catch (err) {
+            io.emit('pagoEmpleado', { ok: false, message: 'Error interno del servidor' });
+        }
+    });
+    //Cobrar
+    socket.on('cobrar', function (data) {
+        console.log('entra');
+        const email = data.email;
+        console.log(email);
+        try{
+            io.emit(email, { ok: true});
+        }
+        catch (err) {
+            io.emit(email, { ok: false, message: 'Error interno del servidor' });
+        }
+    });
+    
     // Cupones
     socket.on('cupon', function (data) {
         const { email, cupones } = data;

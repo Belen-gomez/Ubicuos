@@ -1,40 +1,45 @@
 <html lang="es">
+
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Lista</title>
-  <link rel="stylesheet" href="css/pago.css" >
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Lista</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/pago.css">
+    <script src="/socket.io/socket.io.js"></script>
 </head>
+
 <body>
-<div class="container">
-    <label for="btn-menu" class="icono-menu"> ☰</label>
-</div>
-<input type="checkbox" id="btn-menu">
-<div class ="container-menu">
-    <div class = "cont-menu">
-        <nav>
-            <a href="buscar_producto.html">Buscar un producto</a>
-            <a href="lista.html">Lista de la compra</a>
-            <a href="carrito.html">Carrito</a>
-            <a href="favoritos.html">Favoritos</a>
-            <a href="preguntas.html">Preguntas y respuestas</a>
-            <a href="cupones.html">Cupones y descuentos</a>
-        </nav>
-        <label for="btn-menu" class="icon-equis">✖️</label>
+    <div class="container">
+        <label for="btn-menu" class="icono-menu"> ☰</label>
     </div>
-</div>    
-<img class= "logo" src="images/logo.png" alt="logo"> 
+    <input type="checkbox" id="btn-menu">
+    <div class="container-menu">
+        <div class="cont-menu">
+            <nav>
+                <a href="buscar_producto.html">Buscar un producto</a>
+                <a href="lista.html">Lista de la compra</a>
+                <a href="carrito.html">Carrito</a>
+                <a href="favoritos.html">Favoritos</a>
+                <a href="preguntas.html">Preguntas y respuestas</a>
+                <a href="cupones.html">Cupones y descuentos</a>
+            </nav>
+            <label for="btn-menu" class="icon-equis">✖️</label>
+        </div>
+    </div>
+    <img class="logo" src="images/logo.png" alt="logo">
 
-<h1 id = "texto">Seleccione una caja en la que pagar sus productos</h1>
-<h1 id = "texto2">Productos a pagar:</h1>
+    <h1 id="texto">Seleccione una caja en la que pagar sus productos</h1>
+    <h1 id="texto2">Productos a pagar:</h1>
 
-<div class = "productos">
+    <div class="productos">
 
 
-</div>
-<div class = "botones">
-    <button class="boton_principal" id="selCaja" >Seleccione una caja</button>
-</div>
-
-<script src="js/pago.js"></script>
+    </div>
+    <div class="botones">
+        <button class="boton_principal" id="selCaja">Seleccione una caja</button>
+    </div>
+    <img class="gif_nfc" src="images/gif_nfc.gif" alt="nfc"></img>
+    <script src="js/pago.js"></script>
 </body>
