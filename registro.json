@@ -62,24 +62,6 @@
     ]
   },
   {
-    "email": "belen@gmail.com",
-    "password": "1",
-    "nombre": "Belen",
-    "n_compras": 1,
-    "carrito": [
-      {
-        "producto": "Fuet Espetec",
-        "precio": "3€",
-        "cantidad": 1,
-        "favorito": false
-      }
-    ],
-    "cupones": [
-      "bienvenida",
-      "camiseta"
-    ]
-  },
-  {
     "email": "a@gmail.com",
     "password": "1",
     "nombre": "Angela",
@@ -93,6 +75,30 @@
     "email": "Star@gmail.com",
     "password": "ringo",
     "nombre": "Ringo",
+    "n_compras": 0,
+    "carrito": [
+      {
+        "producto": "Camiseta",
+        "precio": "15€",
+        "cantidad": 1,
+        "favorito": false
+      }
+    ],
+    "cupones": [
+      {
+        "nombre": "bienvenida",
+        "abierto": false
+      },
+      {
+        "nombre": "camiseta",
+        "abierto": false
+      }
+    ]
+  },
+  {
+    "email": "belen@gmail.com",
+    "password": "1",
+    "nombre": "Belen",
     "n_compras": 0,
     "carrito": [
       {

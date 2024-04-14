@@ -1,14 +1,16 @@
 let mapa;
 var prodcutos = [];
+var marcadorUsuario = null;
+
 navigator.geolocation.getCurrentPosition(function (position) {
-    
+
     const userLat = position.coords.latitude;
     const userLong = position.coords.longitude;
-  
+
     // Define los límites de la imagen basándote en la ubicación del usuario
-    
+
     const imageBounds = [[userLat - 0.005, userLong - 0.07], [userLat + 0.095, userLong + 0.03]];
-  
+
     // Crea el mapa con las opciones de límites y zoom
     map = L.map('map', {
         center: [userLat, userLong],
@@ -18,65 +20,95 @@ navigator.geolocation.getCurrentPosition(function (position) {
         maxBounds: imageBounds, // Los límites máximos del mapa
         maxBoundsViscosity: 1.0, // Hace que el mapa no se pueda mover fuera de los límites
     });
-  
+
     L.imageOverlay('images/mapa.jpg', imageBounds).addTo(map);
     map.on('click', function (e) {
         alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
         alert("Lat, Lon : " + userLat + ", " + userLong)
     });
-    L.marker([userLat, userLong]).addTo(map).bindPopup("Estás aquí");
-    prodcutos.push([userLat + 0.07734547799743, userLong- 0.0256704705298106]);
-    //fuet: 40,49995027799743, -3,7186240705298106
-    //usuario: 40,4226048, -3,6929536
-  });
+    marcadorUsuario = L.marker([userLat, userLong]).addTo(map).bindPopup("Estás aquí");
 
-document.getElementById("btn-top").addEventListener("click", function() {
+    // Agrega productos
+    //Fuet
+    prodcutos.push([userLat + 0.07734547799743, userLong - 0.0256704705298106]);
+    //Ordenador
+    prodcutos.push([userLat + 0.03712678880546, userLong - 0.061397254568599]);
+    //Camiseta
+    prodcutos.push([userLat + 0.02397186664462, userLong - 0.051270567152715]);
+});
+
+var watchId = navigator.geolocation.watchPosition(function (position) {
+    const userLat = position.coords.latitude;
+    const userLong = position.coords.longitude;
+
+    // Actualiza la posición del marcador del usuario
+    if (marcadorUsuario) {
+        marcadorUsuario.setLatLng([userLat, userLong]);
+    } else {
+        marcadorUsuario = L.marker([userLat, userLong]).addTo(mapa).bindPopup("Estás aquí");
+    }
+});
+
+document.getElementById("btn-top").addEventListener("click", function () {
     window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 const input = document.getElementById("producto")
-input.addEventListener("click", function() {
+input.addEventListener("click", function () {
     const opciones = document.getElementsByClassName("opciones");
     for (let i = 0; i < opciones.length; i++) {
         opciones[i].style.display = "block";
     }
-/*     opciones.style.display = "block"; */
 });
+
 const fuet = document.getElementById("fuet")
-fuet.addEventListener("click", function() {
+const ordenador = document.getElementById("ordenador")
+const camiseta = document.getElementById("camiseta")
+
+fuet.addEventListener("click", function () {
     const opciones = document.getElementsByClassName("opciones");
     for (let i = 0; i < opciones.length; i++) {
         opciones[i].style.display = "none";
     }
-
     input.value = "Fuet Espetec";
 });
 
-const buscar = document.getElementById("btn-buscar");
-buscar.addEventListener("click", function() {
-    const producto = input.value;
-    if(producto===null){
-        alert("Selecciona un producto para buscar");
+ordenador.addEventListener("click", function () {
+    const opciones = document.getElementsByClassName("opciones");
+    for (let i = 0; i < opciones.length; i++) {
+        opciones[i].style.display = "none";
     }
-    else if (producto === "Fuet Espetec") {
+    input.value = "Ordenador";
+});
+
+camiseta.addEventListener("click", function () {
+    const opciones = document.getElementsByClassName("opciones");
+    for (let i = 0; i < opciones.length; i++) {
+        opciones[i].style.display = "none";
+    }
+    input.value = "Camiseta";
+});
+
+const buscar = document.getElementById("btn-buscar");
+buscar.addEventListener("click", function () {
+    const producto = input.value;
+    map.eachLayer(function (layer) {
+        if (layer instanceof L.Marker && layer !== marcadorUsuario) {
+            map.removeLayer(layer);
+        }
+    });
+
+    if (producto === "Fuet Espetec") {
         L.marker(prodcutos[0]).addTo(map).bindPopup("Fuet Espetec");
         map.setView(prodcutos[0], 13);
     }
+    if (producto === "Ordenador") {
+        L.marker(prodcutos[1]).addTo(map).bindPopup("Ordenador");
+        map.setView(prodcutos[1], 13);
+    }
+    if (producto === "Camiseta") {
+        L.marker(prodcutos[2]).addTo(map).bindPopup("Camiseta");
+        map.setView(prodcutos[2], 13);
+    }
 });
 
-  /*   var marcadorUsuario= null;
-  var watchId = navigator.geolocation.watchPosition(function(position) {
-    usuario = [position.coords.latitude, position.coords.longitude];
-    if (marcadorUsuario) {
-      marcadorUsuario.setLatLng(usuario);
-    }
-    else{
-      marcadorUsuario = L.marker(usuario).addTo(map).bindPopup("Estás aquí")
-    }
-    calcularDistancia();
-  
-    //Si se está mostrando la ruta la quitamos porque al moverse irá avanzando
-    if(rutaLinea){
-      ocultarRuta();
-    }
-  }); */

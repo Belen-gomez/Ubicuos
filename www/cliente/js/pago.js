@@ -15,4 +15,29 @@ window.onload = async function() {
     } catch(error) {
         console.error('Error de Bluetooth:', error);
     }
+
+    // Verifica si el navegador soporta la API Web NFC
+    if ('NDEFReader' in window) {
+        // Crea un nuevo lector NFC
+        const ndef = new NDEFReader();
+    
+        // Solicita permiso para leer etiquetas NFC
+        ndef.scan().then(() => {
+        console.log("Escaneo iniciado exitosamente.");
+        }).catch(error => {
+        console.log(`Error al iniciar el escaneo: ${error}.`);
+        });
+    
+        // Define qué hacer cuando se lee una nueva etiqueta NFC
+        ndef.onreading = ({ message, serialNumber }) => {
+        console.log(`Etiqueta NFC leída con número de serie: ${serialNumber}`);
+        window.open("./confirmacionpago.html");
+        
+        };
+    } else {
+        console.log("Tu navegador no soporta la API Web NFC.");
+    }
+  
+
+
 };
