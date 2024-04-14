@@ -1,20 +1,28 @@
 // Espera a que la página se cargue completamente
 window.onload = async function() {
-    try {
+    const listaProductos = document.getElementById('productos');
+    // listaProductos.style.display = 'none';
+    const texto2 = document.getElementById('texto2');
+    texto2.style.display = 'none';
+    //al darle al boton de seleccionar caja se pide el bluetooth
+    const boton = document.getElementById('selCaja');
+    boton.addEventListener('click', async () => {
         // Solicita al usuario que seleccione un dispositivo Bluetooth
         const dispositivo = await navigator.bluetooth.requestDevice({
-            filters: [{services: ['<TU_SERVICIO_BLUETOOTH>']}]
+            acceptAllDevices: true
         });
-
+    
         // Conecta al dispositivo seleccionado
         const servidor = await dispositivo.gatt.connect();
-
+    
         // Aquí puedes realizar operaciones con el dispositivo Bluetooth conectado
-
+    
         console.log('Conexión establecida con éxito:', dispositivo.name);
-    } catch(error) {
-        console.error('Error de Bluetooth:', error);
-    }
+        boton.style.display = 'none';
+        const texto = document.getElementById('texto');
+        texto.style.display = 'none';
+        texto2.style.display = 'block';
+    });
 
     // Verifica si el navegador soporta la API Web NFC
     if ('NDEFReader' in window) {
@@ -31,7 +39,7 @@ window.onload = async function() {
         // Define qué hacer cuando se lee una nueva etiqueta NFC
         ndef.onreading = ({ message, serialNumber }) => {
         console.log(`Etiqueta NFC leída con número de serie: ${serialNumber}`);
-        window.open("./confirmacionpago.html");
+        window.open("../carrito.html");
         
         };
     } else {

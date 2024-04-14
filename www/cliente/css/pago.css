@@ -1,0 +1,256 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth; /*Hace que el scroll sea suave*/
+}
+
+.logo, .micro {
+    margin-top: 20px;
+    margin-left: auto; 
+    margin-right: auto; 
+    display: block;
+    width: 40%;
+    margin-bottom: 30px;
+}
+
+.container{
+    position: fixed;
+    width: 90%;
+    max-width: 1200px;
+    display: block;
+    top: 0;
+}
+
+.container label{
+    color: #007D55;
+    font-size: 35px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+#btn-menu{
+    display: none;
+}
+
+.container-menu{
+    position: relative;
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    top:0;left:0;
+    transition: all 500ms ease;
+    visibility: hidden;
+
+}
+#btn-menu:checked ~ .container-menu{ /*Cuando el checkbox está seleccionado se le pondrá el estilo a la clase container-menu*/
+    opacity: 1;
+    visibility: visible;
+}
+.cont-menu{
+    width: 100%;
+    max-width: 250px;
+    background: #007D55;
+    height: 100%;
+    position: relative;
+    transition: all 500ms ease;
+    transform: translateX(-100%);
+}
+#btn-menu:checked ~ .container-menu .cont-menu{ /*Cuando el checkbox está seleccionado se abre el menu*/
+    transform: translateX(0%);
+}
+.cont-menu nav{
+    transform: translateY(15%);
+}
+.cont-menu nav a{
+    display:block;
+    text-decoration: none;
+    padding: 20px;
+    color: white;
+    transition: all 400ms ease;
+}
+.cont-menu nav a:hover{
+    border-left: 5px solid white;
+    background: rgba(0,0,0,0.5);
+    padding-left: 30px;
+}
+.cont-menu label{
+    position: absolute;
+    right: 5px; 
+    top: 10px;
+    font-size: 18px;
+    color: #007D55;
+    cursor: pointer;
+    transition: all 500ms ease;
+}
+h1{
+    color: #007D55;
+    font-size: 20px;
+    text-align: center;
+    font-weight: normal;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+h2{
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 20px;
+
+}
+.productos {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.producto {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    margin-bottom: 10px;
+    background-color: rgb(230, 229, 229);
+}
+
+
+.oculto{
+    color: rgb(230, 229, 229);
+}
+.texto{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    margin-right: 20px;
+    align-items: flex-start; /* Alinea el texto a la izquierda */
+    flex: 1; /* Ocupa todo el espacio disponible */
+}
+
+.producto img {
+    float:right;
+    margin-right: 20px; /* Espacio entre la imagen y el texto */
+    margin-top: 10px; /* Espacio entre la imagen y el borde superior */
+    margin-bottom: 10px; /* Espacio entre la imagen y el borde superior */
+    width: 35%;
+    align-self: center; /* Centra la imagen verticalmente */
+}
+
+.buscar, .botones, .preguntas{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.input-box{
+    width:75%;
+    padding: 20px;
+    margin-bottom: 15px;
+    background-color: rgb(231, 231, 231);
+    border: 2px solid #007D55;
+}
+.btn{
+    color: white;
+    font-weight: bold;
+    background-color: #007D55;
+    padding: 15px;
+    margin: 10px;
+    width: 50%;
+    font-size: 15px;
+    border-radius: 5px;
+}
+.btn:hover, .btn-secundario:hover{
+    color: #007D55;
+    font-weight: bold;
+    background-color: white;
+    padding: 15px;
+    margin: 10px;
+    width: 50%;
+    border-radius: 5px;
+    border: 2px solid #007D55;
+}
+.btn-secundario {
+    color: black;
+    font-weight: bold;
+    background-color: rgb(218, 215, 215);
+    text-decoration: none;
+    padding: 15px;
+    margin: 10px;
+    width: 50%;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+
+#btn-top{
+    position: fixed;
+    bottom: 20;
+    right: 10;
+    z-index: 1000;
+    color: white;
+    font-weight: bold;
+    background-color: #007D55;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 5px;
+
+}
+#btn-top:hover{
+    background-color: white;
+    color: #007D55;
+    border: 2px solid #007D55;
+}
+
+
+/* Estilos para el botón de cerrar */
+.boton-cerrar {
+    position: fixed;
+    font-size: 24px;
+    color: white;
+    background-color: #007D55;
+    padding: 5px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1100;
+    top: 120px;
+    right: 20px;
+}
+
+
+
+.botones {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.boton {
+    color: black;
+    font-weight: bold;
+    background-color: rgb(218, 215, 215);
+    text-decoration: none;
+    padding: 15px;
+    margin: 10px;
+    width: 50%;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+.boton_principal {
+    color: white;
+    font-weight: bold;
+    background-color: #007D55;
+    text-decoration: none;
+    padding: 15px;
+    margin: 10px;
+    width: 50%;
+    border-radius: 5px;
+}
