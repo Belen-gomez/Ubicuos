@@ -11,33 +11,58 @@ window.onload = async function () {
         carrito = user.carrito;
         email = user.email;
         console.log(email);
+
+        socket.on(email, function (data) {
+            console.log("ha llegado");
+            if (data.ok) {
+                gif = document.querySelector('.gif_nfc');
+                gif.style.display = 'block';
+                //NFC();
+            }
+            else {
+                alert("Error en el pago")
+            }
+        });
+
     } catch (error) {
         console.error('Error:', error);
     }
 
 };
 
-// // Verifica si el navegador soporta la API Web NFC
-// if ('NDEFReader' in window) {
-//     // Crea un nuevo lector NFC
-//     const ndef = new NDEFReader();
 
-//     // Solicita permiso para leer etiquetas NFC
-//     ndef.scan().then(() => {
-//     console.log("Escaneo iniciado exitosamente.");
-//     }).catch(error => {
-//     console.log(`Error al iniciar el escaneo: ${error}.`);
-//     });
+// Verifica si el navegador soporta la API Web NFC
+async function NFC() {
+    if ('NDEFReader' in window) {
+        try {
+            // Crea un nuevo lector NFC
+            const ndef = new NDEFReader();
 
-//     // Define qué hacer cuando se lee una nueva etiqueta NFC
-//     ndef.onreading = ({ message, serialNumber }) => {
-//     console.log(`Etiqueta NFC leída con número de serie: ${serialNumber}`);
-//     window.open("../carrito.html");
+            // Solicita permiso para leer etiquetas NFC
+            await ndef.scan();
 
-//     };
-// } else {
-//     console.log("Tu navegador no soporta la API Web NFC.");
-// }
+            console.log("Escaneo iniciado exitosamente.");
+
+            // Define qué hacer cuando se lee una nueva etiqueta NFC
+            ndef.onreading = function({ message, serialNumber }) {
+                this.preventDefault();
+
+                console.log(`Etiqueta NFC leída con número de serie: ${serialNumber}`);
+                window.open("../carrito.html");
+
+                return false;
+            };
+        } catch (error) {
+            console.log(`Error al iniciar el escaneo: ${error}.`);
+            // Manejar el error de escaneo NFC aquí
+        }
+    } else {
+        console.log("Tu navegador no soporta la API Web NFC.");
+        // Mostrar mensaje de error o realizar otra acción
+    }
+}
+
+
 
 
 function loadProductos(carrito) {
@@ -49,7 +74,7 @@ function loadProductos(carrito) {
     carrito.forEach(producto => {
         console.log(carrito);
         const elemento = document.createElement('li');
-        
+
         let precio = Number(producto.precio.slice(0, -1));
         if (producto.cantidad > 1) {
             let precio_total = producto.cantidad * precio;
@@ -64,12 +89,18 @@ function loadProductos(carrito) {
         //elemento.appendChild(document.createElement('p')).textContent = producto.;
         listaProductos.appendChild(elemento);
     });
-
+    cupones = user.cupones;
+    cupones.forEach(cupon => {
+        if (cupon.nombre==='bienvenida'){
+            let res = confirm("Tienes un cupón de bienvanida. ¿Quieres usarlo y ahorrar 5€ en tu compra? ");
+            if(res){
+                total = total - total*0.1
+            }
+        }
+    });
     const totalElement = document.createElement('p');
     totalElement.textContent = 'Total: ' + total + '€';
     listaProductos.appendChild(totalElement);
-
-
 }
 
 //al darle al boton de seleccionar caja se pide el bluetooth
@@ -90,19 +121,9 @@ boton.addEventListener('click', async () => {
     const texto = document.getElementById('texto');
     texto.style.display = 'none';
 
-    let data = { user};
-    socket.emit('pago',data);
+    let data = { user };
+    socket.emit('pago', data);
 
 });
 /* const email = user.email; */
 /* console.log(user); */
-socket.on(email, function (data) {
-    console.log("ha llegado");
-    if (data.ok) {
-        gif = document.querySelectord('.gif_nfc');
-        gif.style.display = 'block';
-    }
-    else {
-        alert("Error en el pago")
-    }
-});
