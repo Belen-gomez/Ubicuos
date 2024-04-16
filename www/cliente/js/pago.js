@@ -42,15 +42,14 @@ async function NFC() {
             await ndef.scan();
 
             console.log("Escaneo iniciado exitosamente.");
-
+            this.preventDefault();
             // Define qué hacer cuando se lee una nueva etiqueta NFC
             ndef.onreading = function({ message, serialNumber }) {
-                this.preventDefault();
-
+                
+                alert("lee");
                 console.log(`Etiqueta NFC leída con número de serie: ${serialNumber}`);
                 window.open("../carrito.html");
 
-                return false;
             };
         } catch (error) {
             console.log(`Error al iniciar el escaneo: ${error}.`);
@@ -94,7 +93,7 @@ function loadProductos(carrito) {
         if (cupon.nombre==='bienvenida'){
             let res = confirm("Tienes un cupón de bienvanida. ¿Quieres usarlo y ahorrar 5€ en tu compra? ");
             if(res){
-                total = total - total*0.1
+                total = total - 5;
             }
         }
     });

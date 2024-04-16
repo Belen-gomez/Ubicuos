@@ -8,10 +8,12 @@ window.onload = async () => {
         console.error('Error:', error);
     }
 };
+
 const logoClientes = document.querySelector(".logo-p");
 logoClientes.addEventListener("click", function () {
     window.location.href = "preguntas.html";
 });
+
 function loadUsuarios(usuarios){
     const listaClientes = document.querySelector(".lista-clientes");
     listaClientes.innerHTML = "";
@@ -57,12 +59,23 @@ socket.on('pagoEmpleado', function (data) {
     const user = data.user;
 
     // Guardar el usuario en una lista de usuarios en LocalStorage
+    let guardado = false;
     let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-    usuarios.push(user);
-    localStorage.setItem('usuarios', JSON.stringify(usuarios));
-
-    loadUsuarios(usuarios);
-
+    usuarios.forEach(usuario =>{
+        if (usuario.email ===user.email){
+            guardado = true;
+            if (usuario.carrito === user.carrito){
+                usuarios.splice(usuarios.indexOf(usuario), 1);
+                guardado = false;
+            }
+        } 
+    });
+    if(!guardado){
+        usuarios.push(user);
+        localStorage.setItem('usuarios', JSON.stringify(usuarios));
+        loadUsuarios(usuarios);
+    }
+    
     /* const clienteElement = document.createElement("div");
     clienteElement.classList.add("cliente");
     // Crear un elemento <h2> para el nombre del usuario y agregarlo al <div>
