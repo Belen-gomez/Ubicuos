@@ -20,38 +20,6 @@
     ]
   },
   {
-    "email": "alberto.garciatorre@gmail.com",
-    "password": "sisisi",
-    "nombre": "Alberto",
-    "n_compras": 2,
-    "carrito": [
-      {
-        "producto": "ordenador",
-        "precio": "150€",
-        "cantidad": 1,
-        "favorito": false
-      },
-      {
-        "producto": "Camiseta",
-        "precio": "15€",
-        "cantidad": 1,
-        "favorito": false
-      },
-      {
-        "producto": "Fuet Espetec",
-        "precio": "3€",
-        "cantidad": 1,
-        "favorito": false
-      }
-    ],
-    "cupones": [
-      "bienvenida",
-      "camiseta",
-      "mcqueen",
-      "fnac"
-    ]
-  },
-  {
     "email": "celia@gmail.com",
     "password": "1",
     "nombre": "Celia",
@@ -99,12 +67,26 @@
     "email": "belen@gmail.com",
     "password": "1",
     "nombre": "Belen",
-    "n_compras": 0,
+    "n_compras": 9,
     "carrito": [
       {
-        "producto": "Fuet Espetec",
-        "precio": "3€",
-        "cantidad": 2,
+        "producto": "Camiseta",
+        "precio": "15€",
+        "cantidad": 1,
+        "favorito": false
+      }
+    ]
+  },
+  {
+    "email": "alberto.garciatorre@gmail.com",
+    "password": "sisisi",
+    "nombre": "Alberto",
+    "n_compras": 2,
+    "carrito": [
+      {
+        "producto": "Camiseta",
+        "precio": "15€",
+        "cantidad": 1,
         "favorito": false
       }
     ],
@@ -115,6 +97,18 @@
       },
       {
         "nombre": "camiseta",
+        "abierto": false
+      },
+      {
+        "nombre": "mcqueen",
+        "abierto": false
+      },
+      {
+        "nombre": "mcqueen",
+        "abierto": false
+      },
+      {
+        "nombre": "fnac",
         "abierto": false
       }
     ]

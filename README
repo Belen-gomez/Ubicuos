@@ -1,0 +1,29 @@
+FUNCIONALIDADES:
+    1 - Agregar: para agregar un producto al carrito, el usuario deberá pulsar el botón de la cámara y 
+                 escanear alguno de los productos que se encuentran en la carpeta www/cliente/QR
+    
+    2 - Eliminar: para eliminar algún producto del carrito, el usuario deberá hacer click en el 
+                  producto de la lista que se desea eliminar y posteriormente agitar el dispositivo.
+    
+    3 - Marcar como favorito: para marcar como favorito un producto del carrito, 
+                              el usuario deberá hacer doble click sobre el producto deseado.
+                            
+    4 - Ordenar: para ordenar el carrito, el usuario deberá pulsar un producto y 
+                 deslizar hacia arriba o hacia abajo para ordenarlo en la posición deseada.
+
+    5 - Pagar: para pagar los productos del carrito, el usuario deberá entrar en la sección de pago de la aplicación, posteriormente
+               deberá seleccionar el dispositivo bluetooth que representa la Caja. Una vez seleccionado, el empleado solicitará el cobro al cliente pulsando en el botón que aparecerá en la sección clientes. Después el usuario deberá pulsar el botón de pagar, que permitirá acercar el móvil a un dispositivo NFC(que simula el datáfono) y finalizar el pago.
+
+               Para poder simular el pago, se deberá utilizar una aplicación que simule un dispositivo Low energy utilizando otro dispositivo movil distinto al del cliente. Este dispositivo representará la caja física. De esta forma, el cliente podrá ver este dispositivo al realizar el pago, y asi simular que se acerca a la caja por proximidad. La aplicación utilizada es nRF Connect.
+    
+    6 - Inicio de sesión y registro: la aplicación permite iniciar sesión o registrarse como cliente y como empleado. 
+                                     La información de cada cuenta se almacena en un archivo json permitiendo que varios usuarios puedan conectarse al mismo tiempo.
+    
+    7 - Preguntas: el cliente puede acceder a una sección llamada Preguntas y respuestas en la que puede hacer preguntas dictadas por
+                   voz o escritas por texto. Cuando se envía una pregunta, el empleado la recibe automáticamente y puede responderla. Al responder la pregunta el cliente la recibe instantáneamente.  
+
+    8 - Cupones: el cliente obtiene distintos cupones, estos los puede encontrar en la sección llamada cupones. 
+                 Los cupones se desbloquean al agitar el dispositivo, estos se aplican al realizar el pago. 
+
+    9 - Buscar producto: para buscar un producto, el usuario debe entrar en la sección Buscar producto. Posteriormente podrá
+                         introducir en el cuadro de texto el producto que desea buscar y este aparecerá en el mapa. Al mover el dispositivo, el punto en el mapa que representa al usuario también se moverá, aunque las dimensiones no corresponden a las reales.   

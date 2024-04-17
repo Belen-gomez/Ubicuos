@@ -110,12 +110,12 @@ function comprobar_cupones(usuario) {
     cupon_deseado = false
     if (usuario.n_compras >= 1) {
         usuario.cupones.forEach(cupon => {
-            if (cupon == "mcqueen") {
+            if (cupon.nombre == "mcqueen") {
                 cupon_deseado = true;
             }
         })
         if (cupon_deseado == false) {
-            usuario.cupones.push({  nombre: "bienvenida",
+            usuario.cupones.push({  nombre: "mcqueen",
                                     abierto: false});
         }
     }
@@ -123,12 +123,12 @@ function comprobar_cupones(usuario) {
     cupon_deseado = false
     if (usuario.n_compras >= 2) {
         usuario.cupones.forEach(cupon => {
-            if (cupon == "fnac") {
+            if (cupon.nombre == "fnac") {
                 cupon_deseado = true;
             }
         })
         if (cupon_deseado == false) {
-            usuario.cupones.push({  nombre: "bienvenida",
+            usuario.cupones.push({  nombre: "fnac",
                                     abierto: false});
         }
     }

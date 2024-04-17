@@ -1,5 +1,6 @@
 let user;
 let email;
+let cupones;
 let carrito = [];
 const socket = io();
 // Espera a que la página se cargue completamente
@@ -13,11 +14,8 @@ window.onload = async function () {
         console.log(email);
 
         socket.on(email, function (data) {
-            console.log("ha llegado");
             if (data.ok) {
-                gif = document.querySelector('.gif_nfc');
-                gif.style.display = 'block';
-                //NFC();
+                NFC();
             }
             else {
                 alert("Error en el pago")
@@ -30,39 +28,45 @@ window.onload = async function () {
 
 };
 
-
 // Verifica si el navegador soporta la API Web NFC
 async function NFC() {
     if ('NDEFReader' in window) {
-        try {
-            // Crea un nuevo lector NFC
-            const ndef = new NDEFReader();
+        const ndef = new NDEFReader();
+        const pagar = document.getElementById('pagar');
+        pagar.style.display = 'block';
 
-            // Solicita permiso para leer etiquetas NFC
-            await ndef.scan();
+        pagar.onclick = async () => {
+            gif = document.querySelector('.gif_nfc');
+            gif.style.display = 'block';
+            try {
 
-            console.log("Escaneo iniciado exitosamente.");
-            this.preventDefault();
-            // Define qué hacer cuando se lee una nueva etiqueta NFC
-            ndef.onreading = function({ message, serialNumber }) {
-                
-                alert("lee");
-                console.log(`Etiqueta NFC leída con número de serie: ${serialNumber}`);
-                window.open("../carrito.html");
+                // Solicita permiso para leer etiquetas NFC
+                await ndef.scan();
 
-            };
-        } catch (error) {
-            console.log(`Error al iniciar el escaneo: ${error}.`);
-            // Manejar el error de escaneo NFC aquí
+                console.log("Escaneo iniciado exitosamente.");
+                //this.preventDefault();
+                // Define qué hacer cuando se lee una nueva etiqueta NFC
+                ndef.onreading = function ({ message, serialNumber }) {
+                    //ff:0f:99:f9:01:00:00
+                    console.log(`Etiqueta NFC leída con número de serie: ${serialNumber}`);
+                    alert("Comprar realizada con éxito. ¡Vuelva pronto!");
+                    user.n_compras += 1;
+                    user.carrito = [];
+                    socket.emit("pago_realizado", { email: email });
+                    localStorage.setItem('usuario', JSON.stringify(user));
+                    window.location.href = 'carrito.html';
+
+                };
+            } catch (error) {
+                console.log(`Error al iniciar el escaneo: ${error}.`);
+                // Manejar el error de escaneo NFC aquí
+            }
         }
     } else {
         console.log("Tu navegador no soporta la API Web NFC.");
         // Mostrar mensaje de error o realizar otra acción
     }
 }
-
-
-
 
 function loadProductos(carrito) {
     // Mostrar todos los productos del carrito en la pantalla
@@ -89,14 +93,46 @@ function loadProductos(carrito) {
         listaProductos.appendChild(elemento);
     });
     cupones = user.cupones;
+    let nuevos_cupones = [];
     cupones.forEach(cupon => {
+        let res = false;
         if (cupon.nombre==='bienvenida'){
-            let res = confirm("Tienes un cupón de bienvanida. ¿Quieres usarlo y ahorrar 5€ en tu compra? ");
+            res = confirm("Tienes un cupón de bienvanida. ¿Quieres usarlo y ahorrar 5€ en tu compra? ");
             if(res){
-                total = total - 5;
+                total = total*19/20;
             }
         }
+        else if (cupon.nombre === 'camiseta'){
+            let numero = 0;
+            if (carrito.forEach(producto => {
+                if (producto.nombre === 'Camiseta'){
+                    numero += 1;
+                }
+            }) >= 3){
+                res = confirm("Tienes un cupón de bienvanida. ¿Quieres usarlo y ahorrar 5€ en tu compra? ");
+                if(res){
+                    total = total - 15;
+                }
+            }
+        }
+        else if (cupon.nombre==='fnac'){
+            res = confirm("Tienes un cupón de bienvanida. ¿Quieres usarlo y ahorrar 5€ en tu compra? ");
+            if(res){
+                total = total*0.9;
+            }
+        }
+        if (!res){
+            //confirm(cupon.nombre);
+            nuevos_cupones.push(cupon);
+        }
     });
+    // Añadir a la base de datos
+    const email = user.email;
+    
+    const data = { email, nuevos_cupones };
+    localStorage.setItem('usuario', JSON.stringify(user));
+    socket.emit('cupon', data);
+
     const totalElement = document.createElement('p');
     totalElement.textContent = 'Total: ' + total + '€';
     listaProductos.appendChild(totalElement);
@@ -124,5 +160,3 @@ boton.addEventListener('click', async () => {
     socket.emit('pago', data);
 
 });
-/* const email = user.email; */
-/* console.log(user); */

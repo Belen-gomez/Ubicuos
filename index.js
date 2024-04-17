@@ -7,16 +7,13 @@ const path = require('path');
 const io = require('socket.io')(server);
 
 const fs = require('fs');
+const e = require('express');
 
 app.use(express.static(__dirname + '/www'));
 
 app.use(express.json());
 
-/* app.use(session({
-  secret: 'user',
-  resave: false,
-  saveUninitialized: true
-})); */
+//La parte de iniciar sesión y registro no está hecho con sockets. Hemos considerado que el cliente se conecta al servidor una vez que ya haya iniciado sesi
 
 // Ruta para manejar el registro y la autenticación
 app.post('/login', (req, res) => {
@@ -94,42 +91,6 @@ app.post('/registro', (req, res) => {
         }
     });
 });
-
-/* app.get('/getUser', (req, res) => {
-  // Comprueba si el usuario ha iniciado sesión
-  if (req.session.user) {
-    res.status(200).send(req.session.user);
-  } else {
-    res.status(401).send('No has iniciado sesión');
-  }
-}); */
-
-
-//Código para acceder a un usuario, se puede usar en cualquier pagina
-/* try {
-  const response = await fetch('/getUser');
-  if (!response.ok) {
-    throw new Error('No has iniciado sesión');
-  }
-  const user = await response.json();
-  document.title = `¡Bienvenido ${user.nombre}!`;
-} catch (error) {
-  console.error('Error:', error);
-} */
-
-/* Ruta para manejar la publicación de preguntas por el cliente */
-/* app.post('/ask', (req, res) => {
-  const { id, nombre, texto, respuesta } = req.body;
-  const preguntas = JSON.parse(jsonString);
-  fs.writeFile('preguntas.json', JSON.stringify(usuarios, null, 2), 'utf8', (err) => {
-    if (err) {
-      console.log('Error escribiendo en el archivo de registro:', err);
-      res.status(500).send('Error interno del servidor');
-      return;
-    }
-}) */
-
-
 
 /* Ruta para manejar el inicio, registro y la autenticación del empleado */
 app.post('/login-e', (req, res) => {
@@ -315,21 +276,6 @@ io.on('connection', function (socket) {
         });
     });
 
-
-    /*socket.on('textMessage', (data) => {
-      let questions = require('./preguntas.json');
-      questions.push(data);
-      fs.writeFileSync('preguntas.json', JSON.stringify(questions, null, 2), 'utf8', (err) => {
-        if (err) {
-          console.log('Error escribiendo en el archivo de registro:', err);
-          res.status(500).send('Error interno del servidor');
-          return;
-        }
-        const preguntas = JSON.parse(questions);
-        socket.emit('preguntasData', {ok: true, preguntas});
-      });
-    });*/
-
     socket.on('textMessage', (data) => {
         fs.readFile('preguntas.json', 'utf8', (err, jsonString) => {
             if (err) {
@@ -376,7 +322,39 @@ io.on('connection', function (socket) {
             })
         });
     });
+    socket.on('pago_realizado', function (data) {
+        const {email} = data;
+        fs.readFile('registro.json', 'utf8', (err, jsonString) => {
+            if (err) {
+                console.log('Error leyendo el archivo de registro:', err);
+                socket.emit('pagoResponse', { ok: false, message: 'Error interno del servidor', acc: accion },);
+                return;
+            }
+            try {
+                const usuarios = JSON.parse(jsonString);
+                const usuario = usuarios.find(user => user.email === email);
+                if (!usuario) {
+                    socket.emit('pagoResponse', { ok: false, message: 'El usuario no está autentificado', acc: accion });
+                    return;
+                }
 
+                usuario.carrito = [];
+                usuario.n_compras += 1;
+                fs.writeFile('registro.json', JSON.stringify(usuarios, null, 2), 'utf8', (err) => {
+                    if (err) {
+                        console.log('Error escribiendo en el archivo de registro:', err);
+                        res.status(500).send('Error interno del servidor');
+                        return;
+                    }
+                    io.emit('pagoResponse', { ok: true, message: 'Pago realizado', email: email});
+                });
+
+            } catch (err) {
+                console.log('Error analizando el archivo de registro:', err);
+                socket.emit('carritoResponse', { ok: false, message: 'Error interno del servidor', acc: accion });
+            }
+        });
+    });
 
 
     socket.on("message_evt", function (message) {
