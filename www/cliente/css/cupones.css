@@ -137,15 +137,7 @@ img {
     margin-bottom: 10px;
     background-color: rgb(230, 229, 229);
 }
-/* .producto-sel {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border-top: 2px solid black;
-    border-bottom: 2px solid black;
-    margin-bottom: 10px;
-    background-color:#007D55;;
-} */
+
 .oculto{
     color: rgb(230, 229, 229);
 }
@@ -215,22 +207,8 @@ img {
 }
 
 
-.mapa{
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    zoom: 1; /* Initial zoom level */
-}
 
-/* Estilos para la cámara */
-.video-camara {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1000;
-}
+
 
 /* Estilos para el botón de cerrar */
 .boton-cerrar {
@@ -246,38 +224,3 @@ img {
     right: 20px;
 }
 
-/* Estilos para el contenedor de la cámara */
-.container-video {
-    position: relative;
-    z-index: 1000;
-}
-
-/* Estilos para el contenedor de respuestas */
-.respuestas{
-    display: flex;
-}
-
-.respuesta{
-    border: 2px solid #007D55;
-    border-radius: 20px;
-    padding: 20px;
-    width: 280px;
-    height: 220px;
-}
-
-.preg{
-    color: #007D55;
-    padding: 10px;
-    font-family: 'Montserrat';
-    font-size: 15px;
-    text-align: center;
-}
-
-.res{
-    margin-top: 20px;
-    color: black;
-    padding: 10px;
-    font-family: 'Montserrat';
-    font-size: 15px;
-    text-align: center;
-}

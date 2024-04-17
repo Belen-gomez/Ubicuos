@@ -2,5 +2,9 @@
   {
     "numberEmpleado": "12345",
     "password": "Hola123"
+  },
+  {
+    "numberEmpleado": "11111",
+    "password": "1Hola"
   }
 ]

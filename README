@@ -14,9 +14,12 @@ FUNCIONALIDADES:
                  deslizar hacia arriba o hacia abajo para ordenarlo en la posición deseada.
 
     5 - Pagar: para pagar los productos del carrito, el usuario deberá entrar en la sección de pago de la aplicación, posteriormente
-               deberá seleccionar el dispositivo bluetooth que representa la Caja. Una vez seleccionado, el empleado solicitará el cobro al cliente pulsando en el botón que aparecerá en la sección clientes. Después el usuario deberá pulsar el botón de pagar, que permitirá acercar el móvil a un dispositivo NFC(que simula el datáfono) y finalizar el pago.
+               deberá seleccionar el dispositivo bluetooth que representa la Caja. Una vez seleccionado, el empleado solicitará el cobro al cliente pulsando en el botón que aparecerá en la sección clientes. 
+               Después el usuario deberá pulsar el botón de pagar, que permitirá acercar el móvil a un dispositivo NFC(que simula el datáfono) y finalizar el pago.
 
-               Para poder simular el pago, se deberá utilizar una aplicación que simule un dispositivo Low energy utilizando otro dispositivo movil distinto al del cliente. Este dispositivo representará la caja física. De esta forma, el cliente podrá ver este dispositivo al realizar el pago, y asi simular que se acerca a la caja por proximidad. La aplicación utilizada es nRF Connect.
+               Para poder simular el pago, se deberá utilizar una aplicación que simule un dispositivo Low energy utilizando otro dispositivo movil distinto al del cliente. 
+               Este dispositivo representará la caja física. De esta forma, el cliente podrá ver este dispositivo al realizar el pago, y asi simular que se acerca a la caja por proximidad. 
+               La aplicación utilizada es nRF Connect y el dispositivo creado deberá ser un servicio heart_rate, ya que este es el que utilizamos para filtrar los dispositivos bluetooth.
     
     6 - Inicio de sesión y registro: la aplicación permite iniciar sesión o registrarse como cliente y como empleado. 
                                      La información de cada cuenta se almacena en un archivo json permitiendo que varios usuarios puedan conectarse al mismo tiempo.

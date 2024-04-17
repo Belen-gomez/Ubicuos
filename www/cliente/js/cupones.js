@@ -135,8 +135,11 @@ function comprobar_cupones(usuario) {
     // Añadir a la base de datos
     const email = usuario.email;
     const cupones = usuario.cupones;
+    cupones.forEach(elemento => {
+        alert(elemento.nombre);
+    })
     const data = { email, cupones };
-    localStorage.setItem('usuario', JSON.stringify(user));
+    // localStorage.setItem('usuario', JSON.stringify(user));
     socket.emit('cupon', data);
 }
 

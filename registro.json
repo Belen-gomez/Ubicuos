@@ -64,10 +64,30 @@
     ]
   },
   {
+    "email": "alberto.garciatorre@gmail.com",
+    "password": "sisisi",
+    "nombre": "Alberto",
+    "n_compras": 4,
+    "carrito": []
+  },
+  {
     "email": "belen@gmail.com",
     "password": "1",
     "nombre": "Belen",
-    "n_compras": 9,
+    "n_compras": 0,
+    "carrito": [],
+    "cupones": [
+      {
+        "nombre": "bienvenida",
+        "abierto": false
+      }
+    ]
+  },
+  {
+    "email": "Fer@gmail.com",
+    "password": "fer",
+    "nombre": "Fer",
+    "n_compras": 0,
     "carrito": [
       {
         "producto": "Camiseta",
@@ -78,10 +98,10 @@
     ]
   },
   {
-    "email": "alberto.garciatorre@gmail.com",
-    "password": "sisisi",
-    "nombre": "Alberto",
-    "n_compras": 2,
+    "email": "No@djdjjdh.com",
+    "password": "no",
+    "nombre": "No",
+    "n_compras": 0,
     "carrito": [
       {
         "producto": "Camiseta",
@@ -89,28 +109,26 @@
         "cantidad": 1,
         "favorito": false
       }
-    ],
+    ]
+  },
+  {
+    "email": "Si@gmail.com",
+    "password": "si",
+    "nombre": "Si",
+    "n_compras": 0,
+    "carrito": [],
     "cupones": [
       {
         "nombre": "bienvenida",
         "abierto": false
-      },
-      {
-        "nombre": "camiseta",
-        "abierto": false
-      },
-      {
-        "nombre": "mcqueen",
-        "abierto": false
-      },
-      {
-        "nombre": "mcqueen",
-        "abierto": false
-      },
-      {
-        "nombre": "fnac",
-        "abierto": false
       }
     ]
+  },
+  {
+    "email": "bga78a@gmail.com",
+    "password": "1",
+    "nombre": "Belen",
+    "n_compras": 0,
+    "carrito": []
   }
 ]

@@ -41,6 +41,7 @@ function cargarPreguntas(preguntas) {
         const respuestaElement = document.createElement("div");
         respuestaElement.classList.add("respuesta");
         // Crear un elemento <input> para contestar a la pregunta y agregarlo al <div>
+        // if (pregunta.respuesta == "") {
         const respuestaInput = document.createElement("input");
         respuestaInput.classList.add("respuesta-input");
         respuestaInput.setAttribute("type", "text");
@@ -63,7 +64,13 @@ function cargarPreguntas(preguntas) {
         respuestaElement.appendChild(enviarButton);
         // Agregarlo al div
         preguntaElement.appendChild(respuestaElement);
-
+        if (pregunta.respuesta != "") {
+            const textoRespuesta = document.createElement("p");
+            textoRespuesta.classList.add("res");
+            alert(pregunta.respuesta);
+            textoRespuesta.textContent = pregunta.respuesta;
+            preguntaElement.appendChild(textoRespuesta);
+        }
         listaPreguntas.appendChild(preguntaElement);
     });
 }

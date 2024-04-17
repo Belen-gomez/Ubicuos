@@ -11,6 +11,10 @@ window.onload = async function () {
 
         carrito = user.carrito;
         email = user.email;
+        if (carrito.length === 0) { 
+            alert("Antes de pagar tiene que añadir productos a tu carrito"); 
+            window.location.href = 'carrito.html';
+        }
         console.log(email);
 
         socket.on(email, function (data) {
@@ -47,14 +51,17 @@ async function NFC() {
                 //this.preventDefault();
                 // Define qué hacer cuando se lee una nueva etiqueta NFC
                 ndef.onreading = function ({ message, serialNumber }) {
-                    //ff:0f:99:f9:01:00:00
                     console.log(`Etiqueta NFC leída con número de serie: ${serialNumber}`);
-                    alert("Comprar realizada con éxito. ¡Vuelva pronto!");
+                    //if(serialNumber === "ff:0f:99:f9:01:00:00"){
+                    //ff:0f:99:f9:01:00:00
+                    
+                    alert("Compra realizada con éxito. ¡Vuelva pronto!");
                     user.n_compras += 1;
                     user.carrito = [];
                     socket.emit("pago_realizado", { email: email });
                     localStorage.setItem('usuario', JSON.stringify(user));
                     window.location.href = 'carrito.html';
+                    //}
 
                 };
             } catch (error) {
@@ -95,9 +102,10 @@ function loadProductos(carrito) {
     cupones = user.cupones;
     let nuevos_cupones = [];
     cupones.forEach(cupon => {
+        // alert("Hola "+cupon.nombre);
         let res = false;
         if (cupon.nombre==='bienvenida'){
-            res = confirm("Tienes un cupón de bienvanida. ¿Quieres usarlo y ahorrar 5€ en tu compra? ");
+            res = confirm("Tienes un cupón de bienvenida. ¿Quieres usarlo y ahorrar 5€ en tu compra? ");
             if(res){
                 total = total*19/20;
             }
@@ -109,30 +117,35 @@ function loadProductos(carrito) {
                     numero += 1;
                 }
             }) >= 3){
-                res = confirm("Tienes un cupón de bienvanida. ¿Quieres usarlo y ahorrar 5€ en tu compra? ");
+                res = confirm("Tienes un cupón de camiseta. ¿Quieres usarlo? ");
                 if(res){
                     total = total - 15;
                 }
             }
         }
         else if (cupon.nombre==='fnac'){
-            res = confirm("Tienes un cupón de bienvanida. ¿Quieres usarlo y ahorrar 5€ en tu compra? ");
+            res = confirm("Tienes un cupón en electrónica. ¿Quieres usarlo y ahorrar 10% en tu compra? ");
             if(res){
                 total = total*0.9;
             }
         }
-        if (!res){
+        if (res == false){
             //confirm(cupon.nombre);
             nuevos_cupones.push(cupon);
         }
     });
     // Añadir a la base de datos
+    nuevos_cupones.forEach(elemento => {
+        alert(elemento.nombre);
+    });
     const email = user.email;
+    const cupones_actualizados = nuevos_cupones;
     
-    const data = { email, nuevos_cupones };
+    const data = { email, cupones_actualizados };
     localStorage.setItem('usuario', JSON.stringify(user));
     socket.emit('cupon', data);
 
+    total = parseFloat(total.toFixed(2));
     const totalElement = document.createElement('p');
     totalElement.textContent = 'Total: ' + total + '€';
     listaProductos.appendChild(totalElement);
@@ -143,7 +156,7 @@ const boton = document.getElementById('selCaja');
 boton.addEventListener('click', async () => {
     // Solicita al usuario que seleccione un dispositivo Bluetooth
     const dispositivo = await navigator.bluetooth.requestDevice({
-        acceptAllDevices: true
+         filters: [{ services: ['heart_rate'] }] 
     });
 
     // Conecta al dispositivo seleccionado

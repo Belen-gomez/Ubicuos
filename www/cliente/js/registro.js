@@ -40,18 +40,20 @@ registro.addEventListener("touchend", add => {
         },
         body: json
     })
-        .then(response => {
-            if (response.ok) {
-                return response.json();  // Convertir la respuesta a JSON
-            } else {
-                throw new Error('Error al registrar usuario');
-            }
-        })
-        .then(usuario => {
-            alert('Registro exitoso');
-            localStorage.setItem('usuario', JSON.stringify(usuario));  // Guardar el usuario en el almacenamiento local
-            window.location.href = "carrito.html";
-        })
-        .catch(error => console.error('Error:', error));
-
+    .then(response => {
+        if (response.ok) {
+            return response.json();  // Convertir la respuesta a JSON
+        } else {
+            return response.json().then(error => {
+                throw new Error(error.error); // Lanzar el mensaje de error recibido del servidor
+            });
+        }
+    })
+    .then(usuario => {
+        alert('Registro exitoso');
+        localStorage.setItem('usuario', JSON.stringify(usuario));  // Guardar el usuario en el almacenamiento local
+        window.location.href = "carrito.html";
+    })
+    .catch(error => alert(error)); // Mostrar el mensaje de error en el alert
+    
 });
