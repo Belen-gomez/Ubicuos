@@ -125,10 +125,23 @@
     "carrito": []
   },
   {
+    "email": "carmen.pilar.fernandez@gmail.com",
+    "password": "m",
+    "nombre": "Carmen",
+    "n_compras": 0,
+    "carrito": [],
+    "cupones": [
+      {
+        "nombre": "bienvenida",
+        "abierto": false
+      }
+    ]
+  },
+  {
     "email": "alberto.garciatorre@gmail.com",
     "password": "s",
     "nombre": "Alberto",
-    "n_compras": 13,
+    "n_compras": 1,
     "carrito": [
       {
         "producto": "Camiseta",
@@ -140,15 +153,68 @@
     "cupones": [
       {
         "nombre": "bienvenida",
-        "abierto": false
+        "abierto": false,
+        "usado": true
       },
       {
         "nombre": "mcqueen",
-        "abierto": false
+        "abierto": false,
+        "usado": false
+      },
+      {
+        "nombre": "camiseta",
+        "abierto": true,
+        "usado": false
+      }
+    ]
+  },
+  {
+    "email": "Seguro@gmail.com",
+    "password": "s",
+    "nombre": "Mango",
+    "n_compras": 2,
+    "carrito": [
+      {
+        "producto": "ordenador",
+        "precio": "150€",
+        "cantidad": 1,
+        "favorito": false
+      }
+    ],
+    "cupones": [
+      {
+        "nombre": "bienvenida",
+        "abierto": false,
+        "usado": true
+      },
+      {
+        "nombre": "camiseta",
+        "abierto": true,
+        "usado": false
+      },
+      {
+        "nombre": "mcqueen",
+        "abierto": true,
+        "usado": false
       },
       {
         "nombre": "fnac",
-        "abierto": false
+        "abierto": true,
+        "usado": false
+      }
+    ]
+  },
+  {
+    "email": "Gratis@gmail.com",
+    "password": "s",
+    "nombre": "Baratero",
+    "n_compras": 1,
+    "carrito": [],
+    "cupones": [
+      {
+        "nombre": "bienvenida",
+        "abierto": false,
+        "usado": true
       }
     ]
   }

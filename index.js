@@ -70,7 +70,8 @@ app.post('/registro', (req, res) => {
             };
             // Añadir cupón de bienvenida
             nuevoUsuario.cupones.push({ nombre: "bienvenida",
-                                        abierto: false});
+                                        abierto: false,
+                                        usado: false});
             usuarios.push(nuevoUsuario);
             fs.writeFile('registro.json', JSON.stringify(usuarios, null, 2), 'utf8', (err) => {
                 if (err) {
@@ -193,7 +194,6 @@ io.on('connection', function (socket) {
     // Cupones
     socket.on('cupon', function (data) {
         // const { email, new_cupones } = data;
-        console.log("hola");
         fs.readFile('registro.json', 'utf8', (err, jsonString) => {
             if (err) {
                 console.log('Error leyendo el archivo de registro:', err);
@@ -207,8 +207,6 @@ io.on('connection', function (socket) {
                     socket.emit('cuponResponse', { ok: false, message: 'El usuario no está autentificado' });
                     return;
                 }
-                console.log(usuario.cupones);
-                console.log(data[1]);
 
                 usuario.cupones = data[1];
                 fs.writeFile('registro.json', JSON.stringify(usuarios, null, 2), 'utf8', (err) => {

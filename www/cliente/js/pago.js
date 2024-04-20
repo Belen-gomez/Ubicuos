@@ -104,13 +104,16 @@ function loadProductos(carrito) {
     cupones.forEach(cupon => {
         // alert("Hola "+cupon.nombre);
         let res = false;
-        if (cupon.nombre==='bienvenida'){
+        if (cupon.nombre==='bienvenida' && !cupon.usado){
             res = confirm("Tienes un cupón de bienvenida. ¿Quieres usarlo y ahorrar 5€ en tu compra? ");
             if(res){
-                total = total*19/20;
+                total = total - 5;
+                if (total < 0){
+                    total = 0;
+                }
             }
         }
-        else if (cupon.nombre === 'camiseta'){
+        else if (cupon.nombre === 'camiseta' && !cupon.usado){
             let numero = 0;
             if (carrito.forEach(producto => {
                 if (producto.nombre === 'Camiseta'){
@@ -123,11 +126,23 @@ function loadProductos(carrito) {
                 }
             }
         }
-        else if (cupon.nombre==='fnac'){
-            res = confirm("Tienes un cupón en electrónica. ¿Quieres usarlo y ahorrar 10% en tu compra? ");
-            if(res){
-                total = total*0.9;
+        else if (cupon.nombre==='fnac' && !cupon.usado){
+            let electronica = false;
+            carrito.forEach(producto => {
+                if (producto.nombre === 'ordenador'){
+                    electronica = true;
+                }
+            })
+            if (electronica){
+                res = confirm("Tienes un cupón en electrónica. ¿Quieres usarlo y ahorrar 10% en tu compra? ");
+                if(res){
+                    total = total*0.9;
+                }
             }
+        }
+        if (res == true){
+            cupon.usado = true;
+            nuevos_cupones.push(cupon);
         }
         if (res == false){
             //confirm(cupon.nombre);
@@ -135,9 +150,6 @@ function loadProductos(carrito) {
         }
     });
     // Añadir a la base de datos
-    nuevos_cupones.forEach(elemento => {
-        alert(elemento.nombre);
-    });
     const email = user.email;
     const cupones_actualizados = nuevos_cupones;
     

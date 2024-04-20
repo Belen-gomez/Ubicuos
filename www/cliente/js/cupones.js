@@ -36,54 +36,62 @@ window.onload = async () => {
 function loadCupones(cupones) {
     const productos = document.querySelector('.productos');
     productos.innerHTML = '';
+    let nuevos_cupones = [];
     cupones.forEach(cupon => {
-        const div = document.createElement('div');
-        div.className = 'cupon';
+        if (!cupon.usado){
 
-        // Crear el elemento de texto
-        const titulo = document.createElement('h2');
+            const div = document.createElement('div');
+            div.className = 'cupon';
 
-        // Añadir la descripción al div
-        productos.appendChild(titulo);
+            // Crear el elemento de texto
+            const titulo = document.createElement('h2');
 
-        // Crear el elemento de imagen
-        const imagen = document.createElement('img');
+            // Añadir la descripción al div
+            productos.appendChild(titulo);
 
-        // Comprobar si está abierto
-        let path;
-        if (!cupon.abierto){
-            path = "images/regalo.gif";
-            titulo.textContent = "¡Agítame!"
-            // Añade el agitado
-            function handleMotion(event) {
-                const acceleration = event.accelerationIncludingGravity;
-                const agitacion = Math.abs(acceleration.x) + Math.abs(acceleration.y) + Math.abs(acceleration.z);
+            // Crear el elemento de imagen
+            const imagen = document.createElement('img');
 
-                if (agitacion > 100) {
-                    titulo.textContent = 'Cupón ' + cupon.nombre;
-                    path = "images/cupon_" + cupon.nombre + ".png";
-                    imagen.src = path;
-                    // cupon.abierto = true;
-                    localStorage.setItem(nombre, true);
-                    window.removeEventListener('devicemotion', handleMotion);
+            // Comprobar si está abierto
+            let path;
+            if (!cupon.abierto){
+                path = "images/regalo.gif";
+                titulo.textContent = "¡Agita para canjear!"
+                // Añade el agitado
+                function handleMotion(event) {
+                    const acceleration = event.accelerationIncludingGravity;
+                    const agitacion = Math.abs(acceleration.x) + Math.abs(acceleration.y) + Math.abs(acceleration.z);
+
+                    if (agitacion > 100) {
+                        titulo.textContent = 'Cupón ' + cupon.nombre;
+                        path = "images/cupon_" + cupon.nombre + ".png";
+                        imagen.src = path;
+                        window.removeEventListener('devicemotion', handleMotion);
+                    }
                 }
+
+                window.addEventListener('devicemotion', handleMotion);
             }
+            else {
+                titulo.textContent = 'Cupón ' + cupon.nombre;
+                path = "images/cupon_" + cupon.nombre + ".png";
+            }
+            imagen.src = path;
 
-            window.addEventListener('devicemotion', handleMotion);
+            // Añadir la imagen al div
+            div.appendChild(imagen);
+
+            // Agregar el div al contenedor de productos en el HTML
+            productos.appendChild(div);
+
+
+            cupon.abierto = true;
+            nuevos_cupones.push(cupon);
         }
-        else {
-            titulo.textContent = 'Cupón ' + cupon.nombre;
-            path = "images/cupon_" + cupon.nombre + ".png";
-        }
-        imagen.src = path;
-
-        // Añadir la imagen al div
-        div.appendChild(imagen);
-
-        // Agregar el div al contenedor de productos en el HTML
-        productos.appendChild(div);
-        
     });
+    const lista = [usuario.email, usuario.cupones];
+    localStorage.setItem('usuario', JSON.stringify(user));
+    socket.emit('cupon', lista);
 }
 
 // Comprueba que tiene todos los cupones correctos
@@ -103,7 +111,8 @@ function comprobar_cupones(usuario) {
     })
     if (camiseta == true && cupon_deseado == false) {
         usuario.cupones.push({  nombre: "camiseta",
-                                abierto: false});
+                                abierto: false,
+                                usado: false});
     }
 
     // Comprobar número de pedidos
@@ -116,7 +125,8 @@ function comprobar_cupones(usuario) {
         })
         if (cupon_deseado == false) {
             usuario.cupones.push({  nombre: "mcqueen",
-                                    abierto: false});
+                                    abierto: false,
+                                    usado: false});
         }
     }
 
@@ -129,7 +139,8 @@ function comprobar_cupones(usuario) {
         })
         if (cupon_deseado == false) {
             usuario.cupones.push({  nombre: "fnac",
-                                    abierto: false});
+                                    abierto: false,
+                                    usado: false});
         }
     }
     // Añadir a la base de datos
@@ -141,6 +152,6 @@ function comprobar_cupones(usuario) {
     console.log("nuevo:");
     console.log(lista[1]);
     // const data = { email, cupones };
-    // localStorage.setItem('usuario', JSON.stringify(user));
+    localStorage.setItem('usuario', JSON.stringify(user));
     socket.emit('cupon', lista);
 }
