@@ -192,8 +192,8 @@ io.on('connection', function (socket) {
     
     // Cupones
     socket.on('cupon', function (data) {
-        const { email, new_cupones } = data;
-        console.log(new_cupones);
+        // const { email, new_cupones } = data;
+        console.log("hola");
         fs.readFile('registro.json', 'utf8', (err, jsonString) => {
             if (err) {
                 console.log('Error leyendo el archivo de registro:', err);
@@ -202,13 +202,15 @@ io.on('connection', function (socket) {
             }
             try {
                 const usuarios = JSON.parse(jsonString);
-                const usuario = usuarios.find(user => user.email === email);
+                const usuario = usuarios.find(user => user.email === data[0]);
                 if (!usuario) {
                     socket.emit('cuponResponse', { ok: false, message: 'El usuario no está autentificado' });
                     return;
                 }
+                console.log(usuario.cupones);
+                console.log(data[1]);
 
-                usuario.cupones = new_cupones;
+                usuario.cupones = data[1];
                 fs.writeFile('registro.json', JSON.stringify(usuarios, null, 2), 'utf8', (err) => {
                     if (err) {
                         console.log('Error escribiendo en el archivo de registro:', err);

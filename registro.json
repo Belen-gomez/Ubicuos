@@ -64,13 +64,6 @@
     ]
   },
   {
-    "email": "alberto.garciatorre@gmail.com",
-    "password": "sisisi",
-    "nombre": "Alberto",
-    "n_compras": 4,
-    "carrito": []
-  },
-  {
     "email": "belen@gmail.com",
     "password": "1",
     "nombre": "Belen",
@@ -130,5 +123,33 @@
     "nombre": "Belen",
     "n_compras": 0,
     "carrito": []
+  },
+  {
+    "email": "alberto.garciatorre@gmail.com",
+    "password": "s",
+    "nombre": "Alberto",
+    "n_compras": 13,
+    "carrito": [
+      {
+        "producto": "Camiseta",
+        "precio": "15€",
+        "cantidad": 1,
+        "favorito": false
+      }
+    ],
+    "cupones": [
+      {
+        "nombre": "bienvenida",
+        "abierto": false
+      },
+      {
+        "nombre": "mcqueen",
+        "abierto": false
+      },
+      {
+        "nombre": "fnac",
+        "abierto": false
+      }
+    ]
   }
 ]

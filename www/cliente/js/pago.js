@@ -141,7 +141,8 @@ function loadProductos(carrito) {
     const email = user.email;
     const cupones_actualizados = nuevos_cupones;
     
-    const data = { email, cupones_actualizados };
+    // const data = { email, cupones_actualizados };
+    const data = [email, cupones_actualizados];
     localStorage.setItem('usuario', JSON.stringify(user));
     socket.emit('cupon', data);
 

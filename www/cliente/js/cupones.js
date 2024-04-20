@@ -134,23 +134,13 @@ function comprobar_cupones(usuario) {
     }
     // Añadir a la base de datos
     const email = usuario.email;
-    const cupones = usuario.cupones;
-    cupones.forEach(elemento => {
-        alert(elemento.nombre);
-    })
-    const data = { email, cupones };
+    // const cupones = usuario.cupones;
+    const lista = [usuario.email, usuario.cupones];
+    console.log("actual:");
+    console.log(usuario.cupones);
+    console.log("nuevo:");
+    console.log(lista[1]);
+    // const data = { email, cupones };
     // localStorage.setItem('usuario', JSON.stringify(user));
-    socket.emit('cupon', data);
+    socket.emit('cupon', lista);
 }
-
-
-// let shakes = 0;
-// handleDeviceMotion = function (event) {
-//     const acceleration = event.accelerationIncludingGravity;
-//     const accelerationThreshold = 25; // Adjust the threshold value as needed
-
-//     if (Math.abs(acceleration.x) > accelerationThreshold || Math.abs(acceleration.y) > accelerationThreshold || Math.abs(acceleration.z) > accelerationThreshold) {
-//         shakes++;
-//     }
-// };
-// window.addEventListener('devicemotion', handleDeviceMotion);
