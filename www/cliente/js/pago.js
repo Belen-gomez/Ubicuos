@@ -110,12 +110,12 @@ function loadProductos(carrito) {
         }
         else if (cupon.nombre === 'camiseta' && !cupon.usado){
             let numero = 0;
-            carrito.forEach(producto => {
-                if (producto.nombre === 'Camiseta'){
-                    numero += 1;
+            carrito.forEach(elemento => {
+                if (elemento.producto === 'Camiseta'){
+                    numero += elemento.cantidad;
                 }
             });
-            if(numero>= 3){
+            if(numero >= 3){
                 res = confirm("Tienes un cupón de camiseta. ¿Quieres usarlo? ");
                 if(res){
                     total = total - 15;
@@ -124,13 +124,13 @@ function loadProductos(carrito) {
         }
         else if (cupon.nombre==='fnac' && !cupon.usado){
             let electronica = false;
-            carrito.forEach(producto => {
-                if (producto.nombre === 'ordenador'){
+            carrito.forEach(elemento => {
+                if (elemento.producto === 'ordenador'){
                     electronica = true;
                 }
             })
             if (electronica){
-                res = confirm("Tienes un cupón en electrónica. ¿Quieres usarlo y ahorrar 10% en tu compra? ");
+                res = confirm("Tienes un cupón en electrónica. ¿Quieres usarlo y ahorrar 10% en tu compra?");
                 if(res){
                     total = total*0.9;
                 }

@@ -29,5 +29,58 @@
         "usado": false
       }
     ]
+  },
+  {
+    "email": "alberto.garciatorre@gmail.com",
+    "password": "s",
+    "nombre": "Alberto",
+    "n_compras": 4,
+    "carrito": [],
+    "cupones": [
+      {
+        "nombre": "bienvenida",
+        "abierto": true,
+        "usado": true
+      },
+      {
+        "nombre": "camiseta",
+        "abierto": true,
+        "usado": true
+      },
+      {
+        "nombre": "fnac",
+        "abierto": true,
+        "usado": true
+      },
+      {
+        "nombre": "mcqueen",
+        "abierto": true,
+        "usado": false
+      }
+    ]
+  },
+  {
+    "email": "Star@gmail.com",
+    "password": "ringo",
+    "nombre": "Ringo",
+    "n_compras": 2,
+    "carrito": [],
+    "cupones": [
+      {
+        "nombre": "bienvenida",
+        "abierto": true,
+        "usado": true
+      },
+      {
+        "nombre": "camiseta",
+        "abierto": true,
+        "usado": true
+      },
+      {
+        "nombre": "fnac",
+        "abierto": true,
+        "usado": false
+      }
+    ]
   }
 ]
