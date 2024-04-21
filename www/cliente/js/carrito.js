@@ -9,7 +9,6 @@ window.onload = async () => {
         user = JSON.parse(localStorage.getItem('usuario'));
         document.title = `¡Bienvenido ${user.nombre}!`;
 
-        console.log(user.email);
         // Al cargar la página primero se obtiene el carrito que tiene el usuario guardado
         carrito = user.carrito;
         loadCarrito(carrito);
@@ -18,7 +17,7 @@ window.onload = async () => {
     }
 };
 
-function scanQRCode(videoElement) {
+function scanQRCode(videoElement, containerVideo) {
     //Se utuliza el módulo jsQR
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
@@ -51,7 +50,7 @@ function scanQRCode(videoElement) {
                 //Si no no se hace nada
                 alert("Producto no añadido");
             }
-
+            containerVideo.remove();
         } else {
             //Si no encuentra ningún QR sigue buscando
             requestAnimationFrame(scan);
@@ -69,7 +68,6 @@ function parseQRCode(data) {
         const [key, value] = line.split(': ');
         info[key.toLowerCase()] = value;
     });
-    console.log(info);
     return info;
 }
 const camara = document.getElementById('camara');
@@ -106,7 +104,7 @@ camara.addEventListener('click', () => {
             videoElement.srcObject = mediaStream;
             videoElement.onloadedmetadata = function (e) {
                 videoElement.play();
-                scanQRCode(videoElement);
+                scanQRCode(videoElement, containerVideo);
             };
         })
         .catch(function (err) { console.log(err.name + ": " + err.message); }); //Errores por si no se puede abrir la cámara

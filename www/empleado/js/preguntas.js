@@ -17,7 +17,6 @@ window.onload = async () => {
 
 socket.on('preguntasData', (data) => {
     preguntas = data.preguntas;
-    console.log(preguntas);
     cargarPreguntas(preguntas);
 });
 
@@ -67,7 +66,6 @@ function cargarPreguntas(preguntas) {
         if (pregunta.respuesta != "") {
             const textoRespuesta = document.createElement("p");
             textoRespuesta.classList.add("res");
-            alert(pregunta.respuesta);
             textoRespuesta.textContent = pregunta.respuesta;
             preguntaElement.appendChild(textoRespuesta);
         }
@@ -81,6 +79,13 @@ function enviar(pregunta, respuesta) {
         pregunta: pregunta,
         respuesta: respuesta
     };
+    // Buscar la pregunta en la lista de preguntas y cambiar la respuesta
+    const index = preguntas.findIndex(p => p.texto === pregunta);
+    if (index !== -1) {
+        preguntas[index].respuesta = respuesta;
+    }
+    cargarPreguntas(preguntas);
+
     socket.emit('resPregunta', data);
 }
 

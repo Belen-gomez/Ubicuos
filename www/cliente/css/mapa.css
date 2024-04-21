@@ -108,60 +108,6 @@ h2{
     margin-bottom: 20px;
 
 }
-.productos {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.producto {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border-top: 2px solid black;
-    border-bottom: 2px solid black;
-    margin-bottom: 10px;
-    background-color: rgb(230, 229, 229);
-}
-
-.cupon {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border-top: 2px solid black;
-    border-bottom: 2px solid black;
-    margin-bottom: 10px;
-    background-color: rgb(230, 229, 229);
-}
-.oculto{
-    color: rgb(230, 229, 229);
-}
-.texto{
-    display: flex;
-    flex-direction: column;
-    margin-left: 20px;
-    margin-right: 20px;
-    align-items: flex-start; /* Alinea el texto a la izquierda */
-    flex: 1; /* Ocupa todo el espacio disponible */
-}
-
-.producto img {
-    float:right;
-    margin-right: 20px; /* Espacio entre la imagen y el texto */
-    margin-top: 10px; /* Espacio entre la imagen y el borde superior */
-    margin-bottom: 10px; /* Espacio entre la imagen y el borde superior */
-    width: 35%;
-    align-self: center; /* Centra la imagen verticalmente */
-}
-
-.buscar, .botones, .preguntas{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
 .input-box{
     width:75%;
     padding: 20px;
@@ -201,6 +147,31 @@ h2{
     margin-bottom: 30px;
 }
 
+#btn-top{
+    position: fixed;
+    bottom: 20;
+    right: 10;
+    z-index: 1000;
+    color: white;
+    font-weight: bold;
+    background-color: #007D55;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 5px;
+
+}
+#btn-top:hover{
+    background-color: white;
+    color: #007D55;
+    border: 2px solid #007D55;
+}
+.mapa{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    z-index: 1;
+
+}
 .opciones{
     display: none;
     width:75%;
@@ -217,68 +188,10 @@ h2{
 .opciones p:last-child{
     border-bottom: 2px solid #007D55;
 }
-
-/* Estilos para la cámara */
-.video-camara {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1000;
-}
-
-/* Estilos para el botón de cerrar */
-.boton-cerrar {
-    position: fixed;
-    font-size: 24px;
-    color: white;
-    background-color: #007D55;
-    padding: 5px 10px;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 1100;
-    top: 120px;
-    right: 20px;
-}
-
-/* Estilos para el contenedor de la cámara */
-.container-video {
-    position: relative;
-    z-index: 1000;
-}
-
-/* Estilos para el contenedor de respuestas */
-.respuestas{
+.buscar{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-
-.respuesta{
-    border: 2px solid #007D55;
-    border-radius: 20px;
-    padding: 20px;
-    width: 280px;
-    height: auto;
-    margin-bottom: 15px;
-}
-
-.preg{
-    font-weight: bold;
-    color: #007D55;
-    padding: 10px;
-    font-family: 'Montserrat';
-    font-size: 15px;
-    text-align: center;
-}
-
-.res{
-    margin-top: 20px;
-    color: black;
-    padding: 10px;
-    font-family: 'Montserrat';
-    font-size: 15px;
     text-align: center;
 }

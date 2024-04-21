@@ -15,8 +15,6 @@ window.onload = async function () {
             alert("Antes de pagar tiene que añadir productos a tu carrito"); 
             window.location.href = 'carrito.html';
         }
-        console.log(email);
-
         socket.on(email, function (data) {
             if (data.ok) {
                 NFC();

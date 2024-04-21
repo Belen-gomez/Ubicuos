@@ -5,12 +5,6 @@ let pregunta;
 
 window.onload = async () => {
     try {
-        /* const response = await fetch('/getUser');
-        if (!response.ok) {
-          throw new Error('No has iniciado sesión');
-        }
-        user = await response.json(); */
-
         user = JSON.parse(localStorage.getItem('usuario'));
         document.title = `¡Bienvenido ${user.nombre}!`;
 
@@ -76,17 +70,17 @@ recognition.onspeechend = function () {
     recognition.stop();
 }
 
-/* HASTA AQUI NACHO! */
-
 enviar = document.getElementById('btn-enviar');
 enviar.addEventListener('click', add => {
     add.preventDefault();
 
     let preguntaInput = document.getElementById('pregunta-input').value;
-
-    agregarPregunta(user.nombre, user.email, preguntaInput);
-    // Borrar el input
-    document.getElementById('pregunta-input').value = '';
+    if(preguntaInput != '') {
+        agregarPregunta(user.nombre, user.email, preguntaInput);
+        // Borrar el input
+        document.getElementById('pregunta-input').value = '';
+    }
+    
 });
 
 function agregarPregunta(nombre, email, pregunta) {

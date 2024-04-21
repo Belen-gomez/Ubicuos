@@ -2,13 +2,15 @@ let mapa;
 var prodcutos = [];
 var marcadorUsuario = null;
 
+//La posición del usuario es siempre la entrada de la tienda. Esto se ha conseguido centrando los límites del mapa. Si el usuario se mueve también se mueve su marcador.
+//Los productos salen siempre en las mismas posicones del mapa. Esto se hace poniendo los productos en función de la posición del usuario
+
 navigator.geolocation.getCurrentPosition(function (position) {
 
     const userLat = position.coords.latitude;
     const userLong = position.coords.longitude;
 
-    // Define los límites de la imagen basándote en la ubicación del usuario
-
+    // Define los límites de la imagen basándose en la ubicación del usuario
     const imageBounds = [[userLat - 0.005, userLong - 0.07], [userLat + 0.095, userLong + 0.03]];
 
     // Crea el mapa con las opciones de límites y zoom
@@ -21,11 +23,8 @@ navigator.geolocation.getCurrentPosition(function (position) {
         maxBoundsViscosity: 1.0, // Hace que el mapa no se pueda mover fuera de los límites
     });
 
+    // Agrega la imagen al mapa
     L.imageOverlay('images/mapa.jpg', imageBounds).addTo(map);
-    map.on('click', function (e) {
-        alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
-        alert("Lat, Lon : " + userLat + ", " + userLong)
-    });
     marcadorUsuario = L.marker([userLat, userLong]).addTo(map).bindPopup("Estás aquí");
 
     // Agrega productos
@@ -53,6 +52,7 @@ document.getElementById("btn-top").addEventListener("click", function () {
     window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
+//Se puede seleccionar uno de los tres produtos y al pulsar en el botón de mostrará en el mapa
 const input = document.getElementById("producto")
 input.addEventListener("click", function () {
     const opciones = document.getElementsByClassName("opciones");

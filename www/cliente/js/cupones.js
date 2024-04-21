@@ -1,35 +1,15 @@
-// let usuario;
+let usuario;
 const socket = io();
 window.onload = async () => {
-    let usuario;
     try {
-        /* const response = await fetch('/getUser');
-        if (!response.ok) { 
-            throw new Error('No has iniciado sesión');
-        }
-        const user = await response.json(); */
         user = JSON.parse(localStorage.getItem('usuario'));
         document.title = `¡Bienvenido ${user.nombre}!`;
         usuario = user;
     } catch (error) {
         console.error('Error:', error);
     }
-    // alert(usuario.nombre);
-    // alert(usuario.email);
-    // alert(usuario.n_compras);
-    // alert(usuario.carrito.length);
-    // usuario.carrito.forEach(element => {
-    //     alert(element.producto);
-    // });
-    // usuario.cupones.forEach(element => {
-    //     alert(element);
-    // });
-    // Make socket request to get carrito data
-    // console.log(user.email);
-    // socket.emit('getCarrito', user.email);
     comprobar_cupones(usuario);
     loadCupones(usuario.cupones);
-
 };
 
 // Generar los cupones
@@ -89,7 +69,8 @@ function loadCupones(cupones) {
             nuevos_cupones.push(cupon);
         }
     });
-    const lista = [usuario.email, usuario.cupones];
+    const email = usuario.email;
+    const lista = [email, usuario.cupones];
     localStorage.setItem('usuario', JSON.stringify(user));
     socket.emit('cupon', lista);
 }
@@ -117,7 +98,7 @@ function comprobar_cupones(usuario) {
 
     // Comprobar número de pedidos
     cupon_deseado = false
-    if (usuario.n_compras >= 1) {
+    if (usuario.n_compras >= 2) {
         usuario.cupones.forEach(cupon => {
             if (cupon.nombre == "mcqueen") {
                 cupon_deseado = true;
@@ -131,7 +112,7 @@ function comprobar_cupones(usuario) {
     }
 
     cupon_deseado = false
-    if (usuario.n_compras >= 2) {
+    if (usuario.n_compras >= 1) {
         usuario.cupones.forEach(cupon => {
             if (cupon.nombre == "fnac") {
                 cupon_deseado = true;
@@ -147,10 +128,6 @@ function comprobar_cupones(usuario) {
     const email = usuario.email;
     // const cupones = usuario.cupones;
     const lista = [usuario.email, usuario.cupones];
-    console.log("actual:");
-    console.log(usuario.cupones);
-    console.log("nuevo:");
-    console.log(lista[1]);
     // const data = { email, cupones };
     localStorage.setItem('usuario', JSON.stringify(user));
     socket.emit('cupon', lista);

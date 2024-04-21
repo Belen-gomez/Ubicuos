@@ -14,6 +14,8 @@ app.use(express.json());
 
 //La parte de iniciar sesión y registro no está hecho con sockets. 
 //Hemos considerado que el cliente se conecta al servidor una vez que ya haya iniciado sesion. A partir de ahi ya se hace toda la comunicación con sockets
+//Hay dos bases de datos para almacenar la información de los usuarios de forma que se puedan conectar varios distintos usuarios a la vez.
+//El usuario inicia sesión con su cuenta y se guarda ese usuario en LocalStorage para que se pueda usar durante toda su sesión. 
 
 // Ruta para manejar el inicio de sesión
 app.post('/login', (req, res) => {
@@ -132,10 +134,11 @@ app.post('/login-e', (req, res) => {
     });
 });
 
-
+//Todo el resto de la comunicación se hace a través de sockets
 io.on('connection', function (socket) {
-    console.log("Nuevo cliente conectado");
 
+    //Todas las acciones que se hacen sobre el carrito llegan aqui. Se actualiza el carrito del usuario en la base de datos y se envía el mensaje correspondiente al usuario
+    //Gracias a esa base de datos también evitamos que el usuario pierda todo us carrito si por ejemplo apaga el movil o sale de la aplicación por error.
     socket.on('carrito', function (data) {
         const { email, carrito, accion } = data;
         fs.readFile('registro.json', 'utf8', (err, jsonString) => {
@@ -168,6 +171,8 @@ io.on('connection', function (socket) {
             }
         });
     });
+
+
     //Pago
     socket.on('pago', function (data) {
         const user = data.user;
@@ -227,6 +232,11 @@ io.on('connection', function (socket) {
 
 
     /* Preguntas */
+
+    //Se obtienen todas las preguntas de la base de datos. 
+    //Al empleado le salen todas preguntas de la base de datos.
+    //El usuario filtra y solo le aparecen las preguntas con su correo.
+    //De esta forma se guardan todas las preguntas que los usuarios van haciendo
     socket.on('getPreguntas', function (data) {
         fs.readFile('preguntas.json', 'utf8', (err, jsonString) => {
             if (err) {
@@ -236,14 +246,10 @@ io.on('connection', function (socket) {
             }
             const preguntas = JSON.parse(jsonString);
             io.emit('preguntasData', { ok: true, preguntas });
-            // Eliminar las preguntas que tengan respuesta
-            /*
-            const preguntasSinRespuesta = preguntas.filter(pregunta => !pregunta.respuesta);
-            io.emit('preguntasData', { ok: true, preguntas: preguntasSinRespuesta });
-            */
         });
     });
 
+    //Se añade la pregunta del usuario a la base de datos y se envía al empleado
     socket.on('textMessage', (data) => {
         fs.readFile('preguntas.json', 'utf8', (err, jsonString) => {
             if (err) {
@@ -266,6 +272,7 @@ io.on('connection', function (socket) {
         });
     });
 
+    //Se añade la respuesta del empleado a la base de datos y se envía al usuario
     socket.on('resPregunta', (data) => {
         const { pregunta, respuesta } = data;
         fs.readFile('preguntas.json', 'utf8', (err, jsonString) => {

@@ -1,220 +1,39 @@
 [
   {
-    "email": "100471955@alumnos.uc3m.es",
-    "password": "abu",
-    "nombre": "Nashe",
+    "email": "belen@gmail.com",
+    "password": "1",
+    "nombre": "Belen",
     "n_compras": 0,
     "carrito": [
       {
+        "producto": "Camiseta",
+        "precio": "15€",
+        "cantidad": 2,
+        "favorito": false
+      },
+      {
         "producto": "ordenador",
         "precio": "150€",
-        "cantidad": 5,
+        "cantidad": 1,
         "favorito": false
       },
       {
         "producto": "Fuet Espetec",
         "precio": "3€",
-        "cantidad": 3,
-        "favorito": false
-      }
-    ]
-  },
-  {
-    "email": "celia@gmail.com",
-    "password": "1",
-    "nombre": "Celia",
-    "n_compras": 0,
-    "carrito": [],
-    "cupones": [
-      "bienvenida"
-    ]
-  },
-  {
-    "email": "a@gmail.com",
-    "password": "1",
-    "nombre": "Angela",
-    "n_compras": 0,
-    "carrito": [],
-    "cupones": [
-      "bienvenida"
-    ]
-  },
-  {
-    "email": "Star@gmail.com",
-    "password": "ringo",
-    "nombre": "Ringo",
-    "n_compras": 0,
-    "carrito": [
-      {
-        "producto": "Camiseta",
-        "precio": "15€",
-        "cantidad": 1,
-        "favorito": false
+        "cantidad": 2,
+        "favorito": true
       }
     ],
     "cupones": [
       {
         "nombre": "bienvenida",
-        "abierto": false
-      },
-      {
-        "nombre": "camiseta",
-        "abierto": false
-      }
-    ]
-  },
-  {
-    "email": "belen@gmail.com",
-    "password": "1",
-    "nombre": "Belen",
-    "n_compras": 0,
-    "carrito": [],
-    "cupones": [
-      {
-        "nombre": "bienvenida",
-        "abierto": false
-      }
-    ]
-  },
-  {
-    "email": "Fer@gmail.com",
-    "password": "fer",
-    "nombre": "Fer",
-    "n_compras": 0,
-    "carrito": [
-      {
-        "producto": "Camiseta",
-        "precio": "15€",
-        "cantidad": 1,
-        "favorito": false
-      }
-    ]
-  },
-  {
-    "email": "No@djdjjdh.com",
-    "password": "no",
-    "nombre": "No",
-    "n_compras": 0,
-    "carrito": [
-      {
-        "producto": "Camiseta",
-        "precio": "15€",
-        "cantidad": 1,
-        "favorito": false
-      }
-    ]
-  },
-  {
-    "email": "Si@gmail.com",
-    "password": "si",
-    "nombre": "Si",
-    "n_compras": 0,
-    "carrito": [],
-    "cupones": [
-      {
-        "nombre": "bienvenida",
-        "abierto": false
-      }
-    ]
-  },
-  {
-    "email": "bga78a@gmail.com",
-    "password": "1",
-    "nombre": "Belen",
-    "n_compras": 0,
-    "carrito": []
-  },
-  {
-    "email": "carmen.pilar.fernandez@gmail.com",
-    "password": "m",
-    "nombre": "Carmen",
-    "n_compras": 0,
-    "carrito": [],
-    "cupones": [
-      {
-        "nombre": "bienvenida",
-        "abierto": false
-      }
-    ]
-  },
-  {
-    "email": "alberto.garciatorre@gmail.com",
-    "password": "s",
-    "nombre": "Alberto",
-    "n_compras": 1,
-    "carrito": [
-      {
-        "producto": "Camiseta",
-        "precio": "15€",
-        "cantidad": 1,
-        "favorito": false
-      }
-    ],
-    "cupones": [
-      {
-        "nombre": "bienvenida",
-        "abierto": false,
-        "usado": true
-      },
-      {
-        "nombre": "mcqueen",
-        "abierto": false,
+        "abierto": true,
         "usado": false
       },
       {
         "nombre": "camiseta",
         "abierto": true,
         "usado": false
-      }
-    ]
-  },
-  {
-    "email": "Seguro@gmail.com",
-    "password": "s",
-    "nombre": "Mango",
-    "n_compras": 2,
-    "carrito": [
-      {
-        "producto": "ordenador",
-        "precio": "150€",
-        "cantidad": 1,
-        "favorito": false
-      }
-    ],
-    "cupones": [
-      {
-        "nombre": "bienvenida",
-        "abierto": false,
-        "usado": true
-      },
-      {
-        "nombre": "camiseta",
-        "abierto": true,
-        "usado": false
-      },
-      {
-        "nombre": "mcqueen",
-        "abierto": true,
-        "usado": false
-      },
-      {
-        "nombre": "fnac",
-        "abierto": true,
-        "usado": false
-      }
-    ]
-  },
-  {
-    "email": "Gratis@gmail.com",
-    "password": "s",
-    "nombre": "Baratero",
-    "n_compras": 1,
-    "carrito": [],
-    "cupones": [
-      {
-        "nombre": "bienvenida",
-        "abierto": false,
-        "usado": true
       }
     ]
   }
