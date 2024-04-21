@@ -50,7 +50,7 @@ async function NFC() {
                 // Define qué hacer cuando se lee una nueva etiqueta NFC
                 ndef.onreading = function ({ message, serialNumber }) {
                     console.log(`Etiqueta NFC leída con número de serie: ${serialNumber}`);
-                    //if(serialNumber === "ff:0f:99:f9:01:00:00"){
+                    if(serialNumber === "ff:0f:99:f9:01:00:00"){
                     //ff:0f:99:f9:01:00:00
                     
                     alert("Compra realizada con éxito. ¡Vuelva pronto!");
@@ -59,7 +59,7 @@ async function NFC() {
                     socket.emit("pago_realizado", { email: email });
                     localStorage.setItem('usuario', JSON.stringify(user));
                     window.location.href = 'carrito.html';
-                    //}
+                    }
 
                 };
             } catch (error) {

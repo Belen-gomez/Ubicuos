@@ -1,3 +1,9 @@
+Prototipo grupo 4. Miembros:
+-Belén Gómez Arnaldo: 100472037
+-Igancio Fernández Cañedo: 100471955
+-Celia Patricio Ferrer: 100471948
+-Alberto García de la Torre Fernández del Moral: 100472039
+
 A continuación se describen las funcionalidades básicas y extras del proyecto.
 
 FUNCIONALIDADES:
@@ -23,6 +29,7 @@ FUNCIONALIDADES:
     
     6 - Inicio de sesión y registro: la aplicación permite iniciar sesión o registrarse como cliente y como empleado. 
                                      La información de cada cuenta se almacena en un archivo json permitiendo que varios usuarios puedan conectarse al mismo tiempo.
+                                     El número de elmpleado es un numero de 5 dígitos y la contraseña debe tener una mayúscula, un número y 8 caracteres.
     
     7 - Preguntas: el cliente puede acceder a una sección llamada Preguntas y respuestas en la que puede hacer preguntas dictadas por
                    voz o escritas por texto. Cuando se envía una pregunta, el empleado la recibe automáticamente y puede responderla. Al responder la pregunta el cliente la recibe instantáneamente.  
