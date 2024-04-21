@@ -171,30 +171,6 @@ io.on('connection', function (socket) {
             }
         });
     });
-
-
-    //Pago
-    socket.on('pago', function (data) {
-        const user = data.user;
-        try{
-            io.emit('pagoEmpleado', { ok: true, user});
-        }
-        catch (err) {
-            io.emit('pagoEmpleado', { ok: false, message: 'Error interno del servidor' });
-        }
-    });
-    //Cobrar
-    socket.on('cobrar', function (data) {
-        console.log('entra');
-        const email = data.email;
-        console.log(email);
-        try{
-            io.emit(email, { ok: true});
-        }
-        catch (err) {
-            io.emit(email, { ok: false, message: 'Error interno del servidor' });
-        }
-    });
     
     // Cupones
     socket.on('cupon', function (data) {
@@ -297,6 +273,30 @@ io.on('connection', function (socket) {
             })
         });
     });
+
+
+    //EL usuario solicita el pago y le llega al cliente de forma que pueda ver su carrito.
+    socket.on('pago', function (data) {
+        const { user, total } = data;
+        try{
+            io.emit('pagoEmpleado', { ok: true, user, total});
+        }
+        catch (err) {
+            io.emit('pagoEmpleado', { ok: false, message: 'Error interno del servidor' });
+        }
+    });
+    //EL empleado solicita el cobro
+    socket.on('cobrar', function (data) {
+        const email = data.email;
+        try{
+            io.emit(email, { ok: true});
+        }
+        catch (err) {
+            io.emit(email, { ok: false, message: 'Error interno del servidor' });
+        }
+    });
+
+    //Se realiza la compra y se vacía el carrito del usuario. El usuario se elimina de la lista de clientes del empleado
     socket.on('pago_realizado', function (data) {
         const {email} = data;
         fs.readFile('registro.json', 'utf8', (err, jsonString) => {
@@ -329,12 +329,6 @@ io.on('connection', function (socket) {
                 socket.emit('carritoResponse', { ok: false, message: 'Error interno del servidor', acc: accion });
             }
         });
-    });
-
-
-    socket.on("message_evt", function (message) {
-        console.log(socket.id, message);
-        socket.broadcast.emit("message_evt", message);
     });
 });
 

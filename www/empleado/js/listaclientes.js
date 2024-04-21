@@ -1,4 +1,5 @@
 const socket = io();
+let totales = {};
 window.onload = async () => {
     try {
         const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
@@ -39,7 +40,7 @@ function loadUsuarios(usuarios){
             clienteElement.appendChild(elemento);
         });
         const totalElement = document.createElement('p');
-        totalElement.textContent = 'Total: ' + total + '€';
+        totalElement.textContent = 'Total: ' + totales[user.email] + '€';
         clienteElement.appendChild(totalElement);
         const boton = document.createElement('button');
         boton.classList.add("boton_principal");
@@ -56,8 +57,7 @@ function loadUsuarios(usuarios){
 
 }
 socket.on('pagoEmpleado', function (data) {
-    const user = data.user;
-
+    const { user, total } = data;
     // Guardar el usuario en una lista de usuarios en LocalStorage
     let guardado = false;
     let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
@@ -67,11 +67,13 @@ socket.on('pagoEmpleado', function (data) {
             if (usuario.carrito === user.carrito){
                 usuarios.splice(usuarios.indexOf(usuario), 1);
                 guardado = false;
+                totales[user.email] = total;
             }
         } 
     });
     if(!guardado){
         usuarios.push(user);
+        totales[user.email] = total;
         localStorage.setItem('usuarios', JSON.stringify(usuarios));
         loadUsuarios(usuarios);
     }
